@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.page{
+    font-size: 5rem;
+    text-align: center;
+    border: 1px solid grey;
+}
+
+.borderGrey{
+    border : 1px solid blue;
+}
+
+.title{
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+.center-content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-card1{
+    width: 70%;
+    height: 100vh;
+    padding: 20px;
+    margin-right: 60px;
+    display: inline-block;
+}
+.main-card2{
+    width: 30%;
+    height: 100vh;
+    padding: 20px;
+    margin-right: 60px;
+    display: inline-block;
+}
+
+.lg-box{
+    width: 100%;
+}
+
+.md-box{
+    width: 70%;
+    height: 35px;
+}
+
+.sm-box{
+    width: 40%;
+    height: 40px;
+}
+
+.sm-mg{
+    margin-bottom: 20px;
+}
+
+.md-mg{
+    margin-bottom: 20px;
+}
+
+.lg-mg{
+    margin-bottom: 20px;
+}
+
+.mg-top-lg{
+    margin-top: 60px;
+}
+
+
+#root{
+    margin-left: 65px;
+}
+
+.card-child{
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+}
+
+.styled-button {
+    background-color: #3498db;
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px; 
+    border-radius: 5px;
+    cursor: pointer; 
+    margin-top: 20px;
+  }
+  
+  .styled-button:hover {
+    background-color: #2980b9; /* Change background color on hover */
+  }
+
+  .meetingCard-Child{
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+  }
+
+  .card{
+    margin-bottom: 70px;
+  }
+
+  .dashboard-container{
+    display: flex;
+  }
