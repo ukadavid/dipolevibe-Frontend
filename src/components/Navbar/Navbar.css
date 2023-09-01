@@ -1,8 +1,10 @@
 .navbar {
     height: var(--nav-size);
-    background-color: burlywood;
+    background-color: rgb(255, 255, 255);
     padding: 0 1rem;
-    border-radius: var(--border);
+    border-radius: 5px;
+    border-bottom: 0.5px solid grey; 
+    box-shadow: 1px 1px #888888;
   }
   
   .navbar-nav {

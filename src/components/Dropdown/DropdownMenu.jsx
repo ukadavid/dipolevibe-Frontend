@@ -31,21 +31,21 @@ const DropdownMenu = ({openModal}) => {
             setActive={setActive}
             setModal={openModal} 
           >
-            My Profile
+            Add to live meeting
           </DropdownItem>
           <DropdownItem
             leftIcon={<HiOutlineCog />}
             goToMenu={"settings"}
             setActive={setActive}
           >
-            Settings
+            Schedule new meeting
           </DropdownItem>
           <DropdownItem 
             leftIcon={<HiOutlineCog />} 
             goToMenu="animals" 
             setActive={setActive}
           >
-            Animals
+            Record video
           </DropdownItem>
         </div>
       </CSSTransition>
