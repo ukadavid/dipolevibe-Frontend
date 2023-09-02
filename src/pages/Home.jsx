@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-unused-vars */
 import { useState } from 'react';
 import Header from '../components/header/Header';
 import CaptureMeetingModal from '../components/Modal/CaptureMeetingModal/CaptureMeetingModal';
@@ -18,7 +20,7 @@ function Home(){
             </div>
             <div className="card">
                 <div className="center-content card-child"> 
-                    <i class="fa fa-camera" aria-hidden="true" style={{fontSize: "1.8rem"}}></i>
+                    <i className="fa fa-camera" aria-hidden="true" style={{fontSize: "1.8rem"}}></i>
                 </div>
                 <div className="center-content card-child">
                     <h4>You don't have any upcoming meeting in the next 2 days</h4>
@@ -35,7 +37,7 @@ function Home(){
 
             <div className="card">
                 <div className="center-content card-child"> 
-                    <i class="fa fa-video-camera" style={{fontSize: "1.8rem"}}/>
+                    <i className="fa fa-video-camera" style={{fontSize: "1.8rem"}}/>
                 </div>
                 <div className="center-content card-child">
                     <h4>Work is always better together</h4>
@@ -84,38 +86,38 @@ function Home(){
                    <div className="mg-top-lg" style={{width: "380px"}}>
                       <div className="meetingCard-Child lg-box lg-mg px-3 py-4 border rounded-sm">
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-camera" aria-hidden="true"></i>
+                              <i className="fa fa-camera" aria-hidden="true"></i>
                            </div>
                            <div style={{flexGrow:"6"}}>
                              <h3 className="font-family:font-sans font-medium">Capture live meetings</h3>
                              <h2 className="font-family: ui-serif text-gray-400">Support MS Teams, Zoom and GMeet</h2>
                            </div>
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-plus" aria-hidden="true"></i>
+                              <i className="fa fa-plus" aria-hidden="true"></i>
                            </div>       
                       </div>
                       <div className="meetingCard-Child lg-box lg-mg px-3 py-4 border rounded-sm">
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-camera" aria-hidden="true"></i>
+                              <i className="fa fa-camera" aria-hidden="true"></i>
                            </div>
                            <div style={{flexGrow:"6"}}>
                              <h3 className="font-family:font-sans font-medium">Transcribe Audio or Video</h3>
                              <h2 className="font-family: ui-serif text-gray-400">Drop Mp3, Mp4 or WAV files</h2>
                            </div>
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-plus" aria-hidden="true"></i>
+                              <i className="fa fa-plus" aria-hidden="true"></i>
                            </div>       
                       </div>
                       <div className="meetingCard-Child lg-box px-3 py-4 border rounded-sm">
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-camera" aria-hidden="true"></i>
+                              <i className="fa fa-camera" aria-hidden="true"></i>
                            </div>
                            <div style={{flexGrow:"6"}}>
                              <h3 className="font-family:font-sans font-medium">Record and send video</h3>
                              <h2 className="font-family: ui-serif text-gray-400">Screen and video, video and audio</h2>
                            </div>
                            <div className="iconCard" style={{flexGrow:"2"}}>
-                              <i class="fa fa-plus" aria-hidden="true"></i>
+                              <i className="fa fa-plus" aria-hidden="true"></i>
                            </div>       
                       </div>
                    </div>

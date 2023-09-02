@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const baseUrl = "http://localhost:5000"
+const baseUrl = import.meta.env.VITE_BASE_URL;
 
 // Get Request
 export const apiGet = (path) => {

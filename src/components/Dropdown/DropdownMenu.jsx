@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import DropdownItem from "./DropdownItem";
 import { HiOutlineCog } from "react-icons/hi";
 import { CSSTransition } from "react-transition-group";

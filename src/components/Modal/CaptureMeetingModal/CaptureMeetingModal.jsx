@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './CaptureMeetingModal.css'; 
 
 const CaptureMeetingModal = () => {
@@ -17,13 +17,13 @@ const CaptureMeetingModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission here
-    console.log('Form submitted:', input1, input2, input3);
+    console.log('Form submitted:', input1, input2);
     closeModal();
   };
 
   return (
     <div>
-      <button onClick={openModal}>Open Modal</button>
+      <button onClick={openModal}>Logo</button>
 
       {isOpen && (
         <div className="modal-overlay">

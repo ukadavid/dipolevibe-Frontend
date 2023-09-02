@@ -1,4 +1,4 @@
-import React from "react";
+/* eslint-disable react/prop-types */
 import "./DropdownItem.css";
 
 const DropdownItem = (props) => {
