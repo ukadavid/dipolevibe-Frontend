@@ -20,6 +20,11 @@ const ScheduleMeetingModal = () => {
       console.log('Form submitted:', input1, input2);
       closeModal();
     };
+
+    const handleGoogleCalendar = (e) => {
+        e.preventDefault();
+
+    }
   
     return (
       <div>
@@ -27,22 +32,21 @@ const ScheduleMeetingModal = () => {
   
         {isOpen && (
           <div className="modal-overlay">
-            <div className="modal">
-              <h4>Capture life meeting</h4>
+            <div className="modal w-1/2">
+              <h4 className='font-family: ui-sans-serif font-bold text-4xl'>Schedule meeting via</h4>
               <form onSubmit={handleSubmit}>
-                <div>
-                    <a href="https://googlecalendar.com">
-                        <div><span>Google Calendar</span></div>
+                <div className="w-auto border h-20 flex items-center px-2 mt-1 rounded-sm">
+                    <a href="https://calendar.google.com/calendar/u/0/r" className='my-auto'>
+                        <div className=""><span className="font-medium">Google Calendar</span></div>
                     </a>
                 </div>
-                <div>
-                    <a href="https://microsoftcalendar.com">
-                        <div><span>Microsoft Outlook Calendar</span></div>
+                <div className="w-auto border h-20 flex items-center px-2 mt-1 rounded-sm">
+                    <a href="https://microsoftcalendar.com" className='my-auto'>
+                        <div><span className="font-medium">Microsoft Outlook Calendar</span></div>
                     </a>
                 </div>
-                <button type="submit">Submit</button>
               </form>
-              <button onClick={closeModal}>Close</button>
+              <button onClick={closeModal} className="float-right">Close</button>
             </div>
           </div>
         )}

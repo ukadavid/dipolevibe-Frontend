@@ -3,6 +3,11 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+:root {
+    --nav-size: 70px;
+}
+
 .page{
     font-size: 5rem;
     text-align: center;
