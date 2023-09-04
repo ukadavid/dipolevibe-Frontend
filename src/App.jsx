@@ -8,6 +8,7 @@ import SideNavigation from "./Components/sidenav/SideNav";
 import Home from "./Pages/Home";
 import Library from "./Pages/Library";
 import Notification from "./Pages/Notification";
+import HomePage from "./Pages/HomePage/HomePage";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <ToastContainer />
       <Router>
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/adminSignup" element={<AdminSignupPage />} />
           <Route
