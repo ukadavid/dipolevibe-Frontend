@@ -1,17 +1,18 @@
-import { TERipple } from 'tw-elements-react';
-import EyeIcon from '../../assets/EyeIcon.png';
-import MessageIcon from '../../assets/MessageIcon.png';
-import ShareIcon from '../../assets/ShareIcon.png';
+import { TERipple } from "tw-elements-react";
+import EyeIcon from "../../assets/EyeIcon.png";
+import MessageIcon from "../../assets/MessageIcon.png";
+import ShareIcon from "../../assets/ShareIcon.png";
+import DownLineIcon from "../../assets/DownLineIcon.png";
 
 const MyVideos = () => {
   const cardsData = [
     {
       id: 1,
-      imageSrc: 'https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg',
-      initials: 'KA',
-      username: 'User',
-      daysAgo: '9 days',
-      title: 'Demo meeting',
+      imageSrc: "https://tecdn.b-cdn.net/img/new/standard/nature/186.jpg",
+      initials: "KA",
+      username: "User",
+      daysAgo: "9 days",
+      title: "Demo meeting",
     },
     // Add more card data objects as needed
   ];
@@ -38,21 +39,29 @@ const MyVideos = () => {
                 {card.initials}
               </span>
               <span className="text-2xl ml-2 text-black">{card.username}</span>
-              <span className="text-sm ml-auto text-black">{card.daysAgo}</span> {/* Use ml-auto to align right */}
+              <span className="text-sm ml-auto text-black">
+                {card.daysAgo}
+              </span>{" "}
+              {/* Use ml-auto to align right */}
             </div>
-            <p className='text-2xl p-8'>{card.title}</p>
+            <p className="text-sm ml-8 flex items-center">
+              Not Shared
+              <img src={DownLineIcon} alt="Down line Icon" className="ml-1" />
+            </p>
+
+            <p className="text-2xl p-8">{card.title}</p>
             <div className="grid grid-cols-3 gap-2">
               <div className="flex items-center justify-center p-2 text-center text-2xl font-semibold rounded-md">
                 <img src={EyeIcon} alt="See all icon" />
-                <span className="ml-2">2</span>
+                <span className="ml-2 text-sm">2</span>
               </div>
               <div className="flex items-center justify-center p-2 text-center text-2xl font-semibold rounded-md">
                 <img src={MessageIcon} alt="See all icon" />
-                <span className="ml-2">4</span>
+                <span className="ml-2 text-sm">4</span>
               </div>
               <div className="flex items-center justify-center p-2 text-center text-2xl font-semibold rounded-md">
                 <img src={ShareIcon} alt="See all icon" />
-                <span className="ml-2">3</span>
+                <span className="ml-2 text-sm">3</span>
               </div>
             </div>
           </div>
