@@ -14,23 +14,30 @@ const DataProvider = ({ children }) => {
   const registerConfig = async (formData) => {
     try {
       const registerData = {
-
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        userName: formData.userName,
         email: formData.email,
+        phoneNumber: formData.phoneNumber,
         password: formData.password,
-        confirm_password: formData.confirm_password,
+        confirmPassword: formData.confirmPassword,
       };
 
-      const response = await apiPost("/user/register", registerData);
+      
+      console.log(registerData)
+      const response = await apiPost("/user/auth/register", registerData);
       const data = await response.data;
-      toast.success(data.message);
+      console.log(data);
+      toast.success(data.displayMessage);
 
       setTimeout(() => {
-        const userId = data.user._id;
-        window.location.href = `/otpVerify?userId=${userId}`;
+        const userEmail = data.user.email;
+        window.location.href = `/login=${userEmail}`;
+        // window.location.href = `/tokenVerify?userId=${userEmail}`;
   
       }, 2000);
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.errorMessages[0]);
     }
   };
 
@@ -53,6 +60,7 @@ const DataProvider = ({ children }) => {
         window.location.href = "/login";
       }, 2000);
     } catch (error) {
+      console.log(error);
       toast.error(error.response.data.error);
     }
   };
@@ -91,22 +99,21 @@ const DataProvider = ({ children }) => {
           password: formData.password,
         };
   
-        const response = await apiPost("/user/login", userLoginData);
+        const response = await apiPost("/user/auth/login", userLoginData);
         const data = await response.data;
-        if (data.message === "Login successful") {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("userid", JSON.stringify(data.user._id));
+        if (data.displayMessage === "Successfully login") {
+          localStorage.setItem("token", data.result.jwt);
+          // localStorage.setItem("userid", JSON.stringify(data.user._id));
         }
-        console.log(data.token);
-        console.log(data.user._id);
+        console.log(data.result.jwt);
         
-        toast.success(data.message);
+        toast.success(data.displayMessage);
   
         setTimeout(() => {
-          window.location.href = "/userDashboard";
+          window.location.href = "/home";
         }, 2000);
       } catch (error) {
-        toast.error(error.response.data.error);
+        toast.error(error.response.data.errorMessages[0]);
       }
     };
 

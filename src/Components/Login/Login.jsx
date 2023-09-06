@@ -1,26 +1,28 @@
-// import { useAuth } from "../../Context/AuthContext";
-// import { useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
+import { useState } from "react";
 function Login() {
-//   const { adminLoginConfig, userLoginConfig } = useAuth();
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
+  const { userLoginConfig } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-//   const handleEmailChange = (e) => {
-//     setEmail(e.target.value);
-//   };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
-//   const handlePasswordChange = (e) => {
-//     setPassword(e.target.value);
-//   };
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // const formData = {
-    //   email,
-    //   password,
-    // };
-   
+    const formData = {
+      email,
+      password,
+    };
+    userLoginConfig(formData)
   };
+
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -46,8 +48,8 @@ function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                //   onChange={handleEmailChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
+                  onChange={handleEmailChange}
                 />
               </div>
             </div>
@@ -62,7 +64,7 @@ function Login() {
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-gray-600 hover:text-gray-500"
                   >
                     Forgot password?
                   </a>
@@ -75,26 +77,26 @@ function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                //   onChange={handlePasswordChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
+                  onChange={handlePasswordChange}
                 />
               </div>
             </div>
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
                 Sign in
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-center text-sm text-gray-900">
             Not a Registered User?{" "}
             <a
               href="/signup"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+              className="font-semibold leading-6 text-gray-600 hover:text-gray-900"
             >
               Sign up
             </a>
