@@ -40,10 +40,10 @@ const NavBar = () => {
 
   return (
     <>
-      <div className="bg-white">
+      <div>
         <header className="relative z-50">
           <nav
-            className="flex items-center justify-between p-6 lg:px-8"
+            className="fixed bg-white bg-opacity-90 top-0 left-0 right-0 z-10 flex items-center justify-between p-6 lg:px-8"
             aria-label="Global"
           >
             <div className="flex lg:flex-1">
@@ -92,19 +92,19 @@ const NavBar = () => {
             <div className="hidden lg:flex lg:gap-x-12">
               <a
                 href="/"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
               >
                 Home
               </a>
               <a
                 href="/signup"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
               >
                 Register
               </a>
               <a
                 href="/login"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
               >
                 Login
               </a>
@@ -112,7 +112,7 @@ const NavBar = () => {
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a
                 href="#"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
                 onClick={openVideoModal}
               >
                 <FaVideo />
@@ -120,14 +120,14 @@ const NavBar = () => {
               </a>
               <a
                 href="#"
-                className="text-sm mx-4 font-semibold leading-6 text-gray-900"
+                className="text-sm mx-4 hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
                 onClick={openAudioModal}
               >
                 <FaMicrophone /> <span aria-hidden="true"></span>
               </a>
               <a
                 href="#"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
                 onClick={openScreenModal}
               >
                 <FaDesktop /> <span aria-hidden="true"></span>

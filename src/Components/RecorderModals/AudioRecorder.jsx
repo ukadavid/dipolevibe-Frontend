@@ -1,22 +1,21 @@
+/* eslint-disable react/no-unknown-property */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { ReactMediaRecorder } from 'react-media-recorder';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ReactMediaRecorder } from "react-media-recorder";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AudioRecorderModal = ({ closeAudioModal }) => {
-  const [toastDisplayed, setToastDisplayed] = useState(false);
+  let toastDisplayed = false;
 
   const showToast = (status) => {
     if (!toastDisplayed) {
       toast(status);
-      setToastDisplayed(true);
+      toastDisplayed = true;
       setTimeout(() => {
-        setToastDisplayed(false);
-      }, 100);
+        toastDisplayed = false;
+      }, 100); // Set a short timeout to reset toastDisplayed
     }
   };
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="modal-bg absolute inset-0 bg-black opacity-90"></div>
@@ -45,24 +44,51 @@ const AudioRecorderModal = ({ closeAudioModal }) => {
         <div className="flex justify-center mt-4 mb-8 space-x-4">
           <ReactMediaRecorder
             audio
-            render={({ status, mediaBlobUrl, startRecording, stopRecording }) => (
+            render={({
+              status,
+              mediaBlobUrl,
+              startRecording,
+              stopRecording,
+              previewStream,
+            }) => (
               <div>
                 {showToast(status)}
-                {status === 'idle' && (
-                  <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={startRecording}>
+                {status === "idle" && (
+                  <button
+                    className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded"
+                    onClick={startRecording}
+                  >
                     Start Recording
                   </button>
                 )}
-                {status === 'recording' && (
-                  <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={stopRecording}>
+                {status === "recording" && (
+                  <button
+                    className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded"
+                    onClick={stopRecording}
+                  >
                     Stop Recording
                   </button>
                 )}
                 {mediaBlobUrl && <audio src={mediaBlobUrl} controls />}
-                
+                {status === "recording" && (
+                  <audio
+                    srcObject={previewStream}
+                    src={mediaBlobUrl}
+                    controls
+                  />
+                )}
+                {mediaBlobUrl && (
+                  <a
+                    className="text-gray-900 hover:underline"
+                    href={mediaBlobUrl}
+                    download="audio_recording.mp4"
+                  >
+                    Download Recording
+                  </a>
+                )}
               </div>
             )}
-          />     
+          />
         </div>
 
         <div className="flex justify-center space-x-4">
@@ -76,6 +102,6 @@ const AudioRecorderModal = ({ closeAudioModal }) => {
       </div>
     </div>
   );
-}
+};
 
 export default AudioRecorderModal;
