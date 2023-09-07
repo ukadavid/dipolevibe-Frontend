@@ -1,21 +1,41 @@
 import { useState } from "react";
-import CameraIcon from "../../assets/iconCamera.png";
-import RobotIcon from "../../assets/iconRobot.png";
+import { FaVideo, FaMicrophone, FaDesktop } from "react-icons/fa";
+import VideoRecorderModal from "../RecorderModals/VideoRecorder";
+import ScreenRecorderModal from "../RecorderModals/ScreenRecorder";
+import AudioRecorderModal from "../RecorderModals/AudioRecorder";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isVideoModalOpen, setVideoModalOpen] = useState(false);
+  const [isScreenModalOpen, setScreenModalOpen] = useState(false);
+  const [isAudioModalOpen, setAudioModalOpen] = useState(false);
 
+  // toggle menu section
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  const openModal = () => {
-    setIsModalOpen(true);
+  // Modal section
+  const openVideoModal = () => {
+    setVideoModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeVideoModal = () => {
+    setVideoModalOpen(false);
+  };
+  const openScreenModal = () => {
+    setScreenModalOpen(true);
+  };
+
+  const closeScreenModal = () => {
+    setScreenModalOpen(false);
+  };
+  const openAudioModal = () => {
+    setAudioModalOpen(true);
+  };
+
+  const closeAudioModal = () => {
+    setAudioModalOpen(false);
   };
 
   return (
@@ -93,17 +113,24 @@ const NavBar = () => {
               <a
                 href="#"
                 className="text-sm font-semibold leading-6 text-gray-900"
-                onClick={openModal}
+                onClick={openVideoModal}
               >
-                <img className="w-1/2" src={CameraIcon} alt="Camera Icon" />{" "}
+                <FaVideo />
                 <span aria-hidden="true"></span>
               </a>
               <a
                 href="#"
-                className="text-sm font-semibold leading-6 text-gray-900"
+                className="text-sm mx-4 font-semibold leading-6 text-gray-900"
+                onClick={openAudioModal}
               >
-                <img className="w-1/2" src={RobotIcon} alt="Robot Icon" />{" "}
-                <span aria-hidden="true"></span>
+                <FaMicrophone /> <span aria-hidden="true"></span>
+              </a>
+              <a
+                href="#"
+                className="text-sm font-semibold leading-6 text-gray-900"
+                onClick={openScreenModal}
+              >
+                <FaDesktop /> <span aria-hidden="true"></span>
               </a>
             </div>
           </nav>
@@ -165,21 +192,25 @@ const NavBar = () => {
                       <a
                         href="#"
                         className="text-sm font-semibold leading-6 text-gray-900"
-                        onClick={openModal}
+                        onClick={openVideoModal}
                       >
-                        <img
-                          className="h-12 w-auto"
-                          src={CameraIcon}
-                          alt="Camera Icon"
-                        />{" "}
-                        <span aria-hidden="true"></span>
+                        <FaVideo /> <span aria-hidden="true"></span>
+                      </a>
+                      <a
+                        href="#"
+                        className="text-sm font-semibold leading-6 text-gray-900 mx-4"
+                        onClick={openAudioModal}
+                      >
+                        <FaMicrophone /> <span aria-hidden="true"></span>
+                        
                       </a>
                       <a
                         href="#"
                         className="text-sm font-semibold leading-6 text-gray-900"
+                        onClick={openScreenModal}
                       >
-                        <img className="h-12 w-auto" src={RobotIcon} alt="" />{" "}
-                        <span aria-hidden="true"></span>
+                        <FaDesktop /> <span aria-hidden="true"></span>
+                      
                       </a>
                     </div>
                   </div>
@@ -190,54 +221,9 @@ const NavBar = () => {
         </header>
       </div>
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
-          <div className="modal-bg absolute inset-0 bg-black opacity-80"></div>
-          <div className="modal-content z-10 bg-white p-4 rounded-lg shadow-lg">
-            <div className="flex justify-end">
-              <button
-                onClick={closeModal}
-                className="text-gray-700 hover:text-gray-900"
-              >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="flex justify-center mt-4 mb-8 space-x-4">
-              <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded">
-                Record Video
-              </button>
-              <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded">
-                Stop Video
-              </button>
-              <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded">
-                Transcribe Video
-              </button>
-            </div>
-
-            <div className="flex justify-center space-x-4">
-              <button
-                onClick={closeModal}
-                className="px-4 py-2 bg-gray-500 hover:bg-gray-900 text-white px-4 py-2 rounded"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {isVideoModalOpen && <VideoRecorderModal closeVideoModal={closeVideoModal} />}
+      {isScreenModalOpen && <ScreenRecorderModal closeScreenModal={closeScreenModal} />}
+      {isAudioModalOpen && <AudioRecorderModal closeAudioModal={closeAudioModal} />}
     </>
   );
 };
