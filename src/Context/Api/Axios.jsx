@@ -2,6 +2,7 @@ import axios from 'axios';
 
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
+const TranscriptionUrl = import.meta.env.VITE_URL;
 
 // Get Request
 export const apiGet = (path) => {
@@ -23,6 +24,15 @@ export const apiPost = (path, data) => {
     }
 
     return axios.post(`${baseUrl}${path}`, data, config)
+}
+export const apiTranscribePost = (path, data) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    }
+
+    return axios.post(`${TranscriptionUrl}${path}`, data, config)
 }
 
 // Put Request

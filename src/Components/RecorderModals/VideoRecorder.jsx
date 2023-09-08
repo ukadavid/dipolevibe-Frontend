@@ -3,6 +3,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 import VideoPreview from "../VideoPreviewer/VideoPreviewer"
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const VideoRecorderModal = ({closeVideoModal}) => {
     let toastDisplayed = false;
@@ -16,6 +17,22 @@ const VideoRecorderModal = ({closeVideoModal}) => {
         }, 100); // Set a short timeout to reset toastDisplayed
       }
     };
+
+    const handleTranscription = async (mediaBlobUrl) => {
+      try {
+        const response = await fetch(mediaBlobUrl);
+        const blob = await response.blob();
+        const formData = new FormData();
+        formData.append("file", blob, "recording.mp4");
+    
+        const result = await axios.post("http://localhost:5000/transcribe/transcribe", formData);
+        console.log(result.data.transcript);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
+    
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
     <div className="modal-bg absolute inset-0 bg-black opacity-90"></div>
@@ -48,9 +65,12 @@ const VideoRecorderModal = ({closeVideoModal}) => {
             <div>
               {showToast(status)}
               {status === "idle" && <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={startRecording}>Start Recording</button>}
-              {status === "recording" && <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={stopRecording}>Stop Recording</button>}
+              {status === "recording" && <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={() => {
+                  stopRecording();
+                  handleTranscription(mediaBlobUrl);}}>Stop Recording</button>}
               
               {mediaBlobUrl && <video src={mediaBlobUrl} controls autoPlay loop />}
+              {console.log(mediaBlobUrl)}
               {status === "recording" && <VideoPreview stream={previewStream} />}
               {mediaBlobUrl && (
            <a
@@ -60,6 +80,7 @@ const VideoRecorderModal = ({closeVideoModal}) => {
          >
            Download Recording
          </a>
+         
          
           )}
             </div>
