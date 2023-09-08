@@ -126,17 +126,17 @@ const DataProvider = ({ children }) => {
       let email = userId
       
       const response = await apiPost(`/user/auth/confirm-email/${email}`, OTPData);
-      console.log(OTPData.otp);
+      console.log(OTPData);
       const data = await response.data;
       if (data.displayMessage === "Success") {
-        localStorage.setItem("role", JSON.stringify(data.user.role));
-        console.log(data.user.role);
+        toast.success(data.result);
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 2000);
       }
-      toast.success(data.result);
+      
 
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
+
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.errorMessages[0]);
