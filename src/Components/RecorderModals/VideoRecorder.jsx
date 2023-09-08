@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { ReactMediaRecorder } from "react-media-recorder";
 import VideoPreview from "../VideoPreviewer/VideoPreviewer"
@@ -63,7 +64,7 @@ const VideoRecorderModal = ({closeVideoModal}) => {
           video
           render={({ status, mediaBlobUrl, startRecording, stopRecording, previewStream }) => (
             <div>
-              {showToast(status)}
+             {(status == "idle" || status == "acquiring_media") ? null :  showToast(status)}
               {status === "idle" && <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={startRecording}>Start Recording</button>}
               {status === "recording" && <button className="bg-gray-900 hover:bg-gray-500 text-white px-4 py-2 rounded" onClick={() => {
                   stopRecording();

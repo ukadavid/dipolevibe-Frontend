@@ -14,7 +14,7 @@ export default function SideNavigation(){
           onToggle={
                 collapsed => console.log(!collapsed)
             }
-          className='sideNav'
+          className='sideNav bg-gray-900'
         >
             <SideNav.Toggle />
             <SideNav.Nav defaultSelected="home">

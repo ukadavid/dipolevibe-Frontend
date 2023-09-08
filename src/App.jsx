@@ -12,6 +12,8 @@ import Notification from "./Pages/Notification";
 import HomePage from "./Pages/HomePage/HomePage";
 import SuccessPage from "./Pages/SuccessPage";
 import Page404Page from "./Pages/Page404Page";
+import ResetPasswordPage from "./Pages/ResetPasswordPage";
+import AccountVerificationPage from "./Pages/AccountVerificationPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 
 
@@ -27,7 +29,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/adminSignup" element={<AdminSignupPage />} />
           <Route path="/success" element={<SuccessPage />} />
-          <Route path="/404" element={<Page404Page />} />
+          <Route path="/verify" element={<AccountVerificationPage />} />
+          <Route path="*" element={<Page404Page />} />
+          <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
           <Route
             path="/home"
@@ -56,6 +60,7 @@ function App() {
                 </>
             }
           />
+          
         </Routes>
       </Router>
     </DataProvider>

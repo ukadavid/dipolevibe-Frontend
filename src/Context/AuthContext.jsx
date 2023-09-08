@@ -31,9 +31,8 @@ const DataProvider = ({ children }) => {
       toast.success(data.displayMessage);
 
       setTimeout(() => {
-        const userEmail = data.user.email;
-        window.location.href = `/login=${userEmail}`;
-        // window.location.href = `/tokenVerify?userId=${userEmail}`;
+        const userEmail = registerData.email;
+         window.location.href = `/verify?userId=${userEmail}`;
   
       }, 2000);
     } catch (error) {
@@ -117,19 +116,78 @@ const DataProvider = ({ children }) => {
       }
     };
 
+     /* ==================================== Verify Email with OTP ================================================*/
+  const OTPConfig = async (enteredOTP, userId) => {
+    try {
+      const OTPData = {
+        "token": enteredOTP,
+      };
+
+      let email = userId
+      
+      const response = await apiPost(`/user/auth/confirm-email/${email}`, OTPData);
+      console.log(OTPData.otp);
+      const data = await response.data;
+      if (data.displayMessage === "Success") {
+        localStorage.setItem("role", JSON.stringify(data.user.role));
+        console.log(data.user.role);
+      }
+      toast.success(data.result);
+
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.errorMessages[0]);
+    }
+  };
+
+  /* ==================================== Forgot Password with Email ================================================*/
+
+  const EmailConfig = async (emailData) => {
+    try {
+      const EmailData = {
+        email: emailData.email,
+      };
+      console.log(EmailData);
+      console.log(EmailData.email);
+      
+      const response = await apiPost(`/user/auth/forgot_password${EmailData.email}`);
+ 
+      console.log(EmailData.otp);
+      const data = await response.data;
+      if (data.displayMessage === "Success") {
+        localStorage.setItem("role", JSON.stringify(data.user.role));
+        console.log(data.user.role);
+      }
+      toast.success(data.result);
+
+      setTimeout(() => {
+        window.location.href = "/resetPassword";
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data.errorMessages[0]);
+    }
+  };
+
   return (
     <dataContext.Provider
       value={{
         registerConfig,
         adminRegisterConfig,
         adminLoginConfig,
-        userLoginConfig
+        userLoginConfig,
+        OTPConfig,
+        EmailConfig
       }}
     >
       {children}
     </dataContext.Provider>
   );
 };
+
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {

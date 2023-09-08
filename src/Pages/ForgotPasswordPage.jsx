@@ -1,9 +1,10 @@
-import ForgotPassword from "../Components/ForgotPassword/ForgotPassword"
-
+import ForgotPassword from '../Components/ForgotPassword/ForgotPassword'
 
 const ForgotPasswordPage = () => {
   return (
-   <ForgotPassword />
+    <>
+    <ForgotPassword />
+    </>
   )
 }
 

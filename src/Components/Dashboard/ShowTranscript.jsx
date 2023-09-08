@@ -4,15 +4,14 @@ const ShowTranscript = () => {
         <div className="flex items-center">
           {/* Column 1: Rounded Span */}
           <div className="flex-shrink-0">
-            <span className="rounded-full bg-gray-900 text-white text-2xl p-2">
+            <span className="rounded-full bg-gray-900 text-white text-2xl p-2 mb-12">
               KA
             </span>
           </div>
   
           {/* Column 2: Two Rows for Title and Email */}
           <div className="flex-grow">
-            <p className="text-sm font-semibold">John Doe</p>
-            <p className="text-gray-600 text-sm">john.doe@example.com</p>
+            <h1 className="text-lg font-semibold">Demo Meeting</h1>
           </div>
   
           {/* Divider Column */}

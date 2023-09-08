@@ -10,8 +10,7 @@ const Header = () => {
               <br />a thousand words
             </h1>
             <p className="max-w-xs lg:max-w-2xl mb-6 font-light lg:mb-8 md:text-lg lg:text-xl text-gray-500 dark:text-gray-400">
-              dipoVibe video messaging and transcription cuts off distractions
-              to help you work better.
+            DipoVibe empowers you to capture video, audio, and screen recordings effortlessly, allowing seamless sharing. Our advanced transcription feature eliminates distractions, enabling you to focus and work more efficiently.
             </p>
 
             <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
