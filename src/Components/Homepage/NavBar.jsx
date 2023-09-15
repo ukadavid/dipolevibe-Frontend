@@ -1,28 +1,20 @@
 import { useState } from "react";
-import { FaVideo, FaMicrophone, FaDesktop } from "react-icons/fa";
-import VideoRecorderModal from "../RecorderModals/VideoRecorder";
+import {  FaDesktop } from "react-icons/fa";
 import ScreenRecorderModal from "../RecorderModals/ScreenRecorder";
-import AudioRecorderModal from "../RecorderModals/AudioRecorder";
+
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isVideoModalOpen, setVideoModalOpen] = useState(false);
+
   const [isScreenModalOpen, setScreenModalOpen] = useState(false);
-  const [isAudioModalOpen, setAudioModalOpen] = useState(false);
+
 
   // toggle menu section
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
 
-  // Modal section
-  const openVideoModal = () => {
-    setVideoModalOpen(true);
-  };
 
-  const closeVideoModal = () => {
-    setVideoModalOpen(false);
-  };
   const openScreenModal = () => {
     setScreenModalOpen(true);
   };
@@ -30,13 +22,7 @@ const NavBar = () => {
   const closeScreenModal = () => {
     setScreenModalOpen(false);
   };
-  const openAudioModal = () => {
-    setAudioModalOpen(true);
-  };
 
-  const closeAudioModal = () => {
-    setAudioModalOpen(false);
-  };
 
   return (
     <>
@@ -113,21 +99,6 @@ const NavBar = () => {
               <a
                 href="#"
                 className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
-                onClick={openVideoModal}
-              >
-                <FaVideo />
-                <span aria-hidden="true"></span>
-              </a>
-              <a
-                href="#"
-                className="text-sm mx-4 hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
-                onClick={openAudioModal}
-              >
-                <FaMicrophone /> <span aria-hidden="true"></span>
-              </a>
-              <a
-                href="#"
-                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
                 onClick={openScreenModal}
               >
                 <FaDesktop /> <span aria-hidden="true"></span>
@@ -189,21 +160,8 @@ const NavBar = () => {
                       </a>
                     </div>
                     <div className="py-6">
-                      <a
-                        href="#"
-                        className="text-sm font-semibold leading-6 text-gray-900"
-                        onClick={openVideoModal}
-                      >
-                        <FaVideo /> <span aria-hidden="true"></span>
-                      </a>
-                      <a
-                        href="#"
-                        className="text-sm font-semibold leading-6 text-gray-900 mx-4"
-                        onClick={openAudioModal}
-                      >
-                        <FaMicrophone /> <span aria-hidden="true"></span>
-                        
-                      </a>
+
+
                       <a
                         href="#"
                         className="text-sm font-semibold leading-6 text-gray-900"
@@ -221,9 +179,7 @@ const NavBar = () => {
         </header>
       </div>
       {/* Modal */}
-      {isVideoModalOpen && <VideoRecorderModal closeVideoModal={closeVideoModal} />}
       {isScreenModalOpen && <ScreenRecorderModal closeScreenModal={closeScreenModal} />}
-      {isAudioModalOpen && <AudioRecorderModal closeAudioModal={closeAudioModal} />}
     </>
   );
 };

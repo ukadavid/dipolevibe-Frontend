@@ -1,18 +1,16 @@
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from 'react';
 
- // eslint-disable-next-line react/prop-types
- const VideoPreview = ({ stream }) => {
-    const videoRef = useRef(null);
-  
-    useEffect(() => {
-      if (videoRef.current && stream) {
-        videoRef.current.srcObject = stream;
-      }
-    }, [stream]);
-    if (!stream) {
-      return null;
+const VideoPreview = ({ stream }) => {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.srcObject = stream;
     }
-    return <video ref={videoRef} width={500} height={500} autoPlay controls />;
-  };
+  }, [stream]);
 
-  export default VideoPreview
+  return <video ref={videoRef} autoPlay muted />;
+};
+
+export default VideoPreview;

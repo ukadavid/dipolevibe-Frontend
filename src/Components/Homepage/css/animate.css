@@ -1,0 +1,13 @@
+@keyframes custom-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Adjust the bounce height as needed */
+  }
+}
+
+.custom-bounce {
+  animation: custom-bounce 1s cubic-bezier(0.4, 0.2, 0.2, 1) infinite;
+}
