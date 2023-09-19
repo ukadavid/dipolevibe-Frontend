@@ -4,53 +4,23 @@ import { useState } from 'react'
 function SignUp() {
 
   const {registerConfig} = useAuth();
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value)
-  }
-
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value)
-  }
-
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value)
-  }
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value)
-  }
-
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value)
   }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
   }
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value)
-  }
-  
  
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = {
-      firstName,
-      lastName,
-      userName,
       email,
-      phoneNumber,
       password,
-      confirmPassword
     }
 
     registerConfig(formData)
@@ -70,51 +40,6 @@ function SignUp() {
             <form className="space-y-6" onSubmit={handleSubmit}>
                 <div>
                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  First Name
-                </label>
-                <div className="">
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                    onChange={handleFirstNameChange}
-                  />
-                </div>
-                </div>
-                <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Last Name
-                </label>
-                <div className="">
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                    onChange={handleLastNameChange}
-                  />
-                </div>
-                </div>
-                <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Username
-                </label>
-                <div className="">
-                  <input
-                    id="userName"
-                    name="userName"
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                    onChange={handleUserNameChange}
-                  />
-                </div>
-                </div>
-                <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                   Email address
                 </label>
                 <div className="">
@@ -129,23 +54,6 @@ function SignUp() {
                   />
                 </div>
                 </div>
-                <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Phone Number
-                </label>
-                <div className="">
-                  <input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    type="text"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
-                    onChange={handlePhoneNumberChange}
-                  />
-                </div>
-                </div>
-            
-  
               <div>
                 <div className="flex items-center justify-between">
                   <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
@@ -161,28 +69,11 @@ function SignUp() {
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                    onChange={handleConfirmPasswordChange}
+                    onChange={handlePasswordChange}
                     
                   />
                 </div>
                 </div>
-                <div>
-                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Confirm Password
-                </label>
-                <div className="">
-                  <input
-                    id="confirm_password"
-                    name="confirm_password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm sm:leading-6"
-                    onChange={handlePasswordChange}
-                  />
-                </div>
-              </div>
-  
               <div>
                 <button
                   type="submit"

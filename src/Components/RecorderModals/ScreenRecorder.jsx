@@ -6,7 +6,6 @@ import { FaVideo, FaTv, FaVideoSlash } from "react-icons/fa";
 const VideoRecorderModal = ({ closeVideoModal }) => {
   const [screenRecording, setScreenRecording] = useState(null);
   const [cameraRecording, setCameraRecording] = useState(null);
-  const [mediaType, setMediaType] = useState("screen");
   const [isScreenRecording, setIsScreenRecording] = useState(false);
   const [isCameraRecording, setIsCameraRecording] = useState(false);
   const videoRef = useRef();
@@ -26,12 +25,26 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
     setIsCameraRecording(false);
   };
 
-  const toggleMediaType = () => {
-    setMediaType((prevMediaType) => {
-      if (prevMediaType === "camera") return "audio";
-      else if (prevMediaType === "audio") return "screen";
-      else return "camera";
-    });
+  const toggleRecording = () => {
+    if (!isScreenRecording && !isCameraRecording) {
+      screenRecorderRef.current.startRecording();
+      cameraRecorderRef.current.startRecording();
+      setIsScreenRecording(true);
+      setIsCameraRecording(true);
+    } else {
+      screenRecorderRef.current.stopRecording();
+      cameraRecorderRef.current.stopRecording();
+      setIsScreenRecording(false);
+      setIsCameraRecording(false);
+    }
+  };
+
+  const handleFullScreen = () => {
+    // TODO: Implement full screen functionality
+  };
+
+  const handleHDCamera = () => {
+    // TODO: Implement HD camera functionality
   };
 
   const handleMouseDown = (event) => {
@@ -54,11 +67,7 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
   };
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-    >
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="modal-bg absolute inset-0 bg-black opacity-90"></div>
       <div
         className="modal-content z-10 bg-white p-4 rounded-lg shadow-lg"
@@ -68,10 +77,12 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
           resize: "both",
           overflow: "auto",
           position: "absolute",
-          width: '400px'
+          width: "400px",
         }}
         ref={canvasRef}
         onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         <div className="flex justify-end">
           <button
@@ -95,31 +106,25 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
           </button>
         </div>
         <div className="flex justify-center mt-4 mb-8 space-x-4">
-          <button onClick={toggleMediaType}>
-            Switch 
-            Recording
-          </button>
-        </div>
-
-        {mediaType === "screen" && (
           <ReactMediaRecorder
             video
             screen
-            render={({
-              status,
-              startRecording,
-              stopRecording,
-              previewStream,
-            }) => (
+            render={({ status, startRecording, stopRecording, previewStream }) => (
               <div className="text-center">
                 {status === "idle" ? (
-                  <button onClick={startRecording}>
-                    <FaTv />
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded flex items-center" onClick={() => {
+                    startRecording();
+                    setIsScreenRecording(true);
+                  }}>
+                    <FaTv className="mr-2" /> Full Screen
                   </button>
                 ) : (
                   <>
                     <VideoPreview stream={previewStream} />
-                    <button onClick={stopRecording}>
+                    <button onClick={() => {
+                      stopRecording();
+                      setIsScreenRecording(false);
+                    }}>
                       <FaVideoSlash />
                     </button>
                   </>
@@ -129,28 +134,28 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
             onStop={handleScreenStop}
             ref={screenRecorderRef}
           />
-        )}
-
-        {mediaType === "camera" && (
           <ReactMediaRecorder
             video
-            render={({
-              status,
-              startRecording,
-              stopRecording,
-              previewStream,
-            }) => (
+            render={({ status, startRecording, stopRecording, previewStream }) => (
               <div className="text-center">
-                {status == "idle" ? (
-                  <button onClick={startRecording}>
-                    <FaVideo />
+                {status === "idle" ? (
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded flex items-center" onClick={() => {
+                    startRecording();
+                    setIsCameraRecording(true);
+                  }}>
+                    <FaVideo className="mr-2" /> Video Recording
                   </button>
                 ) : (
                   <>
-                    <button onClick={stopRecording}>
+                    {isCameraRecording && (
+                      <VideoPreview stream={previewStream} />
+                    )}
+                    <button onClick={() => {
+                      stopRecording();
+                      setIsCameraRecording(false);
+                    }}>
                       <FaVideoSlash />
                     </button>
-                    <VideoPreview stream={previewStream} />
                   </>
                 )}
               </div>
@@ -158,21 +163,20 @@ const VideoRecorderModal = ({ closeVideoModal }) => {
             onStop={handleCameraStop}
             ref={cameraRecorderRef}
           />
-        )}
-
+        </div>
         {screenRecording && (
           <div>
             <h2>Screen Recording</h2>
             <video src={screenRecording} controls autoPlay />
           </div>
         )}
-
         {cameraRecording && (
           <div>
             <h2>Camera Recording</h2>
             <video src={cameraRecording} controls autoPlay />
           </div>
         )}
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded flex items-center" onClick={toggleRecording}>Start to record</button>
       </div>
     </div>
   );
