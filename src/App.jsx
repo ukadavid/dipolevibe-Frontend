@@ -15,6 +15,7 @@ import Page404Page from "./Pages/Page404Page";
 import ResetPasswordPage from "./Pages/ResetPasswordPage";
 import AccountVerificationPage from "./Pages/AccountVerificationPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
+import RecorderComponent from "./Components/RecorderModals/RecorderModal";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="*" element={<Page404Page />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
+          <Route path="/rtc" element={<RecorderComponent />} />
           <Route
             path="/home"
             element={

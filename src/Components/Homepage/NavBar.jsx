@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {  FaDesktop } from "react-icons/fa";
-import ScreenRecorderModal from "../RecorderModals/ScreenRecorder";
+import RecorderComponent from "../RecorderModals/RecorderModal";
 
 
 const NavBar = () => {
@@ -27,7 +27,7 @@ const NavBar = () => {
   return (
     <>
       <div>
-        <header className="relative z-50">
+        <header className="relative z-10">
           <nav
             className="fixed bg-white bg-opacity-90 top-0 left-0 right-0 z-10 flex items-center justify-between p-6 lg:px-8"
             aria-label="Global"
@@ -109,7 +109,7 @@ const NavBar = () => {
           {/* Mobile Menu */}
           {mobileMenuOpen && (
             <div className="lg:hidden" role="dialog" aria-modal="true">
-              <div className="fixed inset-0 z-50"></div>
+              <div className="fixed inset-0 z-10"></div>
               <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                 <div className="flex items-center justify-between">
                   <a href="#" className="-m-1.5 p-1.5">
@@ -179,8 +179,8 @@ const NavBar = () => {
         </header>
       </div>
       {/* Modal */}
-      {isScreenModalOpen && <ScreenRecorderModal closeScreenModal={closeScreenModal} />}
-    </>
+      {isScreenModalOpen && <RecorderComponent closeScreenModal={closeScreenModal} />}
+    </> 
   );
 };
 
