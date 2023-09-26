@@ -6,7 +6,7 @@ const Success = () => {
         <div className="bg-white p-8 rounded-lg shadow-md w-full sm:max-w-sm">
           <h1 className="text-2xl font-bold mb-4 text-center">Verification Successful</h1>
           <p className="text-sm mb-6 text-center">
-            Your account has been successfully verified.
+            Log into your Email Account to Verify Dipolevibe account.
           </p>
           <div className="mt-6">
             <button

@@ -14,13 +14,8 @@ const DataProvider = ({ children }) => {
   const registerConfig = async (formData) => {
     try {
       const registerData = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        userName: formData.userName,
         email: formData.email,
-        phoneNumber: formData.phoneNumber,
         password: formData.password,
-        confirmPassword: formData.confirmPassword,
       };
 
       
@@ -31,8 +26,9 @@ const DataProvider = ({ children }) => {
       toast.success(data.displayMessage);
 
       setTimeout(() => {
-        const userEmail = registerData.email;
-         window.location.href = `/verify?userId=${userEmail}`;
+        // const userEmail = registerData.email;
+         window.location.href = `/success`;
+        //  window.location.href = `/verify?userId=${userEmail}`;
   
       }, 2000);
     } catch (error) {

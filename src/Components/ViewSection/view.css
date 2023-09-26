@@ -1,0 +1,34 @@
+.resize-handle {
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  right: -1px;
+  top: 0;
+  cursor: ew-resize;
+}
+
+.resize-handle:hover {
+  background: #ccc;
+}
+
+.div-section {
+  background: linear-gradient(rgba(196, 102, 0, 0.6), rgba(155, 89, 182, 0.6));
+}
+
+.edit-text {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  justify-content: flex-end;
+  font-size: 10px;
+  display: none;
+}
+
+.hover-div:hover .edit-text {
+  display: inline-block;
+  opacity: 1;
+  justify-content: flex-end;
+  position: relative;
+  top: 0;
+  left: 50px;
+  font-size: 10px;
+}

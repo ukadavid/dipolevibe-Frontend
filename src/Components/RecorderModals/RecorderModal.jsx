@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
+
 import { useRef, useState } from "react";
 import Draggable from "react-draggable";
 import {
@@ -56,7 +57,7 @@ const RecordingModal = ({ videoRef, startRecording }) => {
     </div>
   );
 };
-const RecorderComponent = ({ closeVideoModal }) => {
+const RecorderComponent = ({ closeScreenModal }) => {
   const videoRef = useRef();
   const [screenRecorder, setScreenRecorder] = useState(null);
   const [screenStream, setScreenStream] = useState(null);
@@ -102,6 +103,7 @@ const RecorderComponent = ({ closeVideoModal }) => {
         a.href = videoURL;
         a.download = "screenRecording.webm";
         a.click();
+        storeVideoInIndexedDB(blob);
   
         recordedChunks = [];
         setIsRecording(false);
@@ -123,21 +125,60 @@ const RecorderComponent = ({ closeVideoModal }) => {
     }
   };
   
+  const storeVideoInIndexedDB = (blob) => {
+    const dbName = "recordingsDB";
+    const dbVersion = 1;
+    const objectStoreName = "recordings";
+  
+    const request = indexedDB.open(dbName, dbVersion);
+  
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+  
+      if (!db.objectStoreNames.contains(objectStoreName)) {
+        db.createObjectStore(objectStoreName, { autoIncrement: true });
+      }
+    };
+  
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+  
+      const transaction = db.transaction(objectStoreName, "readwrite");
+      const objectStore = transaction.objectStore(objectStoreName);
+  
+      // Add a timestamp to the video object before storing it
+      const timestamp = Date.now();
+      const videoObject = { blob, timestamp };
+  
+      const request = objectStore.add(videoObject);
+  
+      request.onsuccess = () => {
+        console.log("Video stored in IndexedDB");
+      };
+  
+      request.onerror = (error) => {
+        console.error("Error storing video in IndexedDB:", error);
+      };
+    };
+  
+    request.onerror = (error) => {
+      console.error("Error opening IndexedDB:", error);
+    };
+  };
+  
 
   const stopRecording = () => {
-    console.log("Attempting to stop recording...");
-    console.log("screenRecorder:", screenRecorder);
-    console.log("screenStream:", screenStream);
-    console.log("cameraStream:", cameraStream);
-  
     if (screenRecorder && screenRecorder.state !== "inactive") {
-      console.log("Stopping recording");
       screenRecorder.stop();
       screenStream.getTracks().forEach((track) => track.stop());
       cameraStream.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
       recordedChunks = [];
       setIsRecording(false);
+
+      setTimeout(() => {
+        window.location.replace("/recordings");
+      }, 1000);
     }
   };
   

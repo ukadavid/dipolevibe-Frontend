@@ -5,9 +5,10 @@ import TestimonialCarousel from '../../Components/Homepage/Carousel'
 import Footer from '../../Components/Homepage/Footer'
 
 const HomePage = () => {
+
   return (
     <div className="mx-0 lg:mx-0">
-    <NavBar />
+    <NavBar/>
     < Header />
     <DetailsPage />
     <TestimonialCarousel />

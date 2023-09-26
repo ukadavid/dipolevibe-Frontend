@@ -15,10 +15,13 @@ import Page404Page from "./Pages/Page404Page";
 import ResetPasswordPage from "./Pages/ResetPasswordPage";
 import AccountVerificationPage from "./Pages/AccountVerificationPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
-import RecorderComponent from "./Components/RecorderModals/RecorderModal";
+import RecordingSection from "./Components/RecordingSection/RecordingSection";
+import ViewPage from "./Pages/ViewPage/ViewPage";
+
 
 
 function App() {
+
   return (
     <div>
     <DataProvider>
@@ -34,7 +37,9 @@ function App() {
           <Route path="*" element={<Page404Page />} />
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
-          <Route path="/rtc" element={<RecorderComponent />} />
+          <Route path="/recordings" element={<RecordingSection />} />
+          <Route path="/view" element={<ViewPage />} />
+
           <Route
             path="/home"
             element={

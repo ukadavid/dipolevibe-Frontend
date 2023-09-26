@@ -7,7 +7,6 @@ function SignUp() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirm_password, setConfirmPassword] = useState('')
 
 
   const handleEmailChange = (e) => {
@@ -17,10 +16,6 @@ function SignUp() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
   }
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value)
-  }
   
  
   const handleSubmit = (e) => {
@@ -28,7 +23,6 @@ function SignUp() {
     const formData = {
       email,
       password,
-      confirm_password
     }
 
     registerConfig(formData)
@@ -79,27 +73,12 @@ function SignUp() {
                     autoComplete="current-password"
                     required
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    onChange={handleConfirmPasswordChange}
+                    onChange={handlePasswordChange}
                     
                   />
                 </div>
                 </div>
-                <div>
-                 <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Confirm Password
-                </label>
-                <div className="">
-                  <input
-                    id="confirm_password"
-                    name="confirm_password"
-                    type="password"
-                    autoComplete="current-password"
-                    required
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    onChange={handlePasswordChange}
-                  />
-                </div>
-              </div>
+               
   
               <div>
                 <button
