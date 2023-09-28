@@ -38,7 +38,7 @@ function App() {
           <Route path="/resetPassword" element={<ResetPasswordPage />} />
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
           <Route path="/recordings" element={<RecordingSection />} />
-          <Route path="/view" element={<ViewPage />} />
+          <Route path="/views" element={<ViewPage />} />
 
           <Route
             path="/home"

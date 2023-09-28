@@ -177,7 +177,7 @@ const RecorderComponent = ({ closeScreenModal }) => {
       setIsRecording(false);
 
       setTimeout(() => {
-        window.location.replace("/recordings");
+        window.location.replace("/views");
       }, 1000);
     }
   };
@@ -189,13 +189,12 @@ const RecorderComponent = ({ closeScreenModal }) => {
         {isRecording ? (
           <>
             <video
-              className="rounded-full"
-              style={{ height: "200px", width: "300px" }}
+              // className="rounded-full "
+              style={{ height: "150px", width: "150px" , borderRadius: '100%'}}
               ref={videoRef}
               autoPlay
               playsInline
               muted
-              controls
             ></video>
             <div className="flex mt-4 border border-sky-blue-500 bg-gray-900 p-2">
               <button className="mx-2 text-white">

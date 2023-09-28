@@ -29,7 +29,6 @@ const InlineEdit = ({ text, onEditText }) => {
       autoFocus
       style={{
         border: 'none',
-        borderBottom: '2px solid #ccc',
         outline: 'none',
         width: '100%',
         fontSize: '1rem',
