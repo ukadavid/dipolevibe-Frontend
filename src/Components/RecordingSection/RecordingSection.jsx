@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import NavBar from "../Homepage/NavBar";
 import Footer from "../Homepage/Footer";
 
@@ -6,8 +6,6 @@ const RecordingSection = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const [mostRecentVideo, setMostRecentVideo] = useState(null);
-  const [db, setDb] = useState(null);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -52,54 +50,8 @@ const RecordingSection = () => {
     // Add code for transcribe functionality
   };
 
-  const handleDownload = () => {
-    if (!db) return;
-    const transaction = db.transaction(["recordings"], "readonly");
-    const objectStore = transaction.objectStore("recordings");
-    const request = objectStore.get(1); // Change 1 to the ID of the video file you want to download
-    request.onsuccess = (event) => {
-      const blob = event.target.result;
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = "video.mp4"; // Change the filename to the name you want to give the downloaded file
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    };
-  };
+ 
 
-  useEffect(() => {
-    const dbName = "recordingsDB";
-    const dbVersion = 1;
-    const objectStoreName = "recordings";
-
-    const request = indexedDB.open(dbName, dbVersion);
-
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
-
-      if (!db.objectStoreNames.contains(objectStoreName)) {
-        db.createObjectStore(objectStoreName, { autoIncrement: true });
-      }
-    };
-
-    request.onsuccess = (event) => {
-      const db = event.target.result;
-      setDb(db);
-
-      const transaction = db.transaction(["recordings"], "readonly");
-      const objectStore = transaction.objectStore("recordings");
-      const request = objectStore.getAll(); // Get all videos
-      request.onsuccess = (event) => {
-        const videos = event.target.result;
-        if (videos.length > 0) {
-          videos.sort((a, b) => b.timestamp - a.timestamp);
-          setMostRecentVideo(videos[0]); // Set the most recent video in state
-        }
-      };
-    };
-  }, []);
 
   const paragraphs = ["Paragraph 1", "Paragraph 2", "Paragraph 3"];
 
@@ -130,7 +82,7 @@ const RecordingSection = () => {
               </div>
               <div className="mb-4">
                 <label htmlFor="description" className="block font-bold mb-1">
-                  Description
+                  Summary
                 </label>
                 <textarea
                   id="description"
@@ -143,17 +95,7 @@ const RecordingSection = () => {
               <div className="mb-4">
                 <label htmlFor="file" className="block font-bold mb-1">
                   Video Upload
-                </label>
-                {mostRecentVideo ? (
-                  <video
-                    width="320"
-                    height="240"
-                    controls
-                    src={URL.createObjectURL(mostRecentVideo.blob)}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                ) : (
+                </label>       
                   <input
                     type="file"
                     id="file"
@@ -162,7 +104,6 @@ const RecordingSection = () => {
                     accept=".mp4, .avi, .mkv"
                     required
                   />
-                )}
               </div>
               <div className="flex justify-between mt-4">
       <button
@@ -178,12 +119,7 @@ const RecordingSection = () => {
       >
         Transcribe
       </button>
-      <button
-        onClick={handleDownload}
-        className="bg-indigo-500 hover:bg-indigo-700 text-white px-4 py-2 rounded"
-      >
-        Download
-      </button>
+
     </div>
             </form>
           </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaTumblr, FaGooglePlusG, FaPinterestP, FaWhatsapp, FaReddit } from 'react-icons/fa';
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaTumblr, FaPinterestP, FaWhatsapp, FaReddit } from 'react-icons/fa';
 import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, TumblrShareButton, PinterestShareButton, WhatsappShareButton, RedditShareButton } from 'react-share';
 import './Share.css'
 
