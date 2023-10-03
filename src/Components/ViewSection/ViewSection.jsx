@@ -4,7 +4,7 @@ import "./view.css";
 import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
 import SocialMediaShare from "../ShareComponent/Share";
-import { apiPost } from "../../Context/Api/Axios";
+import { apiTranscribePost } from "../../Context/Api/Axios";
 
 const ViewSection = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
@@ -70,7 +70,7 @@ const ViewSection = () => {
   const handleSubmit = async () => {
     try {
       console.log(title, summary, mostRecentVideo.blob);
-      const response = await apiPost('/submitVideo', {
+      const response = await apiTranscribePost('/videos/upload', {
         title,
         summary,
         video: mostRecentVideo.blob, 
@@ -81,7 +81,6 @@ const ViewSection = () => {
       console.error('Error submitting data:', error);
     }
   };
-
 
   if (mostRecentVideo && mostRecentVideo.blob) { // Check if mostRecentVideo is not null or undefined
     const url = URL.createObjectURL(mostRecentVideo.blob); // Create URL from the Blob

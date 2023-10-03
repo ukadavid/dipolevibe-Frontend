@@ -25,14 +25,13 @@ export const apiPost = (path, data) => {
 
     return axios.post(`${baseUrl}${path}`, data, config)
 }
-export const apiTranscribePost = (path, data) => {
-    const config = {
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-    }
+export const apiTranscribePost = (path,data) => {
 
-    return axios.post(`${TranscriptionUrl}${path}`, data, config)
+    return axios.post(`${TranscriptionUrl}${path}`, data,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+    })
 }
 
 // Put Request
