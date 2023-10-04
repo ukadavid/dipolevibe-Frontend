@@ -4,10 +4,17 @@ import { useState } from 'react';
 import Header from '../components/header/Header';
 import CaptureMeetingModal from '../components/Modal/CaptureMeetingModal/CaptureMeetingModal';
 import ScheduleMeetingModal from '../components/Modal/ScheduleMeetingModal/ScheduleMeetingModal';
+import {RecordingModal} from '../Components/RecorderModals/RecorderModal'
+import {RecorderComponent} from '../Components/RecorderModals/RecorderModal'
 
 function Home(){
     const[openCaptureMeetingModal,setCaptureMeetingModal] = useState(true);
     const[openScheduleMeetingModal,setScheduleMeetingModal] = useState(false);
+    const [showRecordingModal, setShowRecordingModal] = useState(false);
+
+    const handleRecordButtonClick = () => {
+        setShowRecordingModal(true);
+      };
     return (
         <>
         {openScheduleMeetingModal && <ScheduleMeetingModal/>}
@@ -48,7 +55,9 @@ function Home(){
                 <div className="center-content card-child">
                     <div>
                         <img src="" alt="" />
-                        <button className="styled-button">Record Now</button>
+                        <button className="styled-button" onClick={handleRecordButtonClick}>Record Now</button>
+                        {showRecordingModal &&  <RecorderComponent />}
+                       
                     </div>                     
                 </div>
             </div>
@@ -61,7 +70,7 @@ function Home(){
                 </div>
                 <div className="lg-box">
                     <div className="md-box">
-                        <h4 className="font-light">Meetitng dipoleVibe will attend</h4>
+                        <h4 className="font-light">Meeting dipoleVibe will attend</h4>
                     </div>
                     <div className="lg-box md-mg h-10">
                         <select className='border h-10'>

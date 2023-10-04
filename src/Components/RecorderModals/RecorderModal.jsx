@@ -16,7 +16,7 @@ import {
 
 let recordedChunks = []; // Initialize recordedChunks
 
-const RecordingModal = ({ videoRef, startRecording }) => {
+export const RecordingModal = ({ videoRef, startRecording }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
       <div className="modal bg-white p-4 shadow-lg justify-center rounded w-280">
@@ -57,7 +57,7 @@ const RecordingModal = ({ videoRef, startRecording }) => {
     </div>
   );
 };
-const RecorderComponent = ({ closeScreenModal }) => {
+export const RecorderComponent = ({ closeScreenModal }) => {
   const videoRef = useRef();
   const [screenRecorder, setScreenRecorder] = useState(null);
   const [screenStream, setScreenStream] = useState(null);
@@ -166,6 +166,7 @@ const RecorderComponent = ({ closeScreenModal }) => {
     };
   };
   
+  let views = "/views"
 
   const stopRecording = () => {
     if (screenRecorder && screenRecorder.state !== "inactive") {
@@ -177,7 +178,7 @@ const RecorderComponent = ({ closeScreenModal }) => {
       setIsRecording(false);
 
       setTimeout(() => {
-        window.location.replace("/views");
+        window.location.replace(views);
       }, 1000);
     }
   };
@@ -190,7 +191,7 @@ const RecorderComponent = ({ closeScreenModal }) => {
           <>
             <video
               // className="rounded-full "
-              style={{ height: "150px", width: "150px" , borderRadius: '100%'}}
+              style={{ height: "150px", width: "150px"}}
               ref={videoRef}
               autoPlay
               playsInline
@@ -220,4 +221,3 @@ const RecorderComponent = ({ closeScreenModal }) => {
   );
 };
 
-export default RecorderComponent;
