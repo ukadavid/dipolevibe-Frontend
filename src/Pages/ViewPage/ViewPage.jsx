@@ -4,10 +4,10 @@ import ViewSection from '../../Components/ViewSection/ViewSection'
 const ViewPage = () => {
   return (
     <div  className='bg-gray-50 dark:bg-gray-800'>
-    <div>
+     <div>
         <NavBar />
-      <ViewSection />
-    </div>
+        <ViewSection />
+     </div>
     </div>
   )
 }

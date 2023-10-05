@@ -99,10 +99,10 @@ const RecorderComponent = ({ closeScreenModal }) => {
         const blob = new Blob(recordedChunks, { type: "video/webm" });
         const videoURL = URL.createObjectURL(blob);
   
-        const a = document.createElement("a");
-        a.href = videoURL;
-        a.download = "screenRecording.webm";
-        a.click();
+        // const a = document.createElement("a");
+        // a.href = videoURL;
+        // a.download = "screenRecording.webm";
+        // a.click();
         storeVideoInIndexedDB(blob);
   
         recordedChunks = [];

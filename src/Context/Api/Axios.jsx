@@ -34,6 +34,10 @@ export const apiTranscribePost = (path,data) => {
     })
 }
 
+export const apiGetVideos = async () => {
+    return axios.get(`${TranscriptionUrl}/videos/fetch/public`,)
+}
+
 // Put Request
 export const apiPut = (path, data) => {
     const config = {
