@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {  FaDesktop } from "react-icons/fa";
-import RecorderComponent from "../RecorderModals/RecorderModal";
+import {RecorderComponent} from "../RecorderModals/RecorderModal";
 
 
 const NavBar = () => {
