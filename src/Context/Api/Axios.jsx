@@ -6,12 +6,14 @@ const TranscriptionUrl = import.meta.env.VITE_TranscriptionUrl;
 // Get Request
 export const apiGet = (path) => {
 
-  return axios.get(`${baseUrl}${path}`, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+  return axios.get(`${baseUrl}${path}`);
 };
+
+export const apiGetVideos = (path) => {
+
+    return axios.get(`${TranscriptionUrl}${path}`);
+  };
+
 
 // Post Request
 export const apiPost = (path, data) => {
