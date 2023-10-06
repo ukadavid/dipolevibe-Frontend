@@ -1,19 +1,27 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'; 
+import { MdExitToApp } from "react-icons/md";
 import  CardContext  from './CardContext';
 
 function VideoCard({ video, index }) {
   const [hovered, setHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const videoId = `video-${index}`; // Generate a unique identifier based on the index
+  const videoId = video._id; // Generate a unique identifier based on the index
 
   const toggleControls = () => {
     setHovered(!hovered);
   };
+//   console.log(video);
 
-  const handlePlayButtonClick = () => {
-    setIsPlaying(true);
+  const handleViewButtonClick = () => {
+    let videoViewPage = '/VideoViewPage'
+    localStorage.setItem('videoURL', JSON.stringify(video.videoURL))
+    console.log(video.videoURL);
+
+    setTimeout(() => {
+        window.location.replace(videoViewPage);
+      }, 1000); 
   };
 
   return (
@@ -34,8 +42,24 @@ function VideoCard({ video, index }) {
       onMouseEnter={toggleControls}
       onMouseLeave={toggleControls}
     >
+        <div       
+         style={{
+         marginBottom: '10px',
+         width: '30%',
+         marginRight: '10px',
+         position: 'absolute',
+         top: '5px',
+         zIndex: '2'
+        }}
+        onClick= {() => {
+            console.log("icon clicked");
+            handleViewButtonClick();
+        }}
+        >
+            <MdExitToApp />
+        </div>
       <video
-        id={videoId} // Use the unique identifier for the video element
+        id={video._id} // Use the unique identifier for the video element
         controls={isPlaying}
         autoPlay={isPlaying}
         width="100%"
@@ -46,7 +70,7 @@ function VideoCard({ video, index }) {
       >
         <source src={video.videoURL} type="video/mp4" />
       </video>
-      <CardContext/>
+      <CardContext context={video}/>
 
       {!isPlaying && (
         <div
@@ -62,13 +86,13 @@ function VideoCard({ video, index }) {
             zIndex: 1,
           }}
           onClick={() => {
-            console.log(videoId);
+            // console.log(videoId);
             const videoElement = document.getElementById(videoId);
             videoElement.play();
             setIsPlaying(true);
           }}
         >
-          <FontAwesomeIcon icon={faPlay} style={{ color: 'white' }} />
+          <FontAwesomeIcon icon={faPlay} style={{ color: 'white', width: '50px', height: '50px' }} />
         </div>
       )}
      </div>

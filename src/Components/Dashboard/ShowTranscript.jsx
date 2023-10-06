@@ -1,38 +1,17 @@
 const ShowTranscript = () => {
+  const hasComment = true;
     return (
-      <div className="max-w-screen-lg mx-auto bg-white shadow-md p-4 rounded-lg">
-        <div className="flex items-center">
-          {/* Column 1: Rounded Span */}
-          <div className="flex-shrink-0">
-            <span className="rounded-full bg-gray-900 text-white text-2xl p-2 mb-12">
-              KA
-            </span>
-          </div>
-  
-          {/* Column 2: Two Rows for Title and Email */}
-          <div className="flex-grow">
-            <h1 className="text-lg font-semibold">Demo Meeting</h1>
-          </div>
-  
-          {/* Divider Column */}
-          <div className="border-l border-gray-300 h-12"></div>
-  
-          {/* Column 3: Date */}
-          <div className="ml-12">
-            <p className="text-sm font-semibold">2023-08-30</p>
-          </div>
-  
-          {/* Column 4: Time */}
-          <div className="ml-12">
-            <p className="text-sm font-semibold">15:30</p>
-          </div>
-  
-          {/* Column 5: Exact Minutes */}
-          <div className="ml-12">
-            <p className="text-sm">20 minutes</p>
-          </div>
-        </div>
-      </div>
+      <div className=" w-full gap-4 ">
+      {hasComment ? (
+    // Render your content here when there is a transcription
+    <>
+      <h5 className='text-3xl'>Content has no comment</h5>
+    </>
+  ) : (
+    // Render "No transcription" when there is no transcription
+    <div>No transcription</div>
+  )}
+    </div>
     );
   };
   

@@ -187,7 +187,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
       setTimeout(() => {
         window.location.replace(views);
-      }, 1000);
+      }, 1000); 
     }
   };
 
