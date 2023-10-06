@@ -9,6 +9,7 @@ import { apiTranscribePost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Transcription from './TranscriptionTab';
+import Preloader from "../Preloader/Preloader";
 
 const VideoView = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("45%");
@@ -105,7 +106,7 @@ const VideoView = () => {
       </div>
     );
   } else {
-    return <div>No video found</div>; // Return a message if mostRecentVideo is null or undefined
+    return <Preloader />; // Return a message if mostRecentVideo is null or undefined
   }
 };
 
