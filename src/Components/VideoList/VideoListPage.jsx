@@ -37,7 +37,7 @@ function VideoList() {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 my-14">
       <div className="grid grid-cols-2 gap-4">
         {videos.map(( video, index ) => (
-          <VideoCard key={index} video={video} />
+          <VideoCard key={index} video={video} index={index}/>
         ))}
       </div>
       </div>
