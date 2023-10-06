@@ -5,6 +5,8 @@ import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
 import SocialMediaShare from "../ShareComponent/Share";
 import { apiTranscribePost } from "../../Context/Api/Axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewSection = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
@@ -15,6 +17,7 @@ const ViewSection = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [mostRecentVideo, setMostRecentVideo] = useState(null);
   const [db, setDb] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(null);
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
@@ -33,7 +36,6 @@ const ViewSection = () => {
     window.removeEventListener("mousemove", handleResize);
     window.removeEventListener("mouseup", handleMouseUp);
   };
-
 
   useEffect(() => {
     const dbName = "recordingsDB";
@@ -66,23 +68,34 @@ const ViewSection = () => {
       };
     };
   }, []);
-
   const handleSubmit = async () => {
     try {
       console.log(title, summary, mostRecentVideo.blob);
-      const response = await apiTranscribePost('/videos/upload', {
+      const response = await apiTranscribePost("/videos/upload", {
         title,
         summary,
-        video: mostRecentVideo.blob, 
+        video: mostRecentVideo.blob,
       });
+      console.log(response);
+
+      const newVideoUrl = response.data.videoUrl; 
+      setVideoUrl(newVideoUrl);
+      toast.success(response.data.message);
 
       console.log(title, summary, mostRecentVideo.blob);
     } catch (error) {
-      console.error('Error submitting data:', error);
+      console.error("Error submitting data:", error);
     }
   };
 
-  if (mostRecentVideo && mostRecentVideo.blob) { // Check if mostRecentVideo is not null or undefined
+  useEffect(() => {
+    handleSubmit();
+  }, []);
+
+
+
+  if (mostRecentVideo && mostRecentVideo.blob) {
+    // Check if mostRecentVideo is not null or undefined
     const url = URL.createObjectURL(mostRecentVideo.blob); // Create URL from the Blob
     return (
       <div className="flex ml-4 flex-col lg:flex-row h-screen pt-20 lg:pt-28 ">
@@ -91,15 +104,13 @@ const ViewSection = () => {
           style={{ width: leftColumnWidth }}
         >
           <div className="h-full pt-4">
-          
             <video className="mb-4" controls>
               <source src={url} type="video/mp4" />
             </video>
             <div className="bg-gray-50 dark:bg-gray-800">
-            <SocialMediaShare />
+            {videoUrl && <SocialMediaShare url={videoUrl} />}
             </div>
-           
-  
+
             <div className="resize-handle" onMouseDown={handleMouseDown}></div>
           </div>
         </div>
@@ -136,11 +147,13 @@ const ViewSection = () => {
               <p className="edit-text">Edit Summary</p>
             </div>
             <div className="flex mt-8 justify-center items-center">
-            <button onClick={handleSubmit} className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full">
-    Submit
-  </button>
+              <button
+                onClick={handleSubmit}
+                className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+              >
+                Submit
+              </button>
             </div>
-            
           </div>
         </div>
       </div>
