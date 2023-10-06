@@ -12,7 +12,7 @@ function VideoList() {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        const response = await apiGetVideos();
+        const response = await apiGetVideos('/videos/fetch/public');
         setVideos(response.data);
         setLoading(false); // Data is loaded, set loading to false
       } catch (error) {
