@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-
 import { useRef, useState } from "react";
 import Draggable from "react-draggable";
 import {
@@ -68,124 +67,144 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
   const [isRecording, setIsRecording] = useState(false);
 
-  const startRecording = async () => {
-    try {
-      setIsRecording(true);
+  const stopRecordingAfterOneMinute = setTimeout(() => {
+    console.log("Recording stopped after 1 minute.");
+    // eslint-disable-next-line no-undef
+    stopRecording();
+  }, 60000); 
 
-      const newScreenStream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
+const startRecording = async () => {
+  try {
+    setIsRecording(true);
 
-      const newAudioStream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-      });
+    const newScreenStream = await navigator.mediaDevices.getDisplayMedia({
+      video: true,
+      audio: true,
+    });
 
-      const audioContext = new AudioContext();
-      const source = audioContext.createMediaStreamSource(newAudioStream);
-      const destination = audioContext.createMediaStreamDestination();
-      source.connect(destination);
-      const audioTrack = destination.stream.getAudioTracks()[0];
-      newScreenStream.addTrack(audioTrack);
+    const newAudioStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+    });
 
-      const recorder = new MediaRecorder(
-        new MediaStream([...newScreenStream.getTracks()]),
-        { mimeType: "video/webm" }
-      );
+    const audioContext = new AudioContext();
+    const source = audioContext.createMediaStreamSource(newAudioStream);
+    const destination = audioContext.createMediaStreamDestination();
+    source.connect(destination);
+    const audioTrack = destination.stream.getAudioTracks()[0];
+    newScreenStream.addTrack(audioTrack);
 
-      recorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          recordedChunks.push(event.data);
-        }
-      };
+    setScreenStream(newScreenStream); // Use useState to set streams
+    setAudioStream(newAudioStream);
 
-      recorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: "video/webm" });
-        const videoURL = URL.createObjectURL(blob);
+    const recorder = new MediaRecorder(
+      new MediaStream([...newScreenStream.getTracks()]),
+      { mimeType: "video/webm" }
+    );
 
-        // const a = document.createElement("a");
-        // a.href = videoURL;
-        // a.download = "screenRecording.webm";
-        // a.click();
-        storeVideoInIndexedDB(blob);
-
-        recordedChunks = [];
-        setIsRecording(false);
-      };
-
-      setScreenStream(newScreenStream); // Use useState to set streams
-      setAudioStream(newAudioStream);
-
-      setScreenRecorder(recorder);
-      recorder.start();
-
-      const newCameraStream = await navigator.mediaDevices.getUserMedia({
-        video: isVideoOn, // Use the isVideoOn state here
-      });
-      setCameraStream(newCameraStream);
-
-      if (isVideoOn) {
-        videoRef.current.srcObject = newCameraStream;
-        videoRef.current.play();
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunks.push(event.data);
       }
-    } catch (error) {
-      console.error(error);
+    };
+
+    recorder.onstop = () => {
+      clearTimeout(stopRecordingAfterOneMinute);
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
+      const videoURL = URL.createObjectURL(blob);
+
+      // const a = document.createElement("a");
+      // a.href = videoURL;
+      // a.download = "screenRecording.webm";
+      // a.click();
+      storeVideoInIndexedDB(blob);
+
+      recordedChunks = [];
+      setIsRecording(false);
+    };
+
+    setScreenRecorder(recorder);
+    recorder.start();
+
+    const newCameraStream = await navigator.mediaDevices.getUserMedia({
+      video: isVideoOn, // Use the isVideoOn state here
+    });
+    setCameraStream(newCameraStream);
+
+    if (isVideoOn) {
+      videoRef.current.srcObject = newCameraStream;
+      videoRef.current.play();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+const storeVideoInIndexedDB = (blob) => {
+  const dbName = "recordingsDB";
+  const dbVersion = 1;
+  const objectStoreName = "recordings";
+
+  const request = indexedDB.open(dbName, dbVersion);
+
+  request.onupgradeneeded = (event) => {
+    const db = event.target.result;
+
+    if (!db.objectStoreNames.contains(objectStoreName)) {
+      db.createObjectStore(objectStoreName, { autoIncrement: true });
     }
   };
 
-  const storeVideoInIndexedDB = (blob) => {
-    const dbName = "recordingsDB";
-    const dbVersion = 1;
-    const objectStoreName = "recordings";
+  request.onsuccess = (event) => {
+    const db = event.target.result;
 
-    const request = indexedDB.open(dbName, dbVersion);
+    const transaction = db.transaction(objectStoreName, "readwrite");
+    const objectStore = transaction.objectStore(objectStoreName);
 
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
+    // Add a timestamp to the video object before storing it
+    const timestamp = Date.now();
+    const videoObject = { blob, timestamp };
 
-      if (!db.objectStoreNames.contains(objectStoreName)) {
-        db.createObjectStore(objectStoreName, { autoIncrement: true });
-      }
-    };
+    const request = objectStore.add(videoObject);
 
-    request.onsuccess = (event) => {
-      const db = event.target.result;
-
-      const transaction = db.transaction(objectStoreName, "readwrite");
-      const objectStore = transaction.objectStore(objectStoreName);
-
-      // Add a timestamp to the video object before storing it
-      const timestamp = Date.now();
-      const videoObject = { blob, timestamp };
-
-      const request = objectStore.add(videoObject);
-
-      request.onsuccess = () => {
-        console.log("Video stored in IndexedDB");
-      };
-
-      request.onerror = (error) => {
-        console.error("Error storing video in IndexedDB:", error);
-      };
+    request.onsuccess = () => {
+      console.log("Video stored in IndexedDB");
+      window.location.replace("/views");
+      // Stop recording
+      stopRecording();
     };
 
     request.onerror = (error) => {
-      console.error("Error opening IndexedDB:", error);
+      console.error("Error storing video in IndexedDB:", error);
     };
   };
 
-  let views = "/views";
+  request.onerror = (error) => {
+    console.error("Error opening IndexedDB:", error);
+  };
+};
 
+  let views = "/views";
   const stopRecording = () => {
+    console.log("Stop recording called");
     if (screenRecorder && screenRecorder.state !== "inactive") {
       screenRecorder.stop();
       screenStream.getTracks().forEach((track) => track.stop());
       cameraStream.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
+      const blob = new Blob(recordedChunks, { type: "video/webm" });
       recordedChunks = [];
       setIsRecording(false);
 
+      // Clear the timeout that was set in the startRecording() function
+      clearTimeout(stopRecordingAfterOneMinute);
+
+      // Store the video in the indexedDB
+      storeVideoInIndexedDB(blob);
+
+      // Redirect the user to the views page after one second
       setTimeout(() => {
+        console.log("Redirecting...");
         window.location.replace(views);
       }, 1000); 
     }
@@ -198,6 +217,17 @@ export const RecorderComponent = ({ closeScreenModal }) => {
       videoRef.current.srcObject = null;
     } else {
       videoRef.current.srcObject = cameraStream;
+    }
+  };
+
+  const discardRecording = () => {
+    if (screenRecorder && screenRecorder.state !== "inactive") {
+      screenRecorder.stop();
+      screenStream.getTracks().forEach((track) => track.stop());
+      cameraStream.getTracks().forEach((track) => track.stop());
+      videoRef.current.srcObject = null;
+      recordedChunks = [];
+      setIsRecording(false);
     }
   };
 
@@ -215,7 +245,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
               muted
             ></video>
             <div className="flex mt-4 border border-sky-blue-500 bg-gray-900 p-2">
-              <button className="mx-2 text-white">
+              <button className="mx-2 text-white" >
                 <FaPause />
               </button>
               <button
@@ -229,7 +259,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
                 )}{" "}
               </button>
 
-              <button className="mx-2 text-white">
+              <button className="mx-2 text-white" onClick={discardRecording}>
                 <FaTrash />
               </button>
               <button onClick={stopRecording} className="mx-2 text-white">
