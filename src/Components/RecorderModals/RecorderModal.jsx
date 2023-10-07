@@ -13,7 +13,6 @@ import {
   FaMagic,
   FaVideoSlash
 } from "react-icons/fa";
-import { stopRecordingAfterOneMinute } from "../../utils/recordingUtils"
 
 let recordedChunks = []; // Initialize recordedChunks
 
@@ -68,7 +67,11 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
   const [isRecording, setIsRecording] = useState(false);
 
-
+  const stopRecordingAfterOneMinute = setTimeout(() => {
+    console.log("Recording stopped after 1 minute.");
+    // eslint-disable-next-line no-undef
+    stopRecording();
+  }, 60000); 
 
 const startRecording = async () => {
   try {
