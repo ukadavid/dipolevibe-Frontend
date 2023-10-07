@@ -1,5 +1,5 @@
 import { AiOutlineEye } from "react-icons/ai";
-import { BsChatLeft, BsPeople } from "react-icons/bs";
+import { BsChatLeft, BsPeople } from "react-icons/bs"; 
 import Logo from '../../assets/logo.jpeg';
 
 function CardContext({context}){
@@ -32,7 +32,9 @@ function CardContext({context}){
                 <span className="flex"><BsChatLeft/><pre>0</pre></span>
             </div>
             </div>
-            <div></div>
+            <div>
+                <span>{context.videoTitle}</span>
+            </div>
             <div></div>
         </div>
     )

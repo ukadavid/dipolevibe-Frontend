@@ -203,7 +203,7 @@ const storeVideoInIndexedDB = (blob) => {
       setTimeout(() => {
         console.log("Redirecting...");
         window.location.replace(views);
-      }, 1000);
+      }, 1000); 
     }
   };
 

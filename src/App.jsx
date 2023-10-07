@@ -17,7 +17,7 @@ import AccountVerificationPage from "./Pages/AccountVerificationPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ViewPage from "./Pages/ViewPage/ViewPage";
 import VideoListPage from "./Pages/VideoListPage";
-
+import VideoViewPage from "./Pages/VideoViewPage";
 
 
 function App() {
@@ -39,6 +39,8 @@ function App() {
           <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
           <Route path="/views" element={<ViewPage />} />
           <Route path="/videoList" element={<VideoListPage/>}/>
+          <Route path="/VideoViewPage" element={<VideoViewPage/>}/>
+          
 
           <Route
             path="/home"
