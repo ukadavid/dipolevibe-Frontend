@@ -10,10 +10,9 @@ export const apiGet = (path) => {
 };
 
 export const apiGetVideos = (path) => {
-
+    console.log(path);
     return axios.get(`${TranscriptionUrl}${path}`);
-  };
-
+};
 
 // Post Request
 export const apiPost = (path, data) => {
