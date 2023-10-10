@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'; 
 import { MdExitToApp } from "react-icons/md";
 import  CardContext  from './CardContext';
+import { apiPostViewCount } from '../../Context/Api/Axios';
 
 function VideoCard({ video, index }) {
   const [hovered, setHovered] = useState(false);
@@ -24,6 +25,14 @@ function VideoCard({ video, index }) {
       }, 1000); 
   };
 
+  const handleViewCountUpdate = async (videoId) => {
+    try {
+      await apiPostViewCount(`/videos/updateViewCount?videoId=${videoId}`);
+    } catch (error) {
+      console.error('Error updating count:', error);
+    }
+  };
+
   return (
     <div style={{
         display: 'inline-block',
@@ -31,7 +40,10 @@ function VideoCard({ video, index }) {
         width: '100%',
         marginRight: '10px',
         position: 'relative',
-      }}>
+        // border: '1px solid grey',
+      }}
+      className="border border-slate-300 hover:border-indigo-700 rounded-b-lg"
+      >
     <div
       style={{
         marginBottom: '10px',
@@ -45,18 +57,18 @@ function VideoCard({ video, index }) {
         <div       
          style={{
          marginBottom: '10px',
-         width: '30%',
+        //  width: '0%',
          marginRight: '10px',
          position: 'absolute',
          top: '5px',
+         right: '5px',
          zIndex: '2'
         }}
         onClick= {() => {
-            console.log("icon clicked");
             handleViewButtonClick();
         }}
         >
-            <MdExitToApp />
+            <MdExitToApp className="text-2xl text-slate-200"/>
         </div>
       <video
         id={video._id} // Use the unique identifier for the video element
@@ -87,6 +99,7 @@ function VideoCard({ video, index }) {
           }}
           onClick={() => {
             // console.log(videoId);
+            handleViewCountUpdate(videoId);
             const videoElement = document.getElementById(videoId);
             videoElement.play();
             setIsPlaying(true);

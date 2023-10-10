@@ -5,7 +5,6 @@ const TranscriptionUrl = import.meta.env.VITE_TranscriptionUrl;
 
 // Get Request
 export const apiGet = (path) => {
-
   return axios.get(`${baseUrl}${path}`);
 };
 
@@ -18,6 +17,11 @@ export const apiGetVideos = (path) => {
 export const apiPost = (path, data) => {
   return axios.post(`${baseUrl}${path}`, data);
 };
+
+export const apiPostViewCount = (path) => {
+    //console.log(`${TranscriptionUrl}${path}`);
+    return axios.post(`${TranscriptionUrl}${path}`);
+  };
 
 export const apiTranscribePost = (path, data) => {
   const config = {
@@ -52,8 +56,6 @@ export const apiPatch = (path, data) => {
 };
 
 // Delete Request
-// Delete Request
-
 export const apiDelete = (path, id) => {
   const config = {
     headers: {
