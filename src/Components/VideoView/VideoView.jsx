@@ -40,38 +40,6 @@ const VideoView = () => {
     window.removeEventListener("mouseup", handleMouseUp);
   };
 
-//     const dbName = "recordingsDB";
-//     const dbVersion = 1;
-//     const objectStoreName = "recordings";
-
-//     const request = indexedDB.open(dbName, dbVersion);
-
-//     request.onupgradeneeded = (event) => {
-//       const db = event.target.result;
-
-//       if (!db.objectStoreNames.contains(objectStoreName)) {
-//         db.createObjectStore(objectStoreName, { autoIncrement: true });
-//       }
-//     };
-
-//     request.onsuccess = (event) => {
-//       const db = event.target.result;
-//       setDb(db);
-
-//       const transaction = db.transaction(["recordings"], "readonly");
-//       const objectStore = transaction.objectStore("recordings");
-//       const request = objectStore.getAll(); // Get all videos
-//       request.onsuccess = (event) => {
-//         const videos = event.target.result;
-//         if (videos.length > 0) {
-//           videos.sort((a, b) => b.timestamp - a.timestamp);
-//           setMostRecentVideo(videos[0]); // Set the most recent video in state
-//         }
-//       };
-//     };
-//   }, []);
-
-
 
 
 
