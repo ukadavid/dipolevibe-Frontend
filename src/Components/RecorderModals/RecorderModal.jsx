@@ -72,7 +72,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
     console.log("Recording stopped after 1 minute.");
     // eslint-disable-next-line no-undef
     stopRecording();
-  }, 10000); 
+  }, 60000); 
 
 const startRecording = async () => {
   try {
