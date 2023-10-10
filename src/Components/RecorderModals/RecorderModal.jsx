@@ -64,6 +64,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
   const [audioStream, setAudioStream] = useState(null);
   const [cameraStream, setCameraStream] = useState(null);
   const [isVideoOn, setIsVideoOn] = useState(true);
+  const [discardVideo, setIsDiscardVideo] = useState(false)
 
   const [isRecording, setIsRecording] = useState(false);
 
@@ -71,7 +72,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
     console.log("Recording stopped after 1 minute.");
     // eslint-disable-next-line no-undef
     stopRecording();
-  }, 60000); 
+  }, 10000); 
 
 const startRecording = async () => {
   try {
@@ -168,7 +169,8 @@ const storeVideoInIndexedDB = (blob) => {
     const request = objectStore.add(videoObject);
 
     request.onsuccess = () => {
-      console.log("Video stored in IndexedDB");
+      if (discardVideo == true || discardVideo == false) return;
+        console.log("Video stored in IndexedDB");
       window.location.replace("/views");
       // Stop recording
       stopRecording();
@@ -195,6 +197,7 @@ const storeVideoInIndexedDB = (blob) => {
       const blob = new Blob(recordedChunks, { type: "video/webm" });
       recordedChunks = [];
       setIsRecording(false);
+      setIsDiscardVideo(false);
 
       // Clear the timeout that was set in the startRecording() function
       clearTimeout(stopRecordingAfterOneMinute);
@@ -227,7 +230,7 @@ const storeVideoInIndexedDB = (blob) => {
       cameraStream.getTracks().forEach((track) => track.stop());
       videoRef.current.srcObject = null;
       recordedChunks = [];
-      setIsRecording(false);
+      setIsDiscardVideo(false);
     }
   };
 
