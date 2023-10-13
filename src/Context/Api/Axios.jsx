@@ -33,6 +33,10 @@ export const apiTranscribePost = (path, data) => {
   return axios.post(`${TranscriptionUrl}${path}`, data, config);
 };
 
+export const apiPostComment = (path) => {
+  return axios.post(`${TranscriptionUrl}${path}`)
+} 
+
 // Put Request
 export const apiPut = (path, data) => {
   const config = {

@@ -13,7 +13,13 @@ const InlineEdit = ({ text, onEditText }) => {
 
   const handleBlur = () => {
     setIsEditing(false);
-    onEditText(editedText);
+    // while(editedText.length <= 3){
+      const formattedText = editedText
+      .split(' ') // Split text into individual strings // Filter strings with 1 to 3 characters
+      .map(str => `#${str}`) // Add "#" to each string
+      .join(' '); // Join strings back together with spaces
+    onEditText(formattedText);
+    // }
   };
 
   const handleChange = (e) => {
@@ -37,9 +43,13 @@ const InlineEdit = ({ text, onEditText }) => {
       }}
     />
   ) : (
-    <span style={{
+    <span 
+    style={{
        padding: '10px'
-      }} onDoubleClick={handleDoubleClick}>{text}</span>
+      }} 
+    onDoubleClick={handleDoubleClick}>
+      {text}
+    </span>
   );
 };
 

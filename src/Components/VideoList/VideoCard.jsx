@@ -1,24 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'; 
 import { MdExitToApp } from "react-icons/md";
 import  CardContext  from './CardContext';
+import { useVideo } from '../../Context/VideoStore';
 import { apiPostViewCount } from '../../Context/Api/Axios';
 
 function VideoCard({ video, index }) {
   const [hovered, setHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoId = video._id; // Generate a unique identifier based on the index
+  const { videoObject, setVideoObject } = useVideo();
+  //  let setVideoObjectCopy = setVideoObject(videoObject);
 
   const toggleControls = () => {
     setHovered(!hovered);
   };
-//   console.log(video);
 
   const handleViewButtonClick = () => {
     let videoViewPage = '/VideoViewPage'
-    localStorage.setItem('videoURL', JSON.stringify(video.videoURL))
-    console.log(video.videoURL);
+    localStorage.setItem('videoURL', JSON.stringify(video.videoURL));
+
+    setVideoObject(video);
+    console.log(videoObject);
 
     setTimeout(() => {
         window.location.replace(videoViewPage);
@@ -32,6 +36,10 @@ function VideoCard({ video, index }) {
       console.error('Error updating count:', error);
     }
   };
+
+  useEffect(()=> {
+    setVideoObject(video);
+  });
 
   return (
     <div style={{

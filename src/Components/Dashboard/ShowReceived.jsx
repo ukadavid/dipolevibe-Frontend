@@ -13,7 +13,7 @@ const ShowReceived = () => {
           {hasTranscription ? (
         // Render your content here when there is a transcription
         <>
-          <h5 className='text-3xl'>Content with Transcription</h5>
+          <h5 className='text-xl'>Content with Transcription</h5>
         </>
       ) : (
         // Render "No transcription" when there is no transcription
