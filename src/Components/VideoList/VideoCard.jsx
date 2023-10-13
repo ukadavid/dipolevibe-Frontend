@@ -1,31 +1,38 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'; 
 import { MdExitToApp } from "react-icons/md";
 import  CardContext  from './CardContext';
-import { useVideo } from '../../Context/VideoStore';
 import { apiPostViewCount } from '../../Context/Api/Axios';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 function VideoCard({ video, index }) {
   const [hovered, setHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoId = video._id; // Generate a unique identifier based on the index
-  const { videoObject, setVideoObject } = useVideo();
-  //  let setVideoObjectCopy = setVideoObject(videoObject);
+  const navigate = useNavigate()
+
 
   const toggleControls = () => {
     setHovered(!hovered);
   };
 
+
   const handleViewButtonClick = () => {
     let videoViewPage = '/VideoViewPage'
     localStorage.setItem('videoURL', JSON.stringify(video.videoURL));
 
-    setVideoObject(video);
-    console.log(videoObject);
+  
+    console.log(video);
 
     setTimeout(() => {
-        window.location.replace(videoViewPage);
+      navigate(videoViewPage, {state: {videoUrl: video}})
+        // window.location.replace(videoViewPage);
+
       }, 1000); 
   };
 
@@ -36,10 +43,6 @@ function VideoCard({ video, index }) {
       console.error('Error updating count:', error);
     }
   };
-
-  useEffect(()=> {
-    setVideoObject(video);
-  });
 
   return (
     <div style={{
@@ -122,3 +125,4 @@ function VideoCard({ video, index }) {
 }
 
 export default VideoCard;
+
