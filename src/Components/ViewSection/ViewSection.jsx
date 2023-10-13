@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import "./view.css";
 import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
+import { CiHashtag } from "react-icons/ci";
 import SocialMediaShare from "../ShareComponent/Share";
 import { apiTranscribePost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
@@ -15,11 +16,13 @@ const ViewSection = () => {
     `myVideo-${Math.random().toString(36).substring(7)}`
   );
   const [summary, setSummary] = useState("Summary");
+  const [tag, setTag] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [mostRecentVideo, setMostRecentVideo] = useState(null);
   const [db, setDb] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [submitClicked, setSubmitClicked] = useState(false);
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
@@ -70,21 +73,24 @@ const ViewSection = () => {
       };
     };
   }, []);
+
   const handleSubmit = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       console.log(title, summary, mostRecentVideo.blob);
-      const response = await apiTranscribePost("/videos/upload", {
-        title,
-        summary,
-        video: mostRecentVideo.blob,
-      });
-  
-      console.log(response);
 
-      const newVideoUrl = response.data.videoUrl; 
-      setVideoUrl(newVideoUrl);
-      toast.success(response.data.message);
+      setSubmitClicked(true);
+      // const response = await apiTranscribePost("/videos/upload", {
+      //   title,
+      //   summary,
+      //   video: mostRecentVideo.blob,
+      // });
+  
+      // console.log(response);
+
+      // const newVideoUrl = response.data.videoUrl; 
+      // setVideoUrl(newVideoUrl);
+      // toast.success(response.data.message);
 
       console.log(title, summary, mostRecentVideo.blob);
     } catch (error) {
@@ -92,6 +98,25 @@ const ViewSection = () => {
     }
     finally {
       setLoading(false);
+    }
+  };
+
+  const renderPublishButtons = () => {
+    if (submitClicked) {
+      return (
+        <div className="flex mt-8 justify-center items-center">
+          <button
+            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4"
+          >
+            Public Publish
+          </button>
+          <button
+            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            Private Publish
+          </button>
+        </div>
+      );
     }
   };
 
@@ -150,13 +175,28 @@ const ViewSection = () => {
                 />
                 <p className="edit-text">Edit Summary</p>
               </div>
-              <div className="flex mt-8 justify-center items-center">
-                <button
-                  onClick={handleSubmit}
-                  className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  Submit
-                </button>
+              <div className="flex hover-div items-center">
+                <p className="mr-2">
+                  <CiHashtag />
+                </p>
+                <InlineEdit
+                  text={tag}
+                  onEditText={setTag}
+                  onFocus={() => setIsEditing(true)}
+                  onBlur={() => setIsEditing(false)}
+                />
+                <p className="edit-text">Tags</p>
+              </div>
+              <div >
+                <div className="flex mt-8 justify-center ">
+                    <button
+                     onClick={handleSubmit}
+                     className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    >
+                     Submit
+                    </button>
+                </div>
+                {renderPublishButtons()}
               </div>
             </div>
           </div>

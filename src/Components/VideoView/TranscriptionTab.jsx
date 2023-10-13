@@ -2,36 +2,24 @@ import { useState } from "react";
 import MyVideos from '../Dashboard/MyVideos';
 import ShowReceived from '../Dashboard/ShowReceived';
 import ShowTranscript from '../Dashboard/ShowTranscript';
-import Search from '../Dashboard/Search';
 
  function Transcription(){
-    const [showMyVideos, setShowMyVideos] = useState(true);
-  const [showReceived, setShowReceived] = useState(false);
-  const [showTranscript,setShowTranscript] = useState(false)
+  const [ showReceived, setShowReceived ] = useState(true);
+  const [ showTranscript,setShowTranscript ] = useState(false);
+  const [ isPaidUser, setIsPaidUser ] = useState(false);
   // Define state to manage the active link
-  const [activeLink, setActiveLink] = useState("library");
+  const [ activeLink, setActiveLink ] = useState("transcript");
 
-  const handleMyVideoClick = () => {
-    // Update the state to show UserTable and hide FileUpload
-    setShowMyVideos(true);
-    setShowReceived(false);
-    setShowTranscript(false)
-
-    // Update the active link
-    setActiveLink("video");
-  };
   const handleMyReceived = () => {
     // Update the state to show UserTable and hide FileUpload
-    setShowMyVideos(false);
     setShowReceived(true);
     setShowTranscript(false)
 
     // Update the active link
-    setActiveLink("received");
+    setActiveLink("comment");
   };
   const handleMyTranscript = () => {
     // Update the state to show UserTable and hide FileUpload
-    setShowMyVideos(false);
     setShowReceived(false);
     setShowTranscript(true)
 
@@ -40,40 +28,44 @@ import Search from '../Dashboard/Search';
   };
 
 return (
-<div className="page">
-<div className="mb-3">
+<div className="page border-black">
+    <div className="mb-3">
+    </div>
+    <div className="flex items-center justify-center space-x-3 sm:mt-7 px-12 mt-1">
+    
+      <a
+        href="#"
+        className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
+          activeLink === "transcript"
+            ? "dark:text-gray-400 dark:text-gray"
+            : "no-underline"
+        }`}
+        onClick={handleMyTranscript}
+      >
+         My Transcript
+      </a>
+      <a
+        href="#"
+        className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
+          activeLink === "comment"
+            ? "dark:text-gray-400 dark:text-gray"
+            : "no-underline"
+        }`}
+        onClick={handleMyReceived}
+      >
+        comment
+      </a>
+    </div>
+    {showReceived && <ShowReceived />}
+    {showTranscript &&  (
+      isPaidUser ? 
+      <ShowTranscript /> : 
+      <div>
+        <button className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40">
+          Subscribe to view transcription
+        </button>
+      </div>)}
 </div>
-<div className="flex items-center justify-center space-x-3 sm:mt-7 px-12 mt-4">
-
-  <a
-    href="#"
-    className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
-      activeLink === "received"
-        ? "dark:text-gray-400 dark:text-gray"
-        : "no-underline"
-    }`}
-    onClick={handleMyReceived}
-  >
-     My Transcript
-  </a>
-  <a
-    href="#"
-    className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
-      activeLink === "transcript"
-        ? "dark:text-gray-400 dark:text-gray"
-        : "no-underline"
-    }`}
-    onClick={handleMyTranscript}
-  >
-    comment
-  </a>
-</div>
-
-            {showMyVideos && <MyVideos />}
-            {showReceived && <ShowReceived />}
-            {showTranscript && <ShowTranscript />}
-
-        </div>
     )
 }
 

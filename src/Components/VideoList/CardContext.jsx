@@ -35,7 +35,7 @@ function CardContext({context}){
             <div id="box1column2" className="flex items-center justify-center ml-3">
                 <span className="flex items-center justify-center">
                     <AiOutlineEye style={style}/>
-                    <pre className="text-sm">805</pre>
+                    <pre className="text-sm">{context?.views}</pre>
                 </span>
                 <span className="flex items-center justify-center ml-2">
                     <BsChatLeft style={{color: 'grey', fontSize: '1.1em'}}/>
