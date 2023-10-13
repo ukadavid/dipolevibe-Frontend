@@ -6,7 +6,6 @@ import InlineEdit from "../../Components/ViewSection/InlineEdit";
 import SocialMediaShare from "../../Components/ShareComponent/Share";
 import { apiTranscribePost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
-import { useVideo } from '../../Context/VideoStore';
 import { LiaDownloadSolid } from "react-icons/lia";
 import CommentInputCard  from "./CommentInputCard";
 import CommentCard  from "./CommentCard";
@@ -14,9 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Transcription from './TranscriptionTab';
 import Preloader from "../Preloader/Preloader";
 import Logo from "../../assets/logo.jpeg"
+import { useLocation } from "react-router-dom";
 
-const VideoView = ({ videoContext }) => {
+const VideoView = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
+  const location = useLocation();
+  console.log(location.state);
 
   const [mostRecentVideo, setMostRecentVideo] = useState(
     localStorage.getItem('videoURL').replace(/"/g, '')
@@ -24,8 +26,6 @@ const VideoView = ({ videoContext }) => {
 
   const[hasComments, setComments ] = useState(null);
 
-  const { videoObject } = useVideo();
-  // console.log(videoObject);
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
@@ -48,12 +48,12 @@ const VideoView = ({ videoContext }) => {
     window.removeEventListener("mouseup", handleMouseUp);
   };
 
-  useEffect(() => {
-    console.log(videoObject); // This will log the updated value when it changes.
-  }, [videoObject]);
+  // useEffect(() => {
+  //   console.log(videoObject); // This will log the updated value when it changes.
+  // }, [videoObject]);
 
 
-  if (videoObject) {
+  if (true) {
     // Check if video is not null or undefined
     let videoUrl = localStorage.getItem('videoURL');
     videoUrl = videoUrl.replace(/"/g, '');

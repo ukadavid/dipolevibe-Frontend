@@ -7,8 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 // eslint-disable-next-line react-refresh/only-export-components
 export const dataContext = createContext();
 
+  /**=================Video Data =================================== */
+
 // eslint-disable-next-line react/prop-types
 const DataProvider = ({ children }) => {
+
+
   /**=================Registration =================================== */
 
   const registerConfig = async (formData) => {

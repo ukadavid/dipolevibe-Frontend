@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./Pages/Signup/UserSignupPage";
 import AdminSignupPage from "./Pages/Signup/AdminSignupPage";
 import DataProvider from "./Context/AuthContext";
-import { VideoProvider } from "./Context/VideoStore";
 import { ToastContainer } from "react-toastify";
 import SideNavigation from "./Components/sidenav/SideNav";
 import Home from "./Pages/Home";
@@ -24,8 +23,6 @@ import VideoViewPage from "./Pages/VideoViewPage";
 function App() {
 
   return (
-    <div>
-      <VideoProvider>
         <div>
       <DataProvider>
       <ToastContainer />
@@ -77,8 +74,6 @@ function App() {
       </Router>
       </DataProvider>
       </div>
-      </VideoProvider>
-    </div>
   )
 }
 
