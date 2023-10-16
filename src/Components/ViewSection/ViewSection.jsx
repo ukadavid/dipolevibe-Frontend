@@ -3,12 +3,13 @@ import { useState, useEffect } from "react";
 import "./view.css";
 import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
-import { CiHashtag } from "react-icons/ci";
+import { FaSlackHash } from "react-icons/fa";
 import SocialMediaShare from "../ShareComponent/Share";
 import { apiTranscribePost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../Preloader/Preloader";
+import TagInput from "./TagInput";
 
 const ViewSection = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
@@ -16,13 +17,16 @@ const ViewSection = () => {
     `myVideo-${Math.random().toString(36).substring(7)}`
   );
   const [summary, setSummary] = useState("Summary");
-  const [tag, setTag] = useState([]);
+  const [tag, setTag] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [mostRecentVideo, setMostRecentVideo] = useState(null);
   const [db, setDb] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [numTags, setNumTags] = useState(0);
+  const [buttons, setButtons] = useState([]);
+  const [hasMinimumTag, setMinimumTagError] = useState(false);
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
@@ -76,8 +80,12 @@ const ViewSection = () => {
 
   const handleSubmit = async () => {
     try {
+      if (buttons.length < 1 ) {
+        setMinimumTagError(true); // Set the tag limit message
+        return;
+      }
       // setLoading(true);
-      console.log(title, summary, mostRecentVideo.blob);
+      console.log(tag, title, summary, mostRecentVideo.blob);
 
       setSubmitClicked(true);
       // const response = await apiTranscribePost("/videos/upload", {
@@ -91,8 +99,6 @@ const ViewSection = () => {
       // const newVideoUrl = response.data.videoUrl; 
       // setVideoUrl(newVideoUrl);
       // toast.success(response.data.message);
-
-      console.log(title, summary, mostRecentVideo.blob);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -177,16 +183,23 @@ const ViewSection = () => {
               </div>
               <div className="flex hover-div items-center">
                 <p className="mr-2">
-                  <CiHashtag />
+                  <FaSlackHash />
                 </p>
-                <InlineEdit
-                  text={tag}
-                  onEditText={setTag}
+                <TagInput
+                  tag={tag} 
+                  setTag={setTag} 
+                  buttons={buttons} 
+                  setButtons={setButtons} 
+                  hasMinimumTag={hasMinimumTag}
+                  setMinimumTagError={setMinimumTagError}
+                 />
+                {/* <InlineEdit
                   onFocus={() => setIsEditing(true)}
                   onBlur={() => setIsEditing(false)}
-                />
+                /> */}
                 <p className="edit-text">Tags</p>
               </div>
+             
               <div >
                 <div className="flex mt-8 justify-center ">
                     <button

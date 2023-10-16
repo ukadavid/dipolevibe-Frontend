@@ -15,10 +15,10 @@ const InlineEdit = ({ text, onEditText }) => {
     setIsEditing(false);
     // while(editedText.length <= 3){
       const formattedText = editedText
-      .split(' ') // Split text into individual strings // Filter strings with 1 to 3 characters
-      .map(str => `#${str}`) // Add "#" to each string
-      .join(' '); // Join strings back together with spaces
-    onEditText(formattedText);
+      // .split(' ') // Split text into individual strings // Filter strings with 1 to 3 characters
+      // .map(str => `#${str}`) // Add "#" to each string
+      // .join(' '); // Join strings back together with spaces
+    onEditText(editedText);
     // }
   };
 

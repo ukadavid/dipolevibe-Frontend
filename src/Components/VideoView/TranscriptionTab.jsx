@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
 import MyVideos from '../Dashboard/MyVideos';
 import ShowReceived from '../Dashboard/ShowReceived';
 import ShowTranscript from '../Dashboard/ShowTranscript';
@@ -34,8 +33,7 @@ return (
     </div>
     <div className="flex items-center justify-center space-x-3 sm:mt-7 px-12 mt-1">
     
-      <Link
-        
+      <p
         className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
           activeLink === "transcript"
             ? "dark:text-gray-400 dark:text-gray"
@@ -44,9 +42,8 @@ return (
         onClick={handleMyTranscript}
       >
          My Transcript
-      </Link>
-      <Link
-        
+      </p>
+      <p
         className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
           activeLink === "comment"
             ? "dark:text-gray-400 dark:text-gray"
@@ -55,7 +52,7 @@ return (
         onClick={handleMyReceived}
       >
         comment
-      </Link>
+      </p>
     </div>
     {showReceived && <ShowReceived />}
     {showTranscript &&  (
