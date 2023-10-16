@@ -19,7 +19,6 @@ export const apiPost = (path, data) => {
 };
 
 export const apiPostViewCount = (path) => {
-    //console.log(`${TranscriptionUrl}${path}`);
     return axios.post(`${TranscriptionUrl}${path}`);
   };
 
@@ -33,9 +32,14 @@ export const apiTranscribePost = (path, data) => {
   return axios.post(`${TranscriptionUrl}${path}`, data, config);
 };
 
-export const apiPostComment = (path) => {
-  return axios.post(`${TranscriptionUrl}${path}`)
+export const apiPostComment = (path, data) => {
+  return axios.post(`${TranscriptionUrl}${path}`, data, {
+  });
 } 
+
+export const apiGetComment= (videoId)=> {
+  return axios.get(`${TranscriptionUrl}/comments/public-video/${videoId}`);
+}
 
 // Put Request
 export const apiPut = (path, data) => {

@@ -24,10 +24,10 @@ function VideoCard({ video, index }) {
 
   const handleViewButtonClick = () => {
     let videoViewPage = '/VideoViewPage'
-    localStorage.setItem('videoURL', JSON.stringify(video.videoURL));
+    // localStorage.setItem('videoURL', JSON.stringify(video.videoURL));
 
   
-    console.log(video);
+    // console.log(video);
 
     setTimeout(() => {
       navigate(videoViewPage, {state: {videoUrl: video}})
