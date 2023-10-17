@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { plans } from '../../Data/data';
+import { motion } from 'framer-motion';
+import { useInView } from "react-intersection-observer";
 
 const PlansComponent = () => {
   const [billPlan, setBillPlan] = useState('monthly');
+  const { ref, inView } = useInView({ triggerOnce: true });
 
   const handleBillButtonClick = () => {
     setBillPlan(prevPlan => (prevPlan === 'monthly' ? 'annually' : 'monthly'));
@@ -40,7 +43,12 @@ const PlansComponent = () => {
 
       <div className="flex flex-col items-center justify-center mt-16 space-y-8 lg:flex-row lg:items-stretch lg:space-x-8 lg:space-y-0">
         {plans.map((plan, i) => (
-          <section key={i} className="flex flex-col w-full max-w-sm p-12 space-y-6 bg-white rounded-lg shadow-md">
+          <motion.section key={i} className="flex flex-col w-full max-w-sm p-12 space-y-6 bg-white rounded-lg shadow-md"
+          ref={ref}
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 50 }}
+          transition={{ delay: i * 1, duration: 1 }}
+          >
             <div className="flex-shrink-0">
               <span
                 className={`text-4xl font-medium tracking-tight ${
@@ -84,7 +92,7 @@ const PlansComponent = () => {
                 {`Get ${plan.name}`}
               </button>
             </div>
-          </section>
+          </motion.section>
         ))}
       </div>
     </main>
