@@ -52,7 +52,7 @@ const PlansComponent = () => {
             <div className="flex-shrink-0">
               <span
                 className={`text-4xl font-medium tracking-tight ${
-                  plan.name === 'Basic' ? 'text-green-500' : ''
+                  plan.name === 'Basic' ? 'text-gray-800' : ''
                 }`}
               >
                 {`${billPlan === 'monthly' ? plan.price.monthly : plan.price.annually}`}
@@ -71,7 +71,7 @@ const PlansComponent = () => {
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
-                    fill="currentColor"
+                    fill="bg-gray-800"
                   >
                     <path
                       fillRule="evenodd"
