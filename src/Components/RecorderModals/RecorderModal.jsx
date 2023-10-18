@@ -69,10 +69,13 @@ export const RecorderComponent = ({ closeScreenModal }) => {
   const [isRecording, setIsRecording] = useState(false);
 
   const stopRecordingAfterOneMinute = setTimeout(() => {
-    console.log("Recording stopped after 1 minute.");
-    // eslint-disable-next-line no-undef
-    stopRecording();
-  }, 60000); 
+    if (!localStorage.getItem('User')){
+      console.log("Recording stopped after 1 minute.");
+      // eslint-disable-next-line no-undef
+      stopRecording();
+      window.location.replace('/views')
+    }
+  }, 10000); 
 
 const startRecording = async () => {
   try {
