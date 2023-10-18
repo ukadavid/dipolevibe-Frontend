@@ -90,7 +90,7 @@ const VideoView = () => {
                   href={video.videoUrl}
                   download={video.videoTitle}
                 >
-                  <div className="text-white relative rounded-full bg-slate-600 px-8 py-1">
+                  <div className="text-white relative rounded-full bg-slate-600 px-8 py-1 hover:bg-slate-700 outline outline-0 outline-sky-700 hover:outline-1">
                     <div className="absolute top-2 left-2"><LiaDownloadSolid /></div>
                     <button>Download</button>
                   </div>
@@ -111,7 +111,7 @@ const VideoView = () => {
           style={{ marginTop: '-100px' }}
         >
           <div className="pt-0 px-4 h-full">
-            <Transcription />
+            <Transcription transcription={video.transcription}/>
           </div>
         </div>
       </div>

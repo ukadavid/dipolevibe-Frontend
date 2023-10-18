@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import "./view.css";
 import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
@@ -27,6 +28,7 @@ const ViewSection = () => {
   const [numTags, setNumTags] = useState(0);
   const [buttons, setButtons] = useState([]);
   const [hasMinimumTag, setMinimumTagError] = useState(false);
+  const navigate = useNavigate();
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
@@ -84,21 +86,25 @@ const ViewSection = () => {
         setMinimumTagError(true); // Set the tag limit message
         return;
       }
-      // setLoading(true);
-      console.log(tag, title, summary, mostRecentVideo.blob);
+      // console.log(tag, title, summary, mostRecentVideo.blob);
 
       setSubmitClicked(true);
-      // const response = await apiTranscribePost("/videos/upload", {
-      //   title,
-      //   summary,
-      //   video: mostRecentVideo.blob,
-      // });
-  
-      // console.log(response);
+      const response = await apiTranscribePost("/videos/upload", {
+        tag,
+        title,
+        summary,
+        video: mostRecentVideo.blob,
+      });
 
-      // const newVideoUrl = response.data.videoUrl; 
-      // setVideoUrl(newVideoUrl);
-      // toast.success(response.data.message);
+      setTimeout(() => {
+        navigate('/home')
+      },1000);
+  
+      console.log(response);
+
+      const newVideoUrl = response.data.videoUrl; 
+      setVideoUrl(newVideoUrl);
+      toast.success(response.data.message);
     } catch (error) {
       console.error("Error submitting data:", error);
     }
@@ -107,24 +113,24 @@ const ViewSection = () => {
     }
   };
 
-  const renderPublishButtons = () => {
-    if (submitClicked) {
-      return (
-        <div className="flex mt-8 justify-center items-center">
-          <button
-            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4"
-          >
-            Public Publish
-          </button>
-          <button
-            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          >
-            Private Publish
-          </button>
-        </div>
-      );
-    }
-  };
+  // const renderPublishButtons = () => {
+  //   if (submitClicked) {
+  //     return (
+  //       <div className="flex mt-8 justify-center items-center">
+  //         <button
+  //           className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4"
+  //         >
+  //           Public Publish
+  //         </button>
+  //         <button
+  //           className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+  //         >
+  //           Private Publish
+  //         </button>
+  //       </div>
+  //     );
+  //   }
+  // };
 
 
 
@@ -200,7 +206,7 @@ const ViewSection = () => {
                 <p className="edit-text">Tags</p>
               </div>
              
-              <div >
+              <div>
                 <div className="flex mt-8 justify-center ">
                     <button
                      onClick={handleSubmit}
@@ -209,7 +215,7 @@ const ViewSection = () => {
                      Submit
                     </button>
                 </div>
-                {renderPublishButtons()}
+                {/* {renderPublishButtons()} */}
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from "react-toastify";
 import { FaSearch, FaCalendarAlt, FaChevronDown } from 'react-icons/fa';
 import { apiGetVideos } from '../../Context/Api/Axios';
@@ -7,16 +7,23 @@ function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
 
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      const fetchDefaultVideos = async () => {
+        try {
+          const response = await apiGetVideos('/videos/fetch/public?page=1');
+          onSearch(response.data);
+        } catch (error) {
+          toast.error(error.response.data.message);
+          console.error('Error fetching videos:', error);
+        }
+      };
+      fetchDefaultVideos();
+    }
+  }, [searchTerm, onSearch]);
+
   const handleSearch = async () => {
     try {
-      // const currentDate = new Date().getTime();
-      // const selectedDateValue = new Date(selectedDate).getTime(); // Assuming selectedDateInput is the selected date from your input field
-      
-      // if (selectedDateValue > currentDate) {
-      //   toast.error("Selected date cannot be in the future.");
-      //   return; // Stop processing if the selected date is in the future
-      // }
-
       const response = await apiGetVideos(`/videos/search?search=${searchTerm}&date=${selectedDate}`);
       onSearch(response.data); 
     } catch (error) {
