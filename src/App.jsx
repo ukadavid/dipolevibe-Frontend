@@ -18,6 +18,7 @@ import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ViewPage from "./Pages/ViewPage/ViewPage";
 import VideoListPage from "./Pages/VideoListPage";
 import VideoViewPage from "./Pages/VideoViewPage";
+import Dashboard from "./Components/DashboardUpdate/pages/Dashboard";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/views" element={<ViewPage />} />
           <Route path="/videoList" element={<VideoListPage/>}/>
           <Route path="/VideoViewPage" element={<VideoViewPage/>}/>
+          <Route path="/dashboard" element={<Dashboard/>}/>
           
 
           <Route

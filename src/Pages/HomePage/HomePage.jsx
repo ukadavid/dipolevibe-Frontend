@@ -16,7 +16,7 @@ const HomePage = () => {
         <TestimonialCarousel />
       <PlansComponent />
       <Footer />
-      
+
     </div>
   );
 };

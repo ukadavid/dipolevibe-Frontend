@@ -94,6 +94,12 @@ const NavBar = () => {
               >
                 Login
               </a>
+              <a
+                href="/videolist"
+                className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
+              >
+                Video Library
+              </a>
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a
@@ -157,6 +163,12 @@ const NavBar = () => {
                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       >
                         Login
+                      </a>
+                      <a
+                        href="/videolist"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      >
+                        Video Library
                       </a>
                     </div>
                     <div className="py-6">
