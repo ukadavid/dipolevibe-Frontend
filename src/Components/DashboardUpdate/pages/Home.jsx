@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 import Sidebar from '../partials/Sidebar';
 import Header from '../partials/Header';
-import WelcomeBanner from '../partials/dashboard/WelcomeBanner';
-import ScreenRecord from '../partials/dashboard/ScreenRecord'
+import WelcomeBanner from '../partials/HomeSection/WelcomeBanner';
+import ScreenRecord from '../partials/HomeSection/ScreenRecord'
 import '../css/style.css';
-import MyFeed from '../partials/dashboard/MyFeed';
-import VideoCardList from '../partials/dashboard/VideoCard';
+import MyFeed from '../partials/HomeSection/MyFeed';
+import { VideoCardList } from '../partials/HomeSection/VideoCard';
 
-function Dashboard() {
+function HomeDashboard() {
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -37,9 +37,6 @@ function Dashboard() {
               <div className="col-span-12 sm:col-span-12 xl:col-span-12">
                 <VideoCardList />
               </div>
-
-  
-              
             </div>
 
           </div>
@@ -49,4 +46,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default HomeDashboard;

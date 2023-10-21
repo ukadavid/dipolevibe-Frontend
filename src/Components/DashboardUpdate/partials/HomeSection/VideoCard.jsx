@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRef } from 'react';
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-function VideoCard({ videoSrc, views, date, profileImgSrc, profileName }) {
+export function VideoCard({ videoSrc, views, date, profileImgSrc, profileName }) {
   return (
     <div className="flex flex-col mr-8 col-span-full sm:col-span-3 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
       <div className="py-2 px-4">
@@ -26,7 +26,7 @@ function VideoCard({ videoSrc, views, date, profileImgSrc, profileName }) {
   );
 }
 
-function VideoCardList() {
+export function VideoCardList() {
     const content = [
         {
           videoSrc: "../../../../assets/video.mp4",
@@ -122,4 +122,4 @@ function VideoCardList() {
   );
 }
 
-export default VideoCardList;
+

@@ -1,7 +1,4 @@
-import { TERipple } from 'tw-elements-react';
-import EyeIcon from '../../assets/EyeIcon.png';
-import MessageIcon from '../../assets/MessageIcon.png';
-import ShareIcon from '../../assets/ShareIcon.png';
+
 
 const ShowReceived = () => {
 
