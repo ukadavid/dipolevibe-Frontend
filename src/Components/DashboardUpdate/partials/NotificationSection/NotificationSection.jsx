@@ -45,7 +45,7 @@ export default function NotificationSection() {
       <div className="flex  space-x-6 sm:mt-7 mt-4 mb-8">
         <a
           href="#"
-          className={` text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={` text-sm font-medium border-b-2 pb-1.5 text-black dark:text-white ${
             activeLink === "notify"
               ? "border-b border-gray-500"
               : "border-transparent no-underline"
@@ -57,7 +57,7 @@ export default function NotificationSection() {
 
         <a
           href="#"
-          className={`text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={`text-sm font-medium border-b-2 pb-1.5 text-black dark:text-white  ${
             activeLink === "Shared"
               ? "border-b border-gray-500"
               : "border-transparent no-underline"
@@ -69,7 +69,7 @@ export default function NotificationSection() {
 
         <a
           href="#"
-          className={`text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={`text-sm font-medium border-b-2 pb-1.5 text-black dark:text-white  ${
             activeLink === "Comments"
               ? "border-b border-gray-500"
               : "border-transparent no-underline"
