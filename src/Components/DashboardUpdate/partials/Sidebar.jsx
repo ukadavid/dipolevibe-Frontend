@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FaHome,
   FaFolder,
@@ -15,6 +16,7 @@ import {
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
 
@@ -38,8 +40,8 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         return;
       setSidebarOpen(false);
     };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
+    // document.addEventListener("click", clickHandler);
+    // return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -117,70 +119,41 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   pathname === "/dashboard" || pathname.includes("dashboard")
                 }
               >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="/dashboard"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname === "/dashboard" ||
-                          pathname.includes("dashboard")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaHome />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Home
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/dashboard">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/dashboard");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaHome />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Home
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
               {/* My Library*/}
               <SidebarLinkGroup
                 activecondition={pathname.includes("mylibrary")}
               >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <NavLink
-                        to="/mylibrary"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("mylibrary")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaFolder />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              <a href="/mylibrary">My Library</a>
-                            </span>
-                          </div>
-                        </div>
-                      </NavLink>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/mylibrary">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/mylibrary");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaFolder />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        My Library
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
 
               {/* Notifications */}
@@ -189,70 +162,41 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   pathname === "/notify" || pathname.includes("notify")
                 }
               >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="/notify"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname === "/notify" || pathname.includes("notify")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaBell />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Notifications
-                            </span>
-                          </div>
-                          {/* Icon */}
-                        </div>
-                      </a>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/notify">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/notify");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaBell />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Notifications
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
               {/* Watch Later */}
               <SidebarLinkGroup
                 activecondition={pathname.includes("watchlater")}
               >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="/watchlater"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("watchlater")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaClock />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Watch Later
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/watchlater">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/watchlater");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaClock />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Watch Later
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
             </ul>
           </div>
@@ -272,69 +216,41 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             <ul className="mt-3">
               {/* Settings */}
               <SidebarLinkGroup activecondition={pathname.includes("settings")}>
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="/settings"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("settings")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaCog />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Settings
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/settings">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/settings");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaCog />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Settings
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
               {/* Analytics */}
               <SidebarLinkGroup
                 activecondition={pathname.includes("analytics")}
               >
-                {(handleClick, open) => {
-                  return (
-                    <React.Fragment>
-                      <a
-                        href="/analytics"
-                        className={`block text-slate-200 truncate transition duration-150 ${
-                          pathname.includes("analytics")
-                            ? "hover:text-slate-200"
-                            : "hover:text-white"
-                        }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
-                        }}
-                      >
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center">
-                            <FaChartBar />
-                            <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                              Analytics
-                            </span>
-                          </div>
-                        </div>
-                      </a>
-                    </React.Fragment>
-                  );
-                }}
+                <NavLink to="/analytics">
+                  <div
+                    className="flex items-center justify-between"
+                    onClick={() => {
+                      navigate("/analytics");
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <FaChartBar />
+                      <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                        Analytics
+                      </span>
+                    </div>
+                  </div>
+                </NavLink>
               </SidebarLinkGroup>
             </ul>
           </div>
