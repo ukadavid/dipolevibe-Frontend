@@ -51,27 +51,33 @@ export default function Library() {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        console.log("1");
         const response = await apiGetVideos(
-          `/videos/fetch/public?page=${page}`
+          `/videos/fetch/${
+            activeLink == "video"
+              ? "public"
+              : activeLink === "PrivateVideo"
+              ? "private"
+              : ""
+          }?page=${page}`
         );
+        console.log(response);
         const newVideos = response.data.videos.data;
+        const newTotalPages = response.data.videos.metadata.totalCount; // Updated this line
+        setTotalPages(newTotalPages); // Set total pages based on API response
+        response.status == 200 &&
+          setData((prevVideos) => [...prevVideos, ...newVideos]);
         console.log(newVideos);
-        setData((prevVideos) => [...prevVideos, ...newVideos]);
-        setLoading(false); // Data is loaded, set loading to false
+
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setLoading(false); // Data loading failed, set loading to false
+        setData([]);
+        setLoading(false);
       }
     }
 
     fetchVideos();
-  }, [page]); // Add 'page' as a dependency
-
-  const handlePageChange = (newPage) => {
-    setPage(newPage + 1);
-    setData([]); // Reset data to empty while loading new page
-  };
+  }, [page, activeLink]);
 
   return (
     <div className="">
@@ -84,7 +90,6 @@ export default function Library() {
         <Datepicker />
         {/* Add view button */}
       </div>
-
       <div className="flex items-start justify-start text-left sm:mt-7 mt-4 mb-8">
         <a
           href="#"
@@ -122,16 +127,9 @@ export default function Library() {
           My Transcript
         </a>
       </div>
-
       {showPublicVideos && <MyVideos videosData={data} />}
       {showPrivateVideo && <MyVideos videosData={data} />}
       {showTranscript && <ShowTranscript />}
-
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
     </div>
   );
 }
