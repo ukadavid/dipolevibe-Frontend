@@ -38,7 +38,9 @@ const SettingsSection = () => {
     <>
       <div>
         <h2 className="text-2xl font-bold">My account</h2>
-        <p className="text-sm text-gray-800 my-4">Update your profile</p>
+        <p className="text-sm dark:text-gray-400 text-gray-800 my-4">
+          Update your profile
+        </p>
       </div>
 
       <div className="border-b-2 pb-8">
