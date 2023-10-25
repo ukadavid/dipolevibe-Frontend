@@ -7,6 +7,9 @@ const TranscriptionUrl = import.meta.env.VITE_TranscriptionUrl;
 export const apiGet = (path) => {
   return axios.get(`${baseUrl}${path}`);
 };
+export const apiNodeService = (path) => {
+  return axios.get(`${TranscriptionUrl}${path}`);
+};
 
 export const apiGetVideos = (path) => {
     console.log(path);

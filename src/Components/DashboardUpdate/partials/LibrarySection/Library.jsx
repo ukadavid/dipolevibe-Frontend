@@ -66,9 +66,9 @@ export default function Library() {
       <div className="flex items-center justify-center space-x-3 sm:mt-7 px-12 mt-4 mb-8">
         <a
           href="#"
-          className={`px-3 text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={`px-3 text-sm text-black font-medium border-b-2 pb-1.5 dark:text-white ${
             activeLink === "video"
-              ? "border-black dark:border-gray-400 dark:text-gray text-underline"
+              ? "border-b border-gray-500"
               : "border-transparent no-underline"
           }`}
           onClick={handleMyVideoClick}
@@ -78,9 +78,9 @@ export default function Library() {
 
         <a
           href="#"
-          className={`px-3 text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={`px-3 text-sm text-black font-medium border-b-2 pb-1.5 dark:text-white ${
             activeLink === "PrivateVideo"
-              ? "border-black dark:border-gray-400 dark:text-gray text-underline"
+              ? "border-b border-gray-500"
               : "border-transparent no-underline"
           }`}
           onClick={handleMyPrivateVideo}
@@ -90,9 +90,9 @@ export default function Library() {
 
         <a
           href="#"
-          className={`px-3 text-sm font-medium border-b-2 pb-1.5 dark:text-black ${
+          className={`px-3 text-sm text-black font-medium border-b-2 pb-1.5 dark:text-white ${
             activeLink === "transcript"
-              ? "border-black dark:border-gray-400 dark:text-gray text-underline"
+              ? "border-b border-gray-500"
               : "border-transparent no-underline"
           }`}
           onClick={handleMyTranscript}

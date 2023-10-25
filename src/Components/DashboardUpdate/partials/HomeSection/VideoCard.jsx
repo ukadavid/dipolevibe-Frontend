@@ -1,24 +1,50 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useRef } from 'react';
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useRef, useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight, FaEye } from "react-icons/fa";
+import { apiGetVideos } from "../../../../Context/Api/Axios";
+import Preloader from "../../../Preloader/Preloader";
+import { getDaysSinceUpload } from "../../../../utils/ConvertTime";
 
-export function VideoCard({ videoSrc, views, date, profileImgSrc, profileName }) {
+export function VideoCard({ video, index }) {
   return (
-    <div className="flex flex-col mr-8 col-span-full sm:col-span-3 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+    <div className="flex flex-col mr-8 col-span-full sm:col-span-3 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
       <div className="py-2 px-4">
         <div>
-          <video controls className="w-full mt-4 rounded-lg shadow-lg" style={{ maxHeight: "350px" }}>
-            <source src={videoSrc} type="video/mp4" />
+          <video
+            controls
+            className="w-full mt-4 rounded-lg shadow-lg"
+            style={{ maxHeight: "250px" }}
+          >
+            <source src={video.videoURL} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <p className="text-gray-600 dark:text-gray-400 my-2">{views}</p>
-          <p className="text-gray-600 dark:text-gray-400">{date}</p>
-          <div className="flex items-center mt-4">
-            <img className="h-8 w-8 rounded-full" src={profileImgSrc} alt={profileName} />
-            <a href="https://vimeo.com/julienetquentin" className="font-bold ml-2 text-gray-800 dark:text-white">{profileName}</a>
+          <div className="flex mt-8 items-center justify-between gap-4 my-2">
+            <p className="text-2xl">Title: {video.videoTitle}</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              {getDaysSinceUpload(video.uploadedAt)}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between items-center mt-4 mb-8">
+            <div className="flex items-center">
+              <span className="h-8 w-8 flex items-center justify-center dark:bg-gray-500 bg-gray-800 text-white rounded-full">
+                {video._id.slice(0, 2)}
+              </span>
+              <span className=" ml-2 text-gray-800 dark:text-white">
+                {video._id}
+              </span>
+            </div>
+
+            <span className="mr-4  relative">
+              <FaEye className="h-6 w-6 text-gray-800 dark:text-white" />
+              <span className="top-0 dark:text-white left-4 border border-white rounded-full bg-gray-800 text-white flex items-center justify-center font-bold w-4 h-4 absolute text-xs">
+                {video.views}
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -27,58 +53,36 @@ export function VideoCard({ videoSrc, views, date, profileImgSrc, profileName })
 }
 
 export function VideoCardList() {
-    const content = [
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        {
-          videoSrc: "../../../../assets/video.mp4",
-          views: "4,287 views",
-          date: "a month ago",
-          profileImgSrc: "https://i.vimeocdn.com/portrait/9177372_30x30",
-          profileName: "Julien & Quentin"
-        },
-        // Add more content objects as needed
-      ];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [page, setPage] = useState(1); // Page number state
+
+  useEffect(() => {
+    async function fetchVideos() {
+      try {
+        console.log("1");
+        const response = await apiGetVideos(
+          `/videos/fetch/public?page=${page}`
+        );
+        const newVideos = response.data.videos.data;
+        console.log(newVideos);
+        setData((prevVideos) => [...prevVideos, ...newVideos]);
+        setLoading(false); // Data is loaded, set loading to false
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setLoading(false); // Data loading failed, set loading to false
+      }
+    }
+
+    fetchVideos();
+  }, [page]); // Add 'page' as a dependency
+
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1); // Increment the page number
+  };
+
+  // const videosData = response.data;
 
   const sliderRef = useRef(null);
 
@@ -101,25 +105,28 @@ export function VideoCardList() {
 
   return (
     <div>
-        <div className="flex items-center justify-end mb-4">
-  <p className="mr-2">View</p>
-  <button onClick={goToPrev} className="text-blue-500 mr-2">
-    <FaChevronLeft /> 
-  </button>
-  <button onClick={goToNext} className="text-blue-500">
-    <FaChevronRight />
-  </button>
-</div>
+      <div className="flex items-center justify-end mb-4">
+        <p className="mr-2">View</p>
+        <button
+          onClick={goToPrev}
+          className="dark:text-white text-gray-800 mr-2"
+        >
+          <FaChevronLeft />
+        </button>
+        <button onClick={goToNext} className="dark:text-white text-gray-800">
+          <FaChevronRight />
+        </button>
+      </div>
 
-      
-      <Slider ref={sliderRef} {...sliderSettings}>
-        {content.map((item, index) => (
-          <VideoCard  key={index} {...item} />
-        ))}
-      </Slider>
-      
+      {loading ? (
+        <Preloader />
+      ) : (
+        <Slider ref={sliderRef} {...sliderSettings}>
+          {data.map((video, index) => (
+            <VideoCard key={index} video={video} index={index} />
+          ))}
+        </Slider>
+      )}
     </div>
   );
 }
-
-
