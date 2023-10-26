@@ -12,8 +12,8 @@ export const apiNodeService = (path) => {
 };
 
 export const apiGetVideos = (path) => {
-    console.log(path);
-    return axios.get(`${TranscriptionUrl}${path}`);
+  console.log(path);
+  return axios.get(`${TranscriptionUrl}${path}`);
 };
 
 // Post Request
@@ -22,8 +22,8 @@ export const apiPost = (path, data) => {
 };
 
 export const apiPostViewCount = (path) => {
-    return axios.post(`${TranscriptionUrl}${path}`);
-  };
+  return axios.post(`${TranscriptionUrl}${path}`);
+};
 
 export const apiTranscribePost = (path, data) => {
   const config = {
@@ -36,13 +36,12 @@ export const apiTranscribePost = (path, data) => {
 };
 
 export const apiPostComment = (path, data) => {
-  return axios.post(`${TranscriptionUrl}${path}`, data, {
-  });
-} 
+  return axios.post(`${TranscriptionUrl}${path}`, data, {});
+};
 
-export const apiGetComment= (videoId)=> {
+export const apiGetComment = (videoId) => {
   return axios.get(`${TranscriptionUrl}/comments/public-video/${videoId}`);
-}
+};
 
 // Put Request
 export const apiPut = (path, data) => {
@@ -68,11 +67,5 @@ export const apiPatch = (path, data) => {
 
 // Delete Request
 export const apiDelete = (path, id) => {
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  };
-
-  return axios.delete(`${baseUrl}${path}/${id}`, config);
+  return axios.delete(`${TranscriptionUrl}${path}/${id}`);
 };

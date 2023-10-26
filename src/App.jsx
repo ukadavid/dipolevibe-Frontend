@@ -4,11 +4,7 @@ import SignupPage from "./Pages/Signup/UserSignupPage";
 import AdminSignupPage from "./Pages/Signup/AdminSignupPage";
 import DataProvider from "./Context/AuthContext";
 import { ToastContainer } from "react-toastify";
-import SideNavigation from "./Components/sidenav/SideNav";
-import Home from "./Pages/Home";
 import LoginPage from "./Pages/LoginPage";
-import Library from "./Components/DashboardUpdate/partials/LibrarySection/Library";
-import Notification from "./Pages/Notification";
 import HomePage from "./Pages/HomePage/HomePage";
 import SuccessPage from "./Pages/SuccessPage";
 import Page404Page from "./Pages/Page404Page";
@@ -48,38 +44,10 @@ function App() {
               <Route path="/VideoViewPage" element={<VideoViewPage />} />
               <Route path="/dashboard" element={<HomeDashboard />} />
               <Route path="/mylibrary" element={<MyLibraryDashboard />} />
-              <Route path="/notify" element={<NotificationDashboard />} />
+              <Route path="/notification" element={<NotificationDashboard />} />
               <Route path="/watchlater" element={<WatchLater />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/analytics" element={<Analytics />} />
-
-              <Route
-                path="/home"
-                element={
-                  <>
-                    <SideNavigation />
-                    <Home />
-                  </>
-                }
-              />
-              <Route
-                path="/library"
-                element={
-                  <>
-                    <SideNavigation />
-                    <Library />
-                  </>
-                }
-              />
-              <Route
-                path="/notification"
-                element={
-                  <>
-                    <SideNavigation />
-                    <Notification />
-                  </>
-                }
-              />
             </Routes>
           </Router>
         </ThemeProvider>
