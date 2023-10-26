@@ -1,7 +1,7 @@
 import Datepicker from "../../navComponent/Datepicker";
 import { FaAngleDown, FaArrowRight } from "react-icons/fa";
 import "./Analytics.css";
-import MapComponent from "./WorldMap";
+import WorldMap from "./WorldMap";
 
 const AnalyticsComponent = () => {
   return (
@@ -49,7 +49,7 @@ const AnalyticsComponent = () => {
       </div>
       {/* End of the second row */}
 
-      <div className="flex mt-8  border-b-2 pb-8 gap-2 flex-col md:flex-row">
+      <div className="flex items-center justify-center border-b-2 gap-1 flex-col md:flex-row">
         {/* First Column */}
         <div className=" w-auto">
           <div className="mb-2 text-2xl font-bold">Most views by city</div>
@@ -62,7 +62,7 @@ const AnalyticsComponent = () => {
 
         {/* Second Column */}
         <div className="w-full">
-          <MapComponent />
+          <WorldMap />
         </div>
       </div>
 

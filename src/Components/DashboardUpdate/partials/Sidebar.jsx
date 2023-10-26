@@ -101,9 +101,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             </svg>
           </button>
           {/* Logo */}
-          <NavLink end to="/dashboard" className="block">
-            <span className="text-right font-medium text-sm text-white py-1 px-3 w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full">
-              Dip <span className="text-black">olev</span>ibe
+          <NavLink end to="/" className="block">
+            <span className="text-right font-medium text-sm text-white py-1 px-3 w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-full">
+              Dip{" "}
+              <span className="dark:text-blue-200 text-black mx-0.5">olev</span>
+              ibe
             </span>
           </NavLink>
         </div>

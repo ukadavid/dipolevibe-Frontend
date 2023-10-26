@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { FaSlack, FaGoogle, FaTrash } from "react-icons/fa";
+import { apiDelete } from "../../../../Context/Api/Axios";
+import { toast } from "react-toastify";
 
 const SettingsSection = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
+  const [message, setMessage] = useState();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -31,9 +34,23 @@ const SettingsSection = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
   };
 
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await apiDelete("/user/delete");
+
+      const message = response.data;
+
+      setMessage(message);
+      toast(message);
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast(message);
+    }
+  };
   return (
     <>
       <div>
@@ -199,7 +216,7 @@ const SettingsSection = () => {
           <button
             type="submit"
             className="bg-red-500 mt-4 text-white py-2 px-4 rounded"
-            onClick={handleFormSubmit}
+            onClick={handleDeleteAccount}
           >
             Delete my Account
           </button>

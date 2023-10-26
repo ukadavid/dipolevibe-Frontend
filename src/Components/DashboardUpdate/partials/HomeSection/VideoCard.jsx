@@ -118,15 +118,17 @@ export function VideoCardList() {
         </button>
       </div>
 
-      {loading ? (
-        <Preloader />
-      ) : (
-        <Slider ref={sliderRef} {...sliderSettings}>
-          {data.map((video, index) => (
-            <VideoCard key={index} video={video} index={index} />
-          ))}
-        </Slider>
-      )}
+      <div style={{ opacity: loading ? 0 : 1 }}>
+        {" "}
+        {/* Hide content when loading */}
+        {!loading && (
+          <Slider ref={sliderRef} {...sliderSettings}>
+            {data.map((video, index) => (
+              <VideoCard key={index} video={video} index={index} />
+            ))}
+          </Slider>
+        )}
+      </div>
     </div>
   );
 }
