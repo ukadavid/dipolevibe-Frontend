@@ -1,19 +1,17 @@
 import { useState } from "react";
-import {  FaDesktop } from "react-icons/fa";
-import {RecorderComponent} from "../RecorderModals/RecorderModal";
-
+import { FaDesktop } from "react-icons/fa";
+import { RecorderComponent } from "../RecorderModals/RecorderModal";
+import ThemeToggle from "../DashboardUpdate/navComponent/ThemeToggle";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const [isScreenModalOpen, setScreenModalOpen] = useState(false);
 
-
   // toggle menu section
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
-
 
   const openScreenModal = () => {
     setScreenModalOpen(true);
@@ -22,7 +20,6 @@ const NavBar = () => {
   const closeScreenModal = () => {
     setScreenModalOpen(false);
   };
-
 
   return (
     <>
@@ -34,8 +31,9 @@ const NavBar = () => {
           >
             <div className="flex lg:flex-1">
               <a href="/" className="-m-1.5 p-1.5">
-                <span className="sr-only"></span>
-                <p className="font-semibold">dipoleVibe</p>
+                <span className="text-right font-medium text-sm text-black py-1 px-3 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full">
+                  Dip <span className="text-white mx-0.5">olev</span>ibe
+                </span>
               </a>
             </div>
             <div className="flex lg:hidden">
@@ -94,15 +92,27 @@ const NavBar = () => {
               >
                 Login
               </a>
-            </div>
-            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a
-                href="#"
+                href="/videolist"
                 className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
-                onClick={openScreenModal}
               >
-                <FaDesktop /> <span aria-hidden="true"></span>
+                Video Library
               </a>
+            </div>
+            <div className="hidden lg:flex items-center lg:flex-1 lg:justify-end">
+              <div className="mr-4">
+                <ThemeToggle />
+              </div>
+
+              <div>
+                <a
+                  href="#"
+                  className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
+                  onClick={openScreenModal}
+                >
+                  <FaDesktop /> <span aria-hidden="true"></span>
+                </a>
+              </div>
             </div>
           </nav>
 
@@ -158,18 +168,27 @@ const NavBar = () => {
                       >
                         Login
                       </a>
-                    </div>
-                    <div className="py-6">
-
-
                       <a
-                        href="#"
-                        className="text-sm font-semibold leading-6 text-gray-900"
-                        onClick={openScreenModal}
+                        href="/videolist"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                       >
-                        <FaDesktop /> <span aria-hidden="true"></span>
-                      
+                        Video Library
                       </a>
+                    </div>
+                    <div className="py-6 flex-col items-center">
+                      <div>
+                        <ThemeToggle />
+                      </div>
+
+                      <div className="mt-4 ml-2">
+                        <a
+                          href="#"
+                          className="text-sm hover:text-blue-500 transition font-semibold leading-6 text-gray-900"
+                          onClick={openScreenModal}
+                        >
+                          <FaDesktop /> <span aria-hidden="true"></span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -179,8 +198,10 @@ const NavBar = () => {
         </header>
       </div>
       {/* Modal */}
-      {isScreenModalOpen && <RecorderComponent closeScreenModal={closeScreenModal} />}
-    </> 
+      {isScreenModalOpen && (
+        <RecorderComponent closeScreenModal={closeScreenModal} />
+      )}
+    </>
   );
 };
 

@@ -11,7 +11,6 @@ import Preloader from "../Preloader/Preloader";
 import Logo from "../../assets/logo.jpeg";
 import { useLocation } from "react-router-dom";
 import { apiPostComment, apiGetReccVideos } from '../../Context/Api/Axios';
-import { useVideo } from '../../Context/VideoContext';
 import MainCommentCard from './MainCommentCard';
 import InputBox from './InputBox';
 
@@ -21,7 +20,6 @@ const VideoView = () => {
   // const location = useLocation();
   // const videoObject = location.state.videoUrl;
   const videoObject = JSON.parse(localStorage.getItem('videoObject'))
-  const { state, dispatch } = useVideo();
   const [video, setVideo] = useState(videoObject);
   // const [ hasRecommendedVideos ] = false;
   const [recommendedVideos, setRecommendedVideos] = useState(null);
@@ -116,7 +114,7 @@ const VideoView = () => {
             <video className="mb-1" controls>
               <source src={video.videoURL} type="video/mp4" />
             </video>
-            <div className="px-2 mt-0 bg-gray-50 dark:bg-gray-800">
+            <div className="px-2 mt-0 bg-gray-800 dark:bg-gray-800">
               <div className="mt-2 mb-3 text-lg text-white font-bold ">
                 <span>{video.videoTitle}</span>
               </div>
@@ -135,7 +133,9 @@ const VideoView = () => {
                   <div className="mr-3 rounded-full">
                     <img src={Logo} alt="" className="h-12 w-12 rounded-full" />
                   </div>
-                  <div><span>User Name</span></div>
+                  <div>
+                    <span>User Name</span>
+                  </div>
                 </div>
                 <a
                   href={video.videoURL}

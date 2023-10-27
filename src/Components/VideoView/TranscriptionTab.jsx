@@ -1,46 +1,28 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import Link and useHistory
-import MyVideos from '../Dashboard/MyVideos';
-import ShowReceived from '../Dashboard/ShowReceived';
-import ShowTranscript from '../Dashboard/ShowTranscript';
+import { useState } from "react";
+import ShowReceived from "../DashboardUpdate/partials/LibrarySection/ShowReceived";
+import ShowTranscript from "../DashboardUpdate/partials/LibrarySection/ShowTranscript";
 
-function Transcription({ transcription }) {
+function Transcription() {
   const [showReceived, setShowReceived] = useState(true);
   const [showTranscript, setShowTranscript] = useState(false);
-  const [isPaidUser, setIsPaidUser] = useState(true);
-  const [redirect, setRedirect] = useState(false); // State to manage redirection
-  const navigate = useNavigate(); // Get the history object for redirection
-
+  const [isPaidUser, setIsPaidUser] = useState(false);
   // Define state to manage the active link
   const [activeLink, setActiveLink] = useState("transcript");
 
   const handleMyReceived = () => {
     setShowReceived(true);
     setShowTranscript(false);
+
+    // Update the active link
     setActiveLink("comment");
   };
 
   const handleMyTranscript = () => {
     setShowReceived(false);
     setShowTranscript(true);
+
+    // Update the active link
     setActiveLink("transcript");
-  };
-
-  // Use useEffect to trigger the redirection with a delay
-  useEffect(() => {
-    if (redirect) {
-      const delay = 2000; // 2 seconds
-      const timeoutId = setTimeout(() => {
-        navigate("/signup");
-      }, delay);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [redirect, history]);
-
-  const handleSubscribeClick = () => {
-    // Trigger the redirection after the delay
-    setRedirect(true);
   };
 
   return (
@@ -65,24 +47,20 @@ function Transcription({ transcription }) {
           }`}
           onClick={handleMyReceived}
         >
-          Comment
+          comment
         </p>
       </div>
       {showReceived && <ShowReceived />}
-      {showTranscript && (
-        isPaidUser ? (
-          <ShowTranscript transcript={transcription}/>
+      {showTranscript &&
+        (isPaidUser ? (
+          <ShowTranscript />
         ) : (
           <div>
-            <button
-              onClick={handleSubscribeClick}
-              className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40"
-            >
+            <button className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40">
               Subscribe to view transcription
             </button>
           </div>
-        )
-      )}
+        ))}
     </div>
   );
 }

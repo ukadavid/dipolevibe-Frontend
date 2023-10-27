@@ -7,7 +7,7 @@ const Header = () => {
   const [ref, inView] = useInView({triggerOnce: true})
   return (
     <>
-      <section className="bg-white dark:bg-gray-900 ">
+      <section className="bg-gray-800 dark:bg-gray-900 ">
         <div className="grid max-w-screen-xl px-4 pt-24 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-32 lg:grid-cols-12 lg:pt-28">
           <div className="mr-auto place-self-center lg:col-span-7">
             <motion.h1
@@ -15,7 +15,7 @@ const Header = () => {
             initial={{opacity: 0, y: 50}}
             animate={{opacity: inView ? 1 : 0, y: inView ? 0 : 20}}
             transition={{delay: 0.1, duration: 0.5}}
-            className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
+            className="max-w-2xl mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl text-white xl:text-6xl dark:text-white">
               One video is worth
               <br />a thousand words
             </motion.h1>
@@ -38,7 +38,7 @@ const Header = () => {
               animate={{opacity: inView ? 1 : 0, y: inView ? 0 : 20}}
               transition={{delay: 0.3, duration: 0.5}}
                 href="#"
-                className="inline-flex items-center justify-center w-full px-5 py-3 text-sm font-medium text-center text-gray-900 border border-gray-200 rounded-full sm:w-auto hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:animate-bounce"
+                className="inline-flex items-center justify-center text-white w-full px-5 py-3 text-sm font-medium text-center text-gray-900 border border-gray-200 rounded-full sm:w-auto hover:text-black hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800 hover:animate-bounce"
               >
                 dipoVibe for free
               </motion.a>

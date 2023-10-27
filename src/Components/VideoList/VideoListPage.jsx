@@ -1,8 +1,8 @@
-import { apiGetVideos } from '../../Context/Api/Axios';
-import React, { useEffect, useState } from 'react';
-import VideoCard from './VideoCard';
-import Preloader from '../Preloader/Preloader';
-import SearchBar from './SearchBar';
+import { apiGetVideos } from "../../Context/Api/Axios";
+import { useEffect, useState } from "react";
+import VideoCard from "./VideoCard";
+import Preloader from "../Preloader/Preloader";
+import SearchBar from "./SearchBar";
 
 function VideoList() {
   const [videos, setVideos] = useState([]);
@@ -54,9 +54,13 @@ function VideoList() {
             <VideoCard key={index} video={video} index={index} />
           ))}
         </div>
-        <div  className="flex justify-center">
-          <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 w-40" 
-           onClick={loadMore}>Load More</button>
+        <div className="flex justify-center">
+          <button
+            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300 w-40"
+            onClick={loadMore}
+          >
+            Load More
+          </button>
         </div>
       </div>
     </>

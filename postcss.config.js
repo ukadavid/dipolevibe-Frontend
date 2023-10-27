@@ -1,6 +1,7 @@
+import tailwind from 'tailwindcss'
+import autoprefixer from 'autoprefixer'
+import tailwindConfig from './src/Components/DashboardUpdate/css/tailwind.config'
+
 export default {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
+  plugins: [tailwind(tailwindConfig), autoprefixer],
 }

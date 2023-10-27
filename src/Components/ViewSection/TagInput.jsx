@@ -1,8 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { MdOutlineCancel } from 'react-icons/md';
+/* eslint-disable react/prop-types */
+import { useState, useEffect } from "react";
+import { MdOutlineCancel } from "react-icons/md";
 
-function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumTagError }) {
-  const [buttonText, setButtonText] = useState('');
+function TagInput({
+  tag,
+  setTag,
+  buttons,
+  setButtons,
+  hasMinimumTag,
+  setMinimumTagError,
+}) {
+  const [buttonText, setButtonText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [tagLimitExceeded, setTagLimitExceeded] = useState(false);
   const [duplicateTagError, setDuplicateTagError] = useState(false);
@@ -17,8 +25,8 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
   const createButton = (e) => {
     e.preventDefault(); // Prevent the form submission
 
-    if (buttonText.trim() === '') {
-      alert('Please enter some text for the button.');
+    if (buttonText.trim() === "") {
+      alert("Please enter some text for the button.");
       return;
     }
 
@@ -39,7 +47,7 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
     setTag([...tag, buttonText]);
 
     // Clear the input field after creating the button
-    setButtonText('');
+    setButtonText("");
     setHasAtLeastOneTag(true); // At least one tag is entered
 
     // Exit edit mode
@@ -61,7 +69,7 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
 
   // Handle input blur (losing focus)
   const handleInputBlur = () => {
-    if (!hasAtLeastOneTag && buttonText.trim() !== '') {
+    if (!hasAtLeastOneTag && buttonText.trim() !== "") {
       setHasAtLeastOneTag(true);
     }
     setIsEditing(false);
@@ -76,7 +84,7 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
 
   return isEditing ? (
     <div>
-      <div id="button-container" className='flex'>
+      <div id="button-container" className="flex">
         {buttons.map((buttonText, index) => (
           <div key={index} className="tag-button flex items-center mr-2">
             {buttonText}
@@ -95,14 +103,18 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
             value={buttonText}
             onChange={handleTextInputChange}
             onBlur={handleInputBlur} // Handle blur event
-            className="outline-0"
+            className="outline-0 dark:bg-white"
             autoComplete="off"
           />
           {tagLimitExceeded && (
-            <p className="text-red-600 text-xs">You can only create a maximum of 3 tags.</p>
+            <p className="text-red-600 text-xs">
+              You can only create a maximum of 3 tags.
+            </p>
           )}
           {duplicateTagError && (
-            <p className="text-red-600 text-xs">Duplicate tag. Please enter a different tag.</p>
+            <p className="text-red-600 text-xs">
+              Duplicate tag. Please enter a different tag.
+            </p>
           )}
         </form>
       </div>

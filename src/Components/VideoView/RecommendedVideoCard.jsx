@@ -1,19 +1,13 @@
-import { useVideo } from '../../Context/VideoContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HoverVideoPlayer from 'react-hover-video-player';
 
 function RecommendedVideoCard({video, onClick}){
-  const { dispatch } = useVideo();
   const navigate = useNavigate();
-  const videoContext = video;
 
   const handleCardClick = () => {
-    // let videoViewPage = '/VideoViewPage'
-    // navigate((videoViewPage, {state: {videoUrl: videoContext}}))
     localStorage.setItem('videoObject', JSON.stringify(video));
     console.log("clicked!!"+ localStorage.getItem('videoObject'));
     location.reload()
-    // dispatch({ type: 'SET_VIDEO', payload: video });
   };
     return (
         <div className="flex mb-2 bg-transparent" onClick={handleCardClick}>
