@@ -97,7 +97,7 @@ const ViewSection = () => {
       });
 
       setTimeout(() => {
-        navigate('/home')
+        navigate('/')
       },1000);
   
       console.log(response);
@@ -147,7 +147,7 @@ const ViewSection = () => {
               <source src={url} type="video/mp4" />
             </video>
             <div className="bg-gray-50 dark:bg-gray-800">
-              {videoUrl && <SocialMediaShare url={videoUrl} />}
+              {true && <SocialMediaShare url={videoUrl} />}
             </div>
             <div className="resize-handle" onMouseDown={handleMouseDown}></div>
           </div>

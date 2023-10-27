@@ -5,22 +5,21 @@ import { apiGetVideos } from '../../Context/Api/Axios';
 
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
 
-  useEffect(() => {
-    if (searchTerm.trim() === '') {
-      const fetchDefaultVideos = async () => {
-        try {
-          const response = await apiGetVideos('/videos/fetch/public?page=1');
-          onSearch(response.data);
-        } catch (error) {
-          toast.error(error.response.data.message);
-          console.error('Error fetching videos:', error);
-        }
-      };
-      fetchDefaultVideos();
-    }
-  }, [searchTerm, onSearch]);
+  // useEffect(() => {
+  //   if (searchTerm.trim() === '') {
+  //     const fetchDefaultVideos = async () => {
+  //       try {
+  //         const response = await apiGetVideos('/videos/fetch/public?page=1');
+  //         onSearch(response.data);
+  //       } catch (error) {
+  //         toast.error(error.response.data.message);
+  //         console.error('Error fetching videos:', error);
+  //       }
+  //     };
+  //     fetchDefaultVideos();
+  //   }
+  // }, [searchTerm, onSearch]);
 
   const handleSearch = async () => {
     try {
@@ -45,12 +44,6 @@ function SearchBar({ onSearch }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {/* <input
-          type="date"
-          className="date-input outline-none"
-          value={ selectedDate }
-          onChange={(e) => setSelectedDate(e.target.value)}
-        /> */}
         <button
           onClick={handleSearch}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"

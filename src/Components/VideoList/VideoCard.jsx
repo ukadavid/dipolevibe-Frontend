@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons'; 
-import { MdExitToApp } from "react-icons/md";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 import  CardContext  from './CardContext';
 import { apiPostViewCount } from '../../Context/Api/Axios';
+import { useVideo } from '../../Context/VideoContext';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,7 +15,8 @@ function VideoCard({ video, index }) {
   const [hovered, setHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const videoId = video._id; // Generate a unique identifier based on the index
-  const navigate = useNavigate()
+  const videoRef = useRef(null);
+  const navigate = useNavigate();
 
 
   const toggleControls = () => {
@@ -24,15 +26,12 @@ function VideoCard({ video, index }) {
 
   const handleViewButtonClick = () => {
     let videoViewPage = '/VideoViewPage'
-    // localStorage.setItem('videoURL', JSON.stringify(video.videoURL));
-
-  
-    // console.log(video);
+    localStorage.setItem('videoObject', JSON.stringify(video));
 
     setTimeout(() => {
-      navigate(videoViewPage, {state: {videoUrl: video}})
-        // window.location.replace(videoViewPage);
-
+      // navigate(videoViewPage, {state: {videoUrl: video}})
+      // dispatch({ type: 'SET_VIDEO', payload: video });
+      navigate(videoViewPage)
       }, 1000); 
   };
 
@@ -41,6 +40,14 @@ function VideoCard({ video, index }) {
       await apiPostViewCount(`/videos/updateViewCount?videoId=${videoId}`);
     } catch (error) {
       console.error('Error updating count:', error);
+    }
+  };
+
+  const playVideo = () => {
+    if (videoRef.current) {
+      document.querySelectorAll('video').forEach((v) => v.pause());
+      videoRef.current.play();
+      setIsPlaying(true);
     }
   };
 
@@ -77,11 +84,13 @@ function VideoCard({ video, index }) {
         }}
         onClick= {() => {
             handleViewButtonClick();
+            handleViewCountUpdate(videoId);
         }}
         >
-            <MdExitToApp className="text-2xl text-slate-200"/>
+            <BsBoxArrowUpRight className="text-2xl text-slate-200"/>
         </div>
       <video
+        ref={videoRef}
         id={video._id} // Use the unique identifier for the video element
         controls={isPlaying}
         autoPlay={isPlaying}
@@ -114,9 +123,13 @@ function VideoCard({ video, index }) {
             const videoElement = document.getElementById(videoId);
             videoElement.play();
             setIsPlaying(true);
+            playVideo();
           }}
         >
-          <FontAwesomeIcon icon={faPlay} style={{ color: 'white', width: '50px', height: '50px' }} />
+          <FontAwesomeIcon 
+            icon={faPlay} 
+            style={{ color: 'white', width: '50px', height: '50px' }} 
+          />
         </div>
       )}
      </div>

@@ -9,6 +9,7 @@ const SocialMediaShare = ({ url }) => {
   const handleSocialToggle = () => {
     setSocialOpened(!socialOpened);
   };
+  const iconStyle = "flex bg-sky-400 text-white	border border-black	rounded-2xl w-8 h-8 justify-center";
 
   return (
     <div className="social-media-share ">
@@ -19,13 +20,29 @@ const SocialMediaShare = ({ url }) => {
         <i className="fas fa-share-alt"></i>
       </button>
       <ul className={`list-social transition-opacity ${socialOpened ? 'opacity-100' : 'opacity-0'} duration-500`}>
-        <li><FacebookShareButton url={url}><FaFacebookF /></FacebookShareButton></li>
-        <li><TwitterShareButton url={url}><FaTwitter /></TwitterShareButton></li>
-        <li><LinkedinShareButton url={url}><FaLinkedinIn /></LinkedinShareButton></li>
-        <li><TumblrShareButton url={url}><FaTumblr /></TumblrShareButton></li>
-        <li><PinterestShareButton url={url}><FaPinterestP /></PinterestShareButton></li>
-        <li><WhatsappShareButton url={url}><FaWhatsapp /></WhatsappShareButton></li>
-        <li><RedditShareButton url={url}><FaReddit /></RedditShareButton></li>
+        <li className="flex bg-sky-400	border border-black	rounded-2xl w-8 h-8 justify-center">
+          <FacebookShareButton 
+            url={url}
+            size={32}
+            bgStyle={{color: "fill"}}
+            round={true}
+            borderRadius={10}
+          >
+            <FaFacebookF className="text-white"/>
+          </FacebookShareButton>
+        </li>
+        <li className={iconStyle}
+        ><TwitterShareButton url={url}><FaTwitter /></TwitterShareButton></li>
+        <li className={iconStyle}
+        ><LinkedinShareButton url={url}><FaLinkedinIn /></LinkedinShareButton></li>
+        <li className={iconStyle}
+        ><TumblrShareButton url={url}><FaTumblr /></TumblrShareButton></li>
+        <li className={iconStyle} 
+        ><PinterestShareButton url={url}><FaPinterestP /></PinterestShareButton></li>
+        <li className={iconStyle}
+        ><WhatsappShareButton url={url}><FaWhatsapp /></WhatsappShareButton></li>
+        <li className={iconStyle}
+        ><RedditShareButton url={url}><FaReddit /></RedditShareButton></li>
       </ul>
     </div>
   );

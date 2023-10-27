@@ -8,8 +8,11 @@ export const apiGet = (path) => {
   return axios.get(`${baseUrl}${path}`);
 };
 
+export const apiGetReccVideos = (path, data) => {
+  return axios.get(`${TranscriptionUrl}${path}`, data);
+};
+
 export const apiGetVideos = (path) => {
-    console.log(path);
     return axios.get(`${TranscriptionUrl}${path}`);
 };
 
@@ -17,6 +20,10 @@ export const apiGetVideos = (path) => {
 export const apiPost = (path, data) => {
   return axios.post(`${baseUrl}${path}`, data);
 };
+
+export const apiPostReply = ( path, data) => {
+  return axios.post(`${TranscriptionUrl}${path}`, data)
+}
 
 export const apiPostViewCount = (path) => {
     return axios.post(`${TranscriptionUrl}${path}`);

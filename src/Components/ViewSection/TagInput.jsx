@@ -96,6 +96,7 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
             onChange={handleTextInputChange}
             onBlur={handleInputBlur} // Handle blur event
             className="outline-0"
+            autoComplete="off"
           />
           {tagLimitExceeded && (
             <p className="text-red-600 text-xs">You can only create a maximum of 3 tags.</p>
@@ -103,15 +104,22 @@ function TagInput({ tag, setTag, buttons, setButtons, hasMinimumTag, setMinimumT
           {duplicateTagError && (
             <p className="text-red-600 text-xs">Duplicate tag. Please enter a different tag.</p>
           )}
-          {hasMinimumTag && (
-            <p className="text-red-600 text-xs">You must enter at least one tag.</p>
-          )}
         </form>
       </div>
     </div>
   ) : (
     <span style={{ padding: '10px' }} onDoubleClick={handleDoubleClick}>
-      {hasAtLeastOneTag ? setIsEditing(true) : 'Double-click to add tags'}
+      {hasAtLeastOneTag ? 
+         setIsEditing(true) : 
+      <>
+         Double-click to add tags
+         {hasMinimumTag && (
+          <p className="text-red-600 text-xs">
+            You must enter at least one tag.
+          </p>
+         )}
+      </>
+      }
     </span>
   );
 }

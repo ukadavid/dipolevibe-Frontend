@@ -1,52 +1,39 @@
 import { useState, useEffect } from 'react';
 import { BiBadgeCheck } from 'react-icons/bi';
+import InputBox from './InputBox';
+import { apiPostReply } from '../../Context/Api/Axios';
+import { MdArrowDropDown } from 'react-icons/md';
+import { RiArrowUpSFill } from 'react-icons/ri';
+import useTimeAgo from '../../hooks/useTimeAgo';
+import generateInitials from '../../utils/initialsUtils';
 
-function CommentCard({ comment }){
-    const author = comment.author;
-    const initials = author.slice(0, 1) + author.charAt(Math.floor(author.length / 2));
+function CommentCard({ comment, showReplies, toggleReplies }){
+  const author = comment.author;
+  const newInitials = generateInitials(author);
+  const [replyComments, setReplyComment] = useState([]);
+  const [activeReplyComment,setActiveReplyComment] = useState(false)
+  const [isActiveReplyButton, setReplyState] = useState(false);
+  const newTimeAgo = useTimeAgo(comment.timestamp);
+  const commentId = comment._id;
 
-    const [timeAgo, setTimeAgo] = useState('');
+  {isActiveReplyButton }
 
-  useEffect(() => {
-    // Function to calculate the time difference
-    const calculateTimeAgo = () => {
-      const currentDate = new Date();
-      const commentDate = new Date(comment.timestamp);
-      const timeDifference = currentDate - commentDate;
-      const seconds = Math.floor(timeDifference / 1000);
-      let timeAgoString = '';
-
-      if (seconds < 60) {
-        timeAgoString = `${seconds} seconds ago`;
-      } else if (seconds < 3600) {
-        const minutes = Math.floor(seconds / 60);
-        timeAgoString = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-      } else if (seconds < 86400) {
-        const hours = Math.floor(seconds / 3600);
-        timeAgoString = `${hours} hour${hours > 1 ? 's' : ''} ago`;
-      } else {
-        const days = Math.floor(seconds / 86400);
-        timeAgoString = `${days} day${days > 1 ? 's' : ''} ago`;
-      }
-
-      setTimeAgo(timeAgoString);
-    };
-
-    calculateTimeAgo();
-
-    // Update the time difference every minute
-    const intervalId = setInterval(calculateTimeAgo, 60000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [comment.timestamp]);
+  const handleReplyPost = (replyText) => {
+    try{
+      console.log(replyText);
+        apiPostReply(`/reply/${commentId}`, { text: replyText })
+    }
+    catch(error){
+        console.log(error);
+    }
+}
 
     return(
+      <>
         <div className="flex items-center py-2 mt-2">
             <div className="mr-2">
                  <div className="h-12 w-12 rounded-full text-white bg-gray-300 flex items-center justify-center">
-                   {initials}
+                   {newInitials}
                  </div>
             </div>
             <div>
@@ -55,11 +42,52 @@ function CommentCard({ comment }){
                         {comment.authorPaid ? <BiBadgeCheck /> : ""}
                     </span>
                     <span>{ comment.author }</span>
-                    <span className="text-zinc-400 text-xs ml-2 ">{ timeAgo } </span>
+                    <span className="text-zinc-400 text-xs ml-2 ">{ newTimeAgo } </span>
                 </div>
-                <div className="text-white"><span>{ comment.text }</span></div>
+                <div className="text-white">
+                    <span>{ comment.text }</span>
+                </div>
             </div>
         </div>
+        <div className="flex items-center relative mt-0.5 left-4">
+          <button 
+           className='relative left-6 text-white text-sm rounded-full px-4 py-1 hover:bg-gray-500'
+           onClick={() => {
+            console.log("isActiveReplyButton "+isActiveReplyButton)
+            setReplyState(true)}}
+          >
+            Reply
+          </button>
+          <div className="flex items-center justify-center relative left-4 rounded-full px-4 py-1 hover:bg-gray-500">
+            {comment.replies && comment.replies.length > 0 && (
+            <>
+            <div className="absolute top-0.5 left-0 text-sky-500">
+              {showReplies ? <RiArrowUpSFill className="w-6 h-6"/> : <MdArrowDropDown className="w-6 h-6"/>}
+            </div>
+            <button
+              className="text-white text-sm ml-2"
+              onClick={() => toggleReplies(commentId)}
+            >
+              {comment.replies.length === 1
+                ? '1 reply'
+                : `${comment.replies.length} replies`}
+            </button>
+            </>)}
+          </div>
+        </div>
+        <>
+        {isActiveReplyButton && (
+            <InputBox
+              type={"Reply"} 
+              postReplyComment={handleReplyPost}
+              commentId={commentId}
+              setReplyState={setReplyState}
+              onTextSubmit=""
+            />
+        )}
+        
+        </>
+      </>
     )
 }
 

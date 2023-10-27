@@ -75,7 +75,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
       stopRecording();
       window.location.replace('/views')
     }
-  }, 10000); 
+  }, 60000); 
 
 const startRecording = async () => {
   try {

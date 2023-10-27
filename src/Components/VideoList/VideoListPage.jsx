@@ -27,12 +27,18 @@ function VideoList() {
     fetchVideos();
   }, [page]); // Add 'page' as a dependency
 
+
+  const handleSearch = async (searchResults) => {
+    // Update the videos state with the search results
+    setVideos(searchResults);
+  };
+
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page number
   };
 
   if (loading && videos.length === 0) {
-     <Preloader />;
+     return <Preloader />;
   }
 
   if (error) {
@@ -42,7 +48,7 @@ function VideoList() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 my-14">
-        {/* <SearchBar onSearch={ setVideos }/> */}
+        <SearchBar onSearch={ handleSearch }/>
         <div className="grid grid-cols-2 gap-4">
           {videos.map((video, index) => (
             <VideoCard key={index} video={video} index={index} />
