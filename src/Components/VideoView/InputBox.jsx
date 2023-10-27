@@ -1,38 +1,29 @@
 import { useState } from 'react';
+import { PiUser } from 'react-icons/pi';
 import { apiPostComment } from '../../Context/Api/Axios';
 import Logo from "../../assets/logo.jpeg"
 
-function CommentInputCard({ videoId, mainCommentPost, replyCommentPost, type}) {
+function InputBox({ postMainComment, postReplyComment, type, setReplyState, setCommentUpdate}) {
   const [activeReply, setReply ] = useState(false)
   const [commentText, setCommentText] = useState('');
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true); // Initial state, submit button is disabled
   const [firstCharacterEntered, setFirstCharacterEntered] = useState(false); // Initial state, first character not entered
 
-  const handleCommentPost = () => {
-    try {
-      // Send the comment to the API
-      apiPostComment(`/comments/public-video/${videoId}`, { text: commentText });
 
-    } catch (error) {
-      console.error('Error posting comment:', error);
+  const triggerCommentPost = () => {
+    console.log("trigger comment executed!!")  
+    // Check if the comment text is not empty
+    if (commentText.trim() !== '') {
+      // Call the postMainComment function and pass the comment text as an argument
+      postMainComment(commentText);
+      setCommentUpdate(commentText);
+      resetInputState();
     }
   }
 
-  const triggerCommentPost = () => {
-      mainCommentPost();
+  const triggerReplyPost = () => {
+      postReplyComment(commentText);
       resetInputState();
-  }
-
-  const triggerReplyComment = () => {
-      replyCommentPost();
-      resetInputState();
-  }
-
-  const resetInputState = () => {
-      // Clear the input field after posting
-      setCommentText('');
-      setIsSubmitDisabled(true); // Disable the submit button after posting
-      setFirstCharacterEntered(false); // Reset the first character flag
   }
 
   const handleInputChange = (e) => {
@@ -52,10 +43,18 @@ function CommentInputCard({ videoId, mainCommentPost, replyCommentPost, type}) {
     }
   }
 
+  const resetInputState = () => {
+    // Clear the input field after posting
+    setCommentText('');
+    setIsSubmitDisabled(true); // Disable the submit button after posting
+    setFirstCharacterEntered(false); // Reset the first character flag
+}
+
   return (
     <div className="flex items-center py-2">
-      <div className="mr-2">
-        <img src={Logo} alt="logo" className="h-12 w-12 rounded-full" />
+      <div className="flex items-center justify-center h-12 w-12 rounded-full border border-inherit bg-gray-400 hover:border-sky-400">
+        <PiUser className="text-white h-6 w-6 hover:text-sky-400"/>
+        {/* <img src={Logo} alt="logo" className="h-12 w-12 rounded-full" /> */}
       </div>
       <div className="w-full relative">
         <div className="relative border-b-4 border-indigo-500 text-white">
@@ -68,17 +67,19 @@ function CommentInputCard({ videoId, mainCommentPost, replyCommentPost, type}) {
           />
         </div>
         <div className="mt-2 absolute right-0">
-          <button className="text-white rounded-full px-8 py-1 mr-2 hover:bg-sky-700">
+          <button 
+            className="text-white rounded-full px-8 py-1 mr-2 hover:bg-sky-700"
+            onClick={() => setReplyState(false)}>
             Cancel
           </button>
           <button 
-             onClick={type == 'main' ? triggerCommentPost : triggerReplyComment}
+             onClick={type == 'Submit' ? triggerCommentPost : triggerReplyPost}
              className={`rounded-full px-8 py-1 ${
                firstCharacterEntered ? 'bg-sky-700 text-white-500': 'bg-gray-500 text-gray-600' 
              }`}
              disabled={isSubmitDisabled} // Disable the button when isSubmitDisabled is true
           >
-            Submit
+            {type}
           </button>
         </div>
       </div>
@@ -86,4 +87,4 @@ function CommentInputCard({ videoId, mainCommentPost, replyCommentPost, type}) {
   );
 }
 
-export default CommentInputCard;
+export default InputBox;

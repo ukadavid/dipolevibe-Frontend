@@ -104,6 +104,7 @@ function TagInput({
             onChange={handleTextInputChange}
             onBlur={handleInputBlur} // Handle blur event
             className="outline-0 dark:bg-white"
+            autoComplete="off"
           />
           {tagLimitExceeded && (
             <p className="text-red-600 text-xs">
@@ -115,21 +116,22 @@ function TagInput({
               Duplicate tag. Please enter a different tag.
             </p>
           )}
-          {hasMinimumTag && (
-            <p className="text-red-600 text-xs">
-              You must enter at least one tag.
-            </p>
-          )}
         </form>
       </div>
     </div>
   ) : (
-    <span
-      className="dark:text-gray-800 dark:bg-white"
-      style={{ padding: "10px" }}
-      onDoubleClick={handleDoubleClick}
-    >
-      {hasAtLeastOneTag ? setIsEditing(true) : "Double-click to add tags"}
+    <span style={{ padding: '10px' }} onDoubleClick={handleDoubleClick}>
+      {hasAtLeastOneTag ? 
+         setIsEditing(true) : 
+      <>
+         Double-click to add tags
+         {hasMinimumTag && (
+          <p className="text-red-600 text-xs">
+            You must enter at least one tag.
+          </p>
+         )}
+      </>
+      }
     </span>
   );
 }

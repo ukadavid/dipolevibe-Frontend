@@ -10,15 +10,14 @@ function Transcription() {
   const [activeLink, setActiveLink] = useState("transcript");
 
   const handleMyReceived = () => {
-    // Update the state to show UserTable and hide FileUpload
     setShowReceived(true);
     setShowTranscript(false);
 
     // Update the active link
     setActiveLink("comment");
   };
+
   const handleMyTranscript = () => {
-    // Update the state to show UserTable and hide FileUpload
     setShowReceived(false);
     setShowTranscript(true);
 

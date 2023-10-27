@@ -9,14 +9,12 @@ function VideoList() {
   const [loading, setLoading] = useState(true); // Initial loading state
   const [error, setError] = useState(null); // Error state, if any
   const [page, setPage] = useState(1); // Page number state
-
+  
   useEffect(() => {
     async function fetchVideos() {
       try {
-        console.log("1");
-        const response = await apiGetVideos(
-          `/videos/fetch/public?page=${page}`
-        );
+        const response = await apiGetVideos(`/videos/fetch/public?page=${page}`);
+        console.log(response)
         const newVideos = response.data.videos.data;
         setVideos((prevVideos) => [...prevVideos, ...newVideos]);
         setLoading(false); // Data is loaded, set loading to false
@@ -29,12 +27,18 @@ function VideoList() {
     fetchVideos();
   }, [page]); // Add 'page' as a dependency
 
+
+  const handleSearch = async (searchResults) => {
+    // Update the videos state with the search results
+    setVideos(searchResults);
+  };
+
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page number
   };
 
   if (loading && videos.length === 0) {
-    return <Preloader />;
+     return <Preloader />;
   }
 
   if (error) {
@@ -44,8 +48,8 @@ function VideoList() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 my-14">
-        <SearchBar onSearch={setVideos} />
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        <SearchBar onSearch={ handleSearch }/>
+        <div className="grid grid-cols-2 gap-4">
           {videos.map((video, index) => (
             <VideoCard key={index} video={video} index={index} />
           ))}

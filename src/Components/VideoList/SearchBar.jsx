@@ -40,12 +40,6 @@ function SearchBar({ onSearch }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        {/* <input
-          type="date"
-          className="date-input outline-none"
-          value={ selectedDate }
-          onChange={(e) => setSelectedDate(e.target.value)}
-        /> */}
         <button
           onClick={handleSearch}
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
