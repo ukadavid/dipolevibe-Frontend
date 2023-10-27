@@ -50,9 +50,9 @@ const VideoView = () => {
       const response = await apiGetComment(video._id);
       // API returns an array of comments
       setComments(response.data);
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
-      console.error('Error fetching comments', error);
+      console.error("Error fetching comments", error);
     }
   };
 
@@ -69,13 +69,13 @@ const VideoView = () => {
       <div className="flex ml-4 flex-col lg:flex-row h-screen lg:pt-28 mt-20 ">
         <div
           className="w-auto relative mt-0 h-full"
-          style={{ width: leftColumnWidth, marginTop: '-100px' }}
+          style={{ width: leftColumnWidth, marginTop: "-100px" }}
         >
           <div className="h-full pt-4">
             <video className="mb-1" controls>
               <source src={video.videoURL} type="video/mp4" />
             </video>
-            <div className="px-2 mt-0 bg-gray-50 dark:bg-gray-800">
+            <div className="px-2 mt-0 bg-gray-800 dark:bg-gray-800">
               <div className="mt-2 mb-3 text-lg text-white font-bold ">
                 <span>{video.videoTitle}</span>
               </div>
@@ -84,31 +84,36 @@ const VideoView = () => {
                   <div className="mr-3 rounded-full">
                     <img src={Logo} alt="" className="h-12 w-12 rounded-full" />
                   </div>
-                  <div><span>User Name</span></div>
+                  <div>
+                    <span>User Name</span>
+                  </div>
                 </div>
-                <a
-                  href={video.videoUrl}
-                  download={video.videoTitle}
-                >
+                <a href={video.videoUrl} download={video.videoTitle}>
                   <div className="text-white relative rounded-full bg-slate-600 px-8 py-1">
-                    <div className="absolute top-2 left-2"><LiaDownloadSolid /></div>
+                    <div className="absolute top-2 left-2">
+                      <LiaDownloadSolid />
+                    </div>
                     <button>Download</button>
                   </div>
                 </a>
               </div>
               <CommentInputCard videoId={video._id} />
-              {hasComments ?
+              {hasComments ? (
                 hasComments.map((comment, index) => (
-                  <CommentCard key={index} comment={ comment } />
-                )) :
-                <div className="text-white"><span>No Comment</span></div>
-              }
+                  <CommentCard key={index} comment={comment} />
+                ))
+              ) : (
+                <div className="text-white">
+                  <span>No Comment</span>
+                </div>
+              )}
             </div>
             <div className="resize-handle" onMouseDown={handleMouseDown}></div>
           </div>
         </div>
-        <div className="w-96 min-w-96 max-w-5xl div-section lg:ml-4 h-full rounded-full rounded-lg shadow-lg bg-white mt-1 lg:mt-1 flex flex-col relative"
-          style={{ marginTop: '-100px' }}
+        <div
+          className="w-96 min-w-96 max-w-5xl div-section lg:ml-4 h-full rounded-full rounded-lg shadow-lg bg-white mt-1 lg:mt-1 flex flex-col relative"
+          style={{ marginTop: "-100px" }}
         >
           <div className="pt-0 px-4 h-full">
             <Transcription />
