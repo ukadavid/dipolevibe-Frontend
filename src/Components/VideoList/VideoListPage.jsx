@@ -45,7 +45,7 @@ function VideoList() {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 my-14">
         <SearchBar onSearch={setVideos} />
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
           {videos.map((video, index) => (
             <VideoCard key={index} video={video} index={index} />
           ))}

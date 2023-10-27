@@ -17,7 +17,7 @@ const ViewSection = () => {
     `myVideo-${Math.random().toString(36).substring(7)}`
   );
   const [summary, setSummary] = useState("Summary");
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [mostRecentVideo, setMostRecentVideo] = useState(null);
   const [db, setDb] = useState(null);
@@ -80,7 +80,7 @@ const ViewSection = () => {
 
   const handleSubmit = async () => {
     try {
-      if (buttons.length < 1 ) {
+      if (buttons.length < 1) {
         setMinimumTagError(true); // Set the tag limit message
         return;
       }
@@ -93,16 +93,15 @@ const ViewSection = () => {
       //   summary,
       //   video: mostRecentVideo.blob,
       // });
-  
+
       // console.log(response);
 
-      // const newVideoUrl = response.data.videoUrl; 
+      // const newVideoUrl = response.data.videoUrl;
       // setVideoUrl(newVideoUrl);
       // toast.success(response.data.message);
     } catch (error) {
       console.error("Error submitting data:", error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -111,22 +110,16 @@ const ViewSection = () => {
     if (submitClicked) {
       return (
         <div className="flex mt-8 justify-center items-center">
-          <button
-            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4"
-          >
+          <button className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full mr-4">
             Public Publish
           </button>
-          <button
-            className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          >
+          <button className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Private Publish
           </button>
         </div>
       );
     }
   };
-
-
 
   if (mostRecentVideo && mostRecentVideo.blob) {
     const url = URL.createObjectURL(mostRecentVideo.blob);
@@ -157,7 +150,7 @@ const ViewSection = () => {
                 }`}
               >
                 <h2 className="mr-2">
-                  <FaPen />
+                  <FaPen className="dark:text-gray-800" />
                 </h2>
                 <InlineEdit
                   text={title}
@@ -165,13 +158,13 @@ const ViewSection = () => {
                   onFocus={() => setIsEditing(true)}
                   onBlur={() => setIsEditing(false)}
                 />
-                <p className="edit-text">Edit Title</p>
+                <p className="edit-text dark:text-gray-800">Edit Title</p>
               </div>
             </div>
             <div className="px-4">
               <div className="flex hover-div items-center">
                 <p className="mr-2">
-                  <FaList />
+                  <FaList className="dark:text-gray-800" />
                 </p>
                 <InlineEdit
                   text={summary}
@@ -179,35 +172,35 @@ const ViewSection = () => {
                   onFocus={() => setIsEditing(true)}
                   onBlur={() => setIsEditing(false)}
                 />
-                <p className="edit-text">Edit Summary</p>
+                <p className="dark:text-gray-800 edit-text">Edit Summary</p>
               </div>
               <div className="flex hover-div items-center">
                 <p className="mr-2">
-                  <FaSlackHash />
+                  <FaSlackHash className="dark:text-gray-800" />
                 </p>
                 <TagInput
-                  tag={tag} 
-                  setTag={setTag} 
-                  buttons={buttons} 
-                  setButtons={setButtons} 
+                  tag={tag}
+                  setTag={setTag}
+                  buttons={buttons}
+                  setButtons={setButtons}
                   hasMinimumTag={hasMinimumTag}
                   setMinimumTagError={setMinimumTagError}
-                 />
+                />
                 {/* <InlineEdit
                   onFocus={() => setIsEditing(true)}
                   onBlur={() => setIsEditing(false)}
                 /> */}
                 <p className="edit-text">Tags</p>
               </div>
-             
-              <div >
+
+              <div>
                 <div className="flex mt-8 justify-center ">
-                    <button
-                     onClick={handleSubmit}
-                     className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                    >
-                     Submit
-                    </button>
+                  <button
+                    onClick={handleSubmit}
+                    className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  >
+                    Submit
+                  </button>
                 </div>
                 {renderPublishButtons()}
               </div>
@@ -216,7 +209,7 @@ const ViewSection = () => {
         )}
       </div>
     );
-  } 
+  }
 };
 
 export default ViewSection;
