@@ -86,9 +86,15 @@ function TagInput({
     <div>
       <div id="button-container" className="flex">
         {buttons.map((buttonText, index) => (
-          <div key={index} className="tag-button flex items-center mr-2">
+          <div
+            key={index}
+            className="tag-button dark:text-gray-800 text-gray-800 flex items-center mr-2"
+          >
             {buttonText}
-            <span onClick={() => removeButton(index)} className="text-red-600">
+            <span
+              onClick={() => removeButton(index)}
+              className="text-red-600 dark:text-red-600"
+            >
               <MdOutlineCancel />
             </span>
           </div>
@@ -103,16 +109,16 @@ function TagInput({
             value={buttonText}
             onChange={handleTextInputChange}
             onBlur={handleInputBlur} // Handle blur event
-            className="outline-0 dark:bg-white"
+            className="outline-0 dark:bg-white dark:text-black text-gray-800"
             autoComplete="off"
           />
           {tagLimitExceeded && (
-            <p className="text-red-600 text-xs">
+            <p className="text-red-600 dark:text-red-600 text-xs">
               You can only create a maximum of 3 tags.
             </p>
           )}
           {duplicateTagError && (
-            <p className="text-red-600 text-xs">
+            <p className="text-red-600 dark:text-red-600 text-xs">
               Duplicate tag. Please enter a different tag.
             </p>
           )}
@@ -120,18 +126,19 @@ function TagInput({
       </div>
     </div>
   ) : (
-    <span style={{ padding: '10px' }} onDoubleClick={handleDoubleClick}>
-      {hasAtLeastOneTag ? 
-         setIsEditing(true) : 
-      <>
-         Double-click to add tags
-         {hasMinimumTag && (
-          <p className="text-red-600 text-xs">
-            You must enter at least one tag.
-          </p>
-         )}
-      </>
-      }
+    <span style={{ padding: "10px" }} onDoubleClick={handleDoubleClick}>
+      {hasAtLeastOneTag ? (
+        setIsEditing(true)
+      ) : (
+        <>
+          Double-click to add tags
+          {hasMinimumTag && (
+            <p className="text-red-600 dark:text-red-600 text-xs">
+              You must enter at least one tag.
+            </p>
+          )}
+        </>
+      )}
     </span>
   );
 }

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./Pages/Signup/UserSignupPage";
 import AdminSignupPage from "./Pages/Signup/AdminSignupPage";
 import DataProvider from "./Context/AuthContext";
-import { VideoProvider } from './Context/VideoContext'
 import { ToastContainer } from "react-toastify";
 import LoginPage from "./Pages/LoginPage";
 import HomePage from "./Pages/HomePage/HomePage";
