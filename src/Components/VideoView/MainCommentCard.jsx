@@ -1,68 +1,70 @@
-import { useState, useEffect } from 'react';
-import CommentCard from './CommentCard';
-import InputBox from './InputBox';
-import { apiGetComment ,apiPostComment } from "../../Context/Api/Axios";
+import { useState, useEffect } from "react";
+import CommentCard from "./CommentCard";
+import InputBox from "./InputBox";
+import { apiGetComment, apiPostComment } from "../../Context/Api/Axios";
 
-function MainCommentCard({ video, commentUpdate }){
-    const [hasComments, setComments] = useState(null);
-    const [hasReply, setReply] = useState(null);
-    const [isActiveReplyButton, setReplyState] = useState(false);
-    const [showReplies, setShowReplies] = useState({});
+function MainCommentCard({ video, commentUpdate }) {
+  const [hasComments, setComments] = useState(null);
+  const [hasReply, setReply] = useState(null);
+  const [isActiveReplyButton, setReplyState] = useState(false);
+  const [showReplies, setShowReplies] = useState({});
 
-    // console.log("comment one "+JSON.stringify(hasComments[0]));
-    const fetchComments = async () => {
-        try {
-          const response = await apiGetComment(video._id);
-          // API returns an array of comments
-          setComments(response.data);
-        } catch (error) {
-          console.error('Error fetching comments', error);
-        }
-      };
+  const fetchComments = async () => {
+    try {
+      const response = await apiGetComment(video._id);
+      // API returns an array of comments
+      setComments(response.data);
+    } catch (error) {
+      console.error("Error fetching comments", error);
+    }
+  };
 
-    const toggleReplies = (commentId) => {
-      setShowReplies((prevState) => ({
-        ...prevState,
-        [commentId]: !prevState[commentId]
-      }));
-    };
+  const toggleReplies = (commentId) => {
+    setShowReplies((prevState) => ({
+      ...prevState,
+      [commentId]: !prevState[commentId],
+    }));
+  };
 
-    useEffect(() => {
-        if(hasComments === null) return;
-        setComments((prev) => [...prev, commentUpdate]);
-    },[commentUpdate])
+  useEffect(() => {
+    if (hasComments === null) return;
+    setComments((prev) => [...prev, commentUpdate]);
+  }, [commentUpdate]);
 
-    useEffect(() => {
-        fetchComments();
-    },[hasComments])
+  useEffect(() => {
+    fetchComments();
+  }, []);
 
-    return (
-        <> 
-            {hasComments ? hasComments.slice().reverse().map((comment) => (
+  return (
+    <>
+      {hasComments ? (
+        hasComments
+          .slice()
+          .reverse()
+          .map((comment) => (
             <>
-                <CommentCard 
-                   comment={comment} 
-                   showReplies={showReplies[comment._id]}
-                   toggleReplies={() => toggleReplies(comment._id)}
-                />
-    
-            {showReplies[comment._id] && comment.replies ? comment.replies.map((reply) => (
-              <div className="ml-4">
-                <CommentCard 
-                  comment={reply} 
-                  reply={reply} 
-                />   
-              </div>  
-            )):
-               <></>
-            }
+              <CommentCard
+                comment={comment}
+                showReplies={showReplies[comment._id]}
+                toggleReplies={() => toggleReplies(comment._id)}
+              />
+
+              {showReplies[comment._id] && comment.replies ? (
+                comment.replies.map((reply, i) => (
+                  <div key={i} className="ml-4">
+                    <CommentCard comment={reply} reply={reply} />
+                  </div>
+                ))
+              ) : (
+                <></>
+              )}
             </>
-            )):
-            <div>No comments</div>
-            }
-        </>
-        )
-    
+          ))
+      ) : (
+        <div>No comments</div>
+      )}
+    </>
+  );
 }
 
 export default MainCommentCard;
