@@ -1,26 +1,33 @@
 /* eslint-disable react/prop-types */
-import { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Transition from '../utils/Transition';
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+import Transition from "../utils/Transition";
+import { apiGetVideos } from "../../../Context/Api/Axios";
 
-function ModalSearch({
-  id,
-  searchId,
-  modalOpen,
-  setModalOpen
-}) {
-
+function ModalSearch({ id, searchId, modalOpen, setModalOpen }) {
   const modalContent = useRef(null);
   const searchInput = useRef(null);
+  const [searchResult, setSearchResult] = useState([]);
+
+  const handleInputChange = async (event) => {
+    const query = event.target.value;
+
+    try {
+      const response = await apiGetVideos(`/videos/search?search=${query}`);
+      setSearchResult(response.data);
+    } catch (error) {
+      console.error("Error searching videos:", error);
+    }
+  };
 
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
-      if (!modalOpen || modalContent.current.contains(target)) return
+      if (!modalOpen || modalContent.current.contains(target)) return;
       setModalOpen(false);
     };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
+    document.addEventListener("click", clickHandler);
+    return () => document.removeEventListener("click", clickHandler);
   });
 
   // close if the esc key is pressed
@@ -29,8 +36,8 @@ function ModalSearch({
       if (!modalOpen || keyCode !== 27) return;
       setModalOpen(false);
     };
-    document.addEventListener('keydown', keyHandler);
-    return () => document.removeEventListener('keydown', keyHandler);
+    document.addEventListener("keydown", keyHandler);
+    return () => document.removeEventListener("keydown", keyHandler);
   });
 
   useEffect(() => {
@@ -81,8 +88,13 @@ function ModalSearch({
                 type="search"
                 placeholder="Search Anything…"
                 ref={searchInput}
+                onChange={handleInputChange} // Add this line to call handleInputChange on input change
               />
-              <button className="absolute inset-0 right-auto group" type="submit" aria-label="Search">
+              <button
+                className="absolute inset-0 right-auto group"
+                type="submit"
+                aria-label="Search"
+              >
                 <svg
                   className="w-4 h-4 shrink-0 fill-current text-slate-400 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400 ml-4 mr-2"
                   viewBox="0 0 16 16"
@@ -97,28 +109,40 @@ function ModalSearch({
           <div className="py-4 px-2">
             {/* Recent searches */}
             <div className="mb-3 last:mb-0">
-              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-2 mb-2">Recent searches</div>
+              <div className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase px-2 mb-2">
+                Recent Search
+              </div>
               <ul className="text-sm">
-                <li>
-                  <Link
-                    className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
-                    to="#0"
-                    onClick={() => setModalOpen(!modalOpen)}
-                  >
-                    <svg
-                      className="w-4 h-4 fill-current text-slate-400 dark:text-slate-500 group-hover:text-white group-hover:text-opacity-50 shrink-0 mr-3"
-                      viewBox="0 0 16 16"
+                {searchResult.map((video) => (
+                  <li key={video.id}>
+                    <Link
+                      to={`/videos/${video.id}`}
+                      className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
+                      onClick={() => setModalOpen(!modalOpen)}
                     >
-                      <path d="M15.707 14.293v.001a1 1 0 01-1.414 1.414L11.185 12.6A6.935 6.935 0 017 14a7.016 7.016 0 01-5.173-2.308l-1.537 1.3L0 8l4.873 1.12-1.521 1.285a4.971 4.971 0 008.59-2.835l1.979.454a6.971 6.971 0 01-1.321 3.157l3.107 3.112zM14 6L9.127 4.88l1.521-1.28a4.971 4.971 0 00-8.59 2.83L.084 5.976a6.977 6.977 0 0112.089-3.668l1.537-1.3L14 6z" />
-                    </svg>
-                    <span>Search Content</span>
-                  </Link>
-                </li>
-               
+                      <div className="flex">
+                        <video
+                          controls
+                          className="w-24 h-auto rounded-lg shadow-lg mr-4"
+                        >
+                          <source src={video.videoURL} type="video/mp4" />
+                          Your browser does not support the video tag.
+                        </video>
+                        <div>
+                          <p className="text-slate-900 dark:text-slate-100 font-bold text-lg mb-2">
+                            {video.videoTitle}
+                          </p>
+                          <p className="text-slate-600 dark:text-slate-300">
+                            {video.videoSummary}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
             {/* Recent pages */}
-             
           </div>
         </div>
       </Transition>

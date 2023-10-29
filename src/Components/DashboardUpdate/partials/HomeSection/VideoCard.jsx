@@ -10,8 +10,9 @@ import Preloader from "../../../Preloader/Preloader";
 import { getDaysSinceUpload } from "../../../../utils/ConvertTime";
 
 export function VideoCard({ video, index }) {
+  console.log(video);
   return (
-    <div className="flex flex-col mr-8 col-span-full sm:col-span-3 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
+    <div className="flex flex-col mr-8 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
       <div className="py-2 px-4">
         <div>
           <video
@@ -25,7 +26,7 @@ export function VideoCard({ video, index }) {
           <div className="flex mt-8 items-center justify-between gap-4 my-2">
             <p className="text-2xl">Title: {video.videoTitle}</p>
             <p className="text-gray-600 dark:text-gray-400">
-              {getDaysSinceUpload(video.uploadedAt)}
+              {getDaysSinceUpload(video.updatedAt)}
             </p>
           </div>
 
@@ -61,7 +62,6 @@ export function VideoCardList() {
   useEffect(() => {
     async function fetchVideos() {
       try {
-        console.log("1");
         const response = await apiGetVideos(
           `/videos/fetch/public?page=${page}`
         );
