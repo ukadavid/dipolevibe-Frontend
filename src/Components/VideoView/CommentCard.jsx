@@ -31,7 +31,7 @@ function CommentCard({ comment, showReplies, toggleReplies }) {
 
   return (
     <>
-      <div className="flex items-center py-2 mt-2">
+      <div className="flex mt-8 items-center py-2 mt-2">
         <div className="mr-2">
           <div className="h-12 w-12 rounded-full text-white bg-gray-300 flex items-center justify-center">
             {newInitials}
@@ -50,7 +50,7 @@ function CommentCard({ comment, showReplies, toggleReplies }) {
           </div>
         </div>
       </div>
-      <div className="flex items-center relative mt-0.5 left-4">
+      <div className="flex mb-8 items-center relative mt-0.5 left-4">
         <button
           className="relative left-6 text-white text-sm rounded-full px-4 py-1 hover:bg-gray-500"
           onClick={() => {
