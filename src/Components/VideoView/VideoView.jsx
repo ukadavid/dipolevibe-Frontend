@@ -107,17 +107,21 @@ const VideoView = () => {
 
   if (video) {
     return (
-      <div className="flex ml-4 flex-col lg:flex-row h-screen dark:bg-gray-800 lg:pt-28 mt-20 overflow-scroll">
+      <div className="flex lg:pl-4 flex-col lg:flex-row h-screen dark:bg-gray-800 lg:pt-28 mt-20 overflow-scroll">
         <div
           className="w-auto relative mt-0 h-full "
-          style={{ width: leftColumnWidth, marginTop: "-100px" }}
+          style={
+            window.innerWidth > 768
+              ? { width: leftColumnWidth, marginTop: "-100px" }
+              : {}
+          }
         >
           <div className="h-full pt-4 ">
             <video className="mb-1 w-full" controls>
               <source src={video.videoURL} type="video/mp4" />
             </video>
-            <div className="px-2 mt-0 bg-gray-800 dark:bg-gray-800">
-              <div className="mt-2 mb-3 text-lg text-white font-bold ">
+            <div className="px-2 w-full mt-0 bg-gray-800 dark:bg-gray-800 w-350">
+              <div className="mt-2 mb-3  text-lg text-white font-bold ">
                 <span>{video.videoTitle}</span>
               </div>
               <div className="text-white">
@@ -157,14 +161,14 @@ const VideoView = () => {
               />
               <MainCommentCard video={video} commentUpdate={commentUpdate} />
             </div>
-            <div className="resize-handle" onMouseDown={handleMouseDown}></div>
+            <div
+              className="resize-handle hidden lg:block"
+              onMouseDown={handleMouseDown}
+            ></div>
           </div>
         </div>
         <div>
-          <div
-            className="w-96 min-w-96 max-w-5xl div-section lg:ml-4 h-full rounded-full rounded-lg shadow-lg bg-white mt-1 lg:mt-1 flex flex-col relative"
-            style={{ marginTop: "-100px" }}
-          >
+          <div className="w-full mx-auto mb-8 min-w-96 max-w-5xl div-section lg:mx-auto lg:ml-4 h-3/6 rounded-full rounded-lg shadow-lg bg-white mt-16 lg:mt-4 flex flex-col relative ">
             <div className="pt-0 px-4 h-full">
               <Transcription transcription={video.transcription} />
             </div>
@@ -175,7 +179,7 @@ const VideoView = () => {
               onVideoClick={handleRecommendedVideoClick}
             />
           ) : (
-            <div> No recommended video </div>
+            <div className="mb-32"> No recommended video </div>
           )}
         </div>
       </div>
