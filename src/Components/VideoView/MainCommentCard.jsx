@@ -9,6 +9,7 @@ function MainCommentCard({ video, commentUpdate }){
     const [isActiveReplyButton, setReplyState] = useState(false);
     const [showReplies, setShowReplies] = useState({});
 
+    // console.log("comment one "+JSON.stringify(hasComments[0]));
     const fetchComments = async () => {
         try {
           const response = await apiGetComment(video._id);
@@ -33,7 +34,7 @@ function MainCommentCard({ video, commentUpdate }){
 
     useEffect(() => {
         fetchComments();
-    },[])
+    },[hasComments])
 
     return (
         <> 

@@ -17,11 +17,8 @@ import InputBox from './InputBox';
 const VideoView = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
   const [commentUpdate, setCommentUpdate] = useState('');
-  // const location = useLocation();
-  // const videoObject = location.state.videoUrl;
   const videoObject = JSON.parse(localStorage.getItem('videoObject'))
   const [video, setVideo] = useState(videoObject);
-  // const [ hasRecommendedVideos ] = false;
   const [recommendedVideos, setRecommendedVideos] = useState(null);
   console.log("video from localStorage "+ typeof video)
 
@@ -77,12 +74,11 @@ const VideoView = () => {
   }, []);
 
   useEffect(() => {
-    console.log("comment triggered rerender")
   }, [commentUpdate])
 
-  useEffect(() => {
-    // handleRecommendedVideoClick(video);
-  }, [video])
+  // useEffect(() => {
+  //   // handleRecommendedVideoClick(video);
+  // }, [video])
 
   useEffect(() => {
     // Define a function to handle storage events
