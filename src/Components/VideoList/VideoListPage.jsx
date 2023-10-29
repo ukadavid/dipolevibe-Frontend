@@ -51,16 +51,16 @@ function VideoList() {
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-6 lg:px-8 my-14">
-        <div className="flex justify-center my-8 items-center">
+        <div className="flex flex-col justify-center my-8 items-center">
           <SearchBar onSearch={handleSearch} />
-          <div className="flex ml-auto justify-end items-end">
+          <div className="flex lg:ml-auto mt-4 justify-end items-end">
             <FilterButton />
             {/* Datepicker built with flatpickr */}
             <Datepicker />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {videos.map((video, index) => (
             <VideoCard key={index} video={video} index={index} />
           ))}
