@@ -174,12 +174,14 @@ const VideoView = () => {
             </div>
           </div>
           {recommendedVideos && Object.keys(recommendedVideos)?.length >= 1 ? (
-            <RecommendedVideoContainer
-              video={recommendedVideos}
-              onVideoClick={handleRecommendedVideoClick}
-            />
+            <div className="lg:ml-4">
+              <RecommendedVideoContainer
+                video={recommendedVideos}
+                onVideoClick={handleRecommendedVideoClick}
+              />
+            </div>
           ) : (
-            <div className="mb-32"> No recommended video </div>
+            <div className="mb-32 lg:ml-4"> No recommended video </div>
           )}
         </div>
       </div>
