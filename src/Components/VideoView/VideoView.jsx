@@ -21,7 +21,6 @@ const VideoView = () => {
   // const videoObject = location.state.videoUrl;
   const videoObject = JSON.parse(localStorage.getItem("videoObject"));
   const [video, setVideo] = useState(videoObject);
-  // const [ hasRecommendedVideos ] = false;
   const [recommendedVideos, setRecommendedVideos] = useState(null);
   console.log("video from localStorage " + typeof video);
 

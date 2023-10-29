@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { PiUser } from "react-icons/pi";
-import { apiPostComment } from "../../Context/Api/Axios";
-import Logo from "../../assets/logo.jpeg";
+import { useState } from 'react';
+import { PiUser } from 'react-icons/pi';
+import { apiPostComment } from '../../Context/Api/Axios';
+import generateRandomName from '../../utils/generateRandomName';
 
 function InputBox({
   postMainComment,
@@ -15,13 +15,28 @@ function InputBox({
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true); // Initial state, submit button is disabled
   const [firstCharacterEntered, setFirstCharacterEntered] = useState(false); // Initial state, first character not entered
 
+
+  const comment = {
+    _id: "",
+    text: commentText,
+    author: generateRandomName(),
+    userId: "",
+    authorPaid: "false",
+    PubliVideo: "",
+    timestamp: Date.now(),
+  }
+
+  const commentContainer = {
+    comment: comment,
+    replies: []
+  }
+
   const triggerCommentPost = () => {
-    console.log("trigger comment executed!!");
     // Check if the comment text is not empty
     if (commentText.trim() !== "") {
       // Call the postMainComment function and pass the comment text as an argument
       postMainComment(commentText);
-      setCommentUpdate(commentText);
+      setCommentUpdate(commentContainer);
       resetInputState();
     }
   };
