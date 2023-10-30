@@ -8,6 +8,8 @@ function MainCommentCard({ video, commentUpdate }) {
   const [hasReply, setReply] = useState(null);
   const [isActiveReplyButton, setReplyState] = useState(false);
   const [showReplies, setShowReplies] = useState({});
+  const [replyUpdate, setReplyUpdate] = useState("Holla");
+  const [okay, setOkay] = useState("");
 
   const fetchComments = async () => {
     try {
@@ -33,7 +35,11 @@ function MainCommentCard({ video, commentUpdate }) {
 
   useEffect(() => {
     fetchComments();
-  }, []);
+  }, [commentUpdate,replyUpdate]);
+
+  const handleCommentCardCommentText = (value) =>{
+    setOkay(value);  
+  }
 
   return (
     <>
@@ -52,7 +58,10 @@ function MainCommentCard({ video, commentUpdate }) {
               {showReplies[comment._id] && comment.replies ? (
                 comment.replies.map((reply, i) => (
                   <div key={i} className="ml-4">
-                    <CommentCard comment={reply} reply={reply} />
+                    <CommentCard 
+                      comment={reply} 
+                      setReplyUpdate={setReplyUpdate()} 
+                    />
                   </div>
                 ))
               ) : (

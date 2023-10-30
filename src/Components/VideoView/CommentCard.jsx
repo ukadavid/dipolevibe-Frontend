@@ -7,15 +7,15 @@ import { RiArrowUpSFill } from "react-icons/ri";
 import useTimeAgo from "../../hooks/useTimeAgo";
 import generateInitials from "../../utils/initialsUtils";
 
-function CommentCard({ comment, showReplies, toggleReplies }) {
+function CommentCard({ comment, showReplies, toggleReplies, setReplyUpdatee }) {
   const author = comment.author;
   const newInitials = generateInitials(author);
   const [replyComments, setReplyComment] = useState([]);
   const [activeReplyComment, setActiveReplyComment] = useState(false);
   const [isActiveReplyButton, setReplyState] = useState(false);
-  const newTimeAgo = useTimeAgo(comment.updatedAt);
+  const newTimeAgo = useTimeAgo(comment.timestamp);
   const commentId = comment._id;
-
+   
   {
     isActiveReplyButton;
   }
@@ -89,7 +89,7 @@ function CommentCard({ comment, showReplies, toggleReplies }) {
             postReplyComment={handleReplyPost}
             commentId={commentId}
             setReplyState={setReplyState}
-            onTextSubmit=""
+            setReplyUpdate={setReplyUpdatee}
           />
         )}
       </>
