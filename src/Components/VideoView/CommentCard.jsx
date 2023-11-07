@@ -7,7 +7,7 @@ import { RiArrowUpSFill } from "react-icons/ri";
 import useTimeAgo from "../../hooks/useTimeAgo";
 import generateInitials from "../../utils/initialsUtils";
 
-function CommentCard({ comment, showReplies, toggleReplies, setReplyUpdatee }) {
+function CommentCard({ comment, showReplies, toggleReplies, onReplyUpdate }) {
   const author = comment.author;
   const newInitials = generateInitials(author);
   const [replyComments, setReplyComment] = useState([]);
@@ -22,12 +22,16 @@ function CommentCard({ comment, showReplies, toggleReplies, setReplyUpdatee }) {
 
   const handleReplyPost = (replyText) => {
     try {
-      console.log(replyText);
       apiPostReply(`/reply/${commentId}`, { text: replyText });
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const handleReplyUpdate = (text) => {
+  //   console.log("CommentCard ln 32: "+ text);
+  //   setReplyUpdate('text')
+  // }
 
   return (
     <>
@@ -54,7 +58,6 @@ function CommentCard({ comment, showReplies, toggleReplies, setReplyUpdatee }) {
         <button
           className="relative left-6 text-white text-sm rounded-full px-4 py-1 hover:bg-gray-500"
           onClick={() => {
-            console.log("isActiveReplyButton " + isActiveReplyButton);
             setReplyState(true);
           }}
         >
@@ -89,7 +92,7 @@ function CommentCard({ comment, showReplies, toggleReplies, setReplyUpdatee }) {
             postReplyComment={handleReplyPost}
             commentId={commentId}
             setReplyState={setReplyState}
-            setReplyUpdate={setReplyUpdatee}
+            onReplyUpdate={onReplyUpdate}
           />
         )}
       </>

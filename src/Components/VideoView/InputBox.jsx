@@ -8,7 +8,7 @@ function InputBox({
   postReplyComment,
   type,
   setReplyState,
-  setReplyUpdate,
+  onReplyUpdate,
   setCommentUpdate
 }) {
   const [activeReply, setReply] = useState(false);
@@ -45,7 +45,11 @@ function InputBox({
 
   const triggerReplyPost = () => {
     postReplyComment(commentText);
-    setReplyUpdate(commentText);
+
+    const data = commentText;
+    onReplyUpdate(data);
+    console.log("we have called function: onReplyState")
+
     resetInputState();
   };
 

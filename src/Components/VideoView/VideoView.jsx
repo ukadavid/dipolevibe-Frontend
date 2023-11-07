@@ -9,7 +9,6 @@ import RecommendedVideoContainer from "./RecommendedVideoContainer";
 import Transcription from "./TranscriptionTab";
 import Preloader from "../Preloader/Preloader";
 import Logo from "../../assets/logo.jpeg";
-import { useLocation } from "react-router-dom";
 import { apiPostComment, apiGetReccVideos } from "../../Context/Api/Axios";
 import MainCommentCard from "./MainCommentCard";
 import InputBox from "./InputBox";

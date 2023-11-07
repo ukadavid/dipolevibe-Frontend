@@ -60,7 +60,7 @@ function VideoList() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-1 gap-y-4 justify-items-center justify-center">
           {videos.map((video, index) => (
             <VideoCard key={index} video={video} index={index} />
           ))}

@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import CommentCard from "./CommentCard";
-import InputBox from "./InputBox";
-import { apiGetComment, apiPostComment } from "../../Context/Api/Axios";
+import { apiGetComment } from "../../Context/Api/Axios";
 
 function MainCommentCard({ video, commentUpdate }) {
   const [hasComments, setComments] = useState(null);
-  const [hasReply, setReply] = useState(null);
-  const [isActiveReplyButton, setReplyState] = useState(false);
   const [showReplies, setShowReplies] = useState({});
-  const [replyUpdate, setReplyUpdate] = useState("Holla");
-  const [okay, setOkay] = useState("");
+  const [replyUpdate, setReplyUpdate] = useState(null);
 
   const fetchComments = async () => {
     try {
@@ -28,18 +24,27 @@ function MainCommentCard({ video, commentUpdate }) {
     }));
   };
 
+  const handleReplyUpdate = (data) => {
+    let params = data;
+    setReplyUpdate(params);
+  }
+
   useEffect(() => {
     if (hasComments === null) return;
     setComments((prev) => [...prev, commentUpdate]);
   }, [commentUpdate]);
 
   useEffect(() => {
-    fetchComments();
-  }, [commentUpdate,replyUpdate]);
+    setTimeout(() => {
+      fetchComments();
+    }, 1000)
+  }, [commentUpdate]);
 
-  const handleCommentCardCommentText = (value) =>{
-    setOkay(value);  
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      fetchComments();
+    },1000)
+  },[replyUpdate])
 
   return (
     <>
@@ -53,6 +58,7 @@ function MainCommentCard({ video, commentUpdate }) {
                 comment={comment}
                 showReplies={showReplies[comment._id]}
                 toggleReplies={() => toggleReplies(comment._id)}
+                onReplyUpdate={(data) => handleReplyUpdate(data)}
               />
 
               {showReplies[comment._id] && comment.replies ? (
@@ -60,7 +66,8 @@ function MainCommentCard({ video, commentUpdate }) {
                   <div key={i} className="ml-4">
                     <CommentCard 
                       comment={reply} 
-                      setReplyUpdate={setReplyUpdate()} 
+                      replyUpdate={replyUpdate}
+                      // onReplyUpdate={() => handleReplyUpdate()} 
                     />
                   </div>
                 ))

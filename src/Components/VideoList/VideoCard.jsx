@@ -51,12 +51,14 @@ function VideoCard({ video, index }) {
     }
   };
 
+  console.log("video.videoURL :"+video.videoURL);
+
   return (
     <div style={{
         display: 'inline-block',
         marginBottom: '10px',
-        width: '100%',
-        marginRight: '10px',
+        width: '95%',
+        marginRight: '5px',
         position: 'relative',
         // border: '1px solid grey',
       }}
@@ -87,7 +89,7 @@ function VideoCard({ video, index }) {
             handleViewCountUpdate(videoId);
         }}
         >
-            <BsBoxArrowUpRight className="text-2xl text-slate-200"/>
+            <BsBoxArrowUpRight className="text-lg text-slate-200"/>
         </div>
       <video
         ref={videoRef}
