@@ -1,11 +1,11 @@
-import Success from '../Components/Success/Success'
+import Success from "../Components/Success/Success";
 
 const SuccessPage = () => {
   return (
     <>
-        <Success />
+      <Success />
     </>
-  )
-}
+  );
+};
 
-export default SuccessPage
+export default SuccessPage;

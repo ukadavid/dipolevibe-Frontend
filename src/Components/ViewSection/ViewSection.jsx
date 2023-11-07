@@ -28,6 +28,7 @@ const ViewSection = () => {
   const [numTags, setNumTags] = useState(0);
   const [buttons, setButtons] = useState([]);
   const [hasMinimumTag, setMinimumTagError] = useState(false);
+  const [videoShare, setVideoShare] = useState();
   const navigate = useNavigate();
 
   const handleResize = (e) => {
@@ -101,6 +102,10 @@ const ViewSection = () => {
       console.log(response);
 
       const newVideoUrl = response.data.message.videoObj.videoURL;
+      const videoShareURL = response.data.message.videoObj._id;
+      const videoShareUrl = `http://localhost:5173/video/?${videoShareURL}`;
+      setVideoShare(videoShareUrl);
+      console.log(videoShareURL);
       setVideoUrl(newVideoUrl);
       toast.success(response.data.message.message);
     } catch (error) {
@@ -126,7 +131,7 @@ const ViewSection = () => {
               </video>
             )}
             {submitClicked && loading && <Preloader />}
-            {videoUrl && <SocialMediaShare url={videoUrl} />}
+            {videoUrl && <SocialMediaShare url={videoShare} />}
             <div
               className="resize-handle hidden lg:block"
               onMouseDown={handleMouseDown}
