@@ -19,7 +19,7 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }) {
       console.error("Error searching videos:", error);
     }
   };
-
+  console.log(searchResult);
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -114,9 +114,9 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }) {
               </div>
               <ul className="text-sm">
                 {searchResult.map((video) => (
-                  <li key={video.id}>
+                  <li key={video._id}>
                     <Link
-                      to={`/videos/${video.id}`}
+                      to={`/video/?${video._id}`}
                       className="flex items-center p-2 text-slate-800 dark:text-slate-100 hover:text-white hover:bg-indigo-500 rounded group"
                       onClick={() => setModalOpen(!modalOpen)}
                     >
