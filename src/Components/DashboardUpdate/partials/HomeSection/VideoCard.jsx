@@ -10,7 +10,6 @@ import Preloader from "../../../Preloader/Preloader";
 import { getDaysSinceUpload } from "../../../../utils/ConvertTime";
 
 export function VideoCard({ video, index }) {
-  console.log(video);
   return (
     <div className="flex flex-col mr-8 xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-lg border border-slate-200 dark:border-slate-700">
       <div className="py-2 px-4">
@@ -66,7 +65,6 @@ export function VideoCardList() {
           `/videos/fetch/public?page=${page}`
         );
         const newVideos = response.data.videos.data;
-        console.log(newVideos);
         setData((prevVideos) => [...prevVideos, ...newVideos]);
         setLoading(false); // Data is loaded, set loading to false
       } catch (error) {
