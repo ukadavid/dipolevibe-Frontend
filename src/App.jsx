@@ -49,7 +49,7 @@ function App() {
               <Route path="/VideoViewPage" element={<VideoViewPage />} />
               <Route path="/dashboard" element={<HomeDashboard />} />
               <Route path="/mylibrary" element={<MyLibraryDashboard />} />
-              <Route path="/notification" element={<NotificationDashboard />} />
+              <Route path="/notify" element={<NotificationDashboard />} />
               <Route path="/watchlater" element={<WatchLater />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/analytics" element={<Analytics />} />
