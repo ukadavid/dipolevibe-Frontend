@@ -6,7 +6,7 @@ import Logo from '../../assets/logo.jpeg';
 
 function CardContext({context}){
     const style = { color: "grey", fontSize: "1.5em" }
-    const timeAgo = useTimeAgo(context.uploadedAt)
+    const timeAgo = useTimeAgo(context.createdAt)
     // const initials = generateInitials(context.author);
     // console.log(JSON.stringify(context));
 

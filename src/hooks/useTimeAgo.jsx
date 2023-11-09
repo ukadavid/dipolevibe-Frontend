@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const useTimeAgo = (timestamp) => {
   const [timeAgo, setTimeAgo] = useState('');
-
+  console.log("timestamp: "+timestamp)
   useEffect(() => {
     const calculateTimeAgo = () => {
       const currentDate = new Date();
