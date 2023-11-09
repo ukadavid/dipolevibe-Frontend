@@ -101,7 +101,9 @@ const DataProvider = ({ children }) => {
         },
       });
       const data = await response.data;
+      console.log(data.email);
       toast.success(data.message);
+
       if (data.message === "You are logged in successfully") {
         localStorage.setItem("email", data.email);
         localStorage.setItem("User", "User");

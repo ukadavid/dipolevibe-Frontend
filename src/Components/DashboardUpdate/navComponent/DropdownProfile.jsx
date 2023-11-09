@@ -4,17 +4,24 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Transition from "../utils/Transition";
 import { getUsernameFromEmail } from "../../../utils/emailExtraction";
+import generateInitials from "../../../utils/initialsUtils";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [name, setName] = useState();
+  const [initials, setInitials] = useState();
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
-  const username = getUsernameFromEmail(localStorage.getItem("email"));
-
-  setName(username);
+  useEffect(() => {
+    const user = localStorage.getItem("email");
+    console.log(user);
+    const username = getUsernameFromEmail(user);
+    const initialSet = generateInitials(username);
+    setInitials(initialSet);
+    setName(username);
+  }, []);
 
   // close on click outside
   useEffect(() => {
@@ -61,11 +68,11 @@ function DropdownProfile({ align }) {
         aria-expanded={dropdownOpen}
       >
         <span className="font-medium text-sm py-1 px-3 w-8 h-8 flex items-center justify-center bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600/80 rounded-full">
-          TU
+          {initials}
         </span>
         <div className="flex items-center truncate">
           <span className="truncate ml-2 text-sm font-medium dark:text-slate-300 group-hover:text-slate-800 dark:group-hover:text-slate-200">
-            User name
+            {name}
           </span>
           <svg
             className="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400"

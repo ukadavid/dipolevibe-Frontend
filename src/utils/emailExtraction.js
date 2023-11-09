@@ -3,7 +3,6 @@ export function getUsernameFromEmail(email) {
   if (parts.length === 2) {
     return parts[0];
   } else {
-    // Handle invalid email addresses
     return null;
   }
 }
