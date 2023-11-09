@@ -1,7 +1,6 @@
 import React, { createContext } from "react";
 import { apiPost } from "./Api/Axios";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,15 +22,7 @@ const DataProvider = ({ children }) => {
 
       console.log(registerData);
 
-      const response = await axios.post(
-        "https://localhost:7299/api/User/register",
-        registerData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await apiPost("/User/register", registerData);
       const data = await response.data;
       toast.success(data);
       setTimeout(() => {
