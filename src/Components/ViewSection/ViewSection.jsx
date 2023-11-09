@@ -31,6 +31,7 @@ const ViewSection = () => {
   const [numTags, setNumTags] = useState(0);
   const [buttons, setButtons] = useState([]);
   const [hasMinimumTag, setMinimumTagError] = useState(false);
+  const [videoShare, setVideoShare] = useState();
   const [displayModal, setModal] = useState(false);
   const [isAnonUser, setAnonUser] = useState(false);
   const [isPrivatePublish, setPrivatePublish] = useState(false);
@@ -114,15 +115,14 @@ const ViewSection = () => {
   }
   
   const submitLogic = async () => {
-    console.log("inside submitLogic scope")
     try{
       console.log(submitContext);
-      //  const response = await apiTranscribePost("/videos/upload",
-      //                                            submitContext
-      //                                            );
-      // const newVideoUrl = response.data.message.videoObj.videoURL;
-      // setVideoUrl(newVideoUrl);
-      // toast.success(response.data.message.message);
+       const response = await apiTranscribePost("/videos/upload",
+                                                 submitContext
+                                                 );
+      const newVideoUrl = response.data.message.videoObj.videoURL;
+      setVideoUrl(newVideoUrl);
+      toast.success(response.data.message.message);
     }
     catch(error){
       console.log(error);
@@ -192,7 +192,7 @@ const ViewSection = () => {
               </video>
             )}
             {submitClicked && loading && <Preloader />}
-            {videoUrl && <SocialMediaShare url={videoUrl} />}
+            {videoUrl && <SocialMediaShare url={videoShare} />}
             <div
               className="resize-handle hidden lg:block"
               onMouseDown={handleMouseDown}
@@ -249,7 +249,7 @@ const ViewSection = () => {
                 /> */}
               <p className="edit-text">Tags</p>
             </div>
-            <div class="mt-2.5">
+            {/* <div class="mt-2.5">
               <input 
                 id="checkbox"
                 checked={isChecked}
@@ -258,12 +258,12 @@ const ViewSection = () => {
                 onClick={handleCheckBox}
               />
               <label for="publish-private" class="ml-1.5 text-slate-500 text-sm hover:text-black"><span>publish private</span></label>
-            </div>
+            </div> */}
 
             <div>
               <div className="flex my-8 justify-center ">
                 <button
-                  onClick={handleDefaultSubmit}
+                  onClick={submitLogic}
                   className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 >
                   Submit

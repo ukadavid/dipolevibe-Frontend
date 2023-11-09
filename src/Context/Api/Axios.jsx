@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import axios from "axios";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -16,17 +17,21 @@ export const apiNodeService = (path) => {
 };
 
 export const apiGetVideos = (path) => {
-    return axios.get(`${TranscriptionUrl}${path}`);
+  return axios.get(`${TranscriptionUrl}${path}`);
 };
 
 // Post Request
 export const apiPost = (path, data) => {
-  return axios.post(`${baseUrl}${path}`, data);
+  return axios.post(`${baseUrl}${path}`, data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
 
-export const apiPostReply = ( path, data) => {
-  return axios.post(`${TranscriptionUrl}${path}`, data)
-}
+export const apiPostReply = (path, data) => {
+  return axios.post(`${TranscriptionUrl}${path}`, data);
+};
 
 export const apiPostViewCount = (path) => {
   return axios.post(`${TranscriptionUrl}${path}`);

@@ -1,18 +1,17 @@
 import React, { createContext } from "react";
 import { apiPost } from "./Api/Axios";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const dataContext = createContext();
 
-  /**=================Video Data =================================== */
+/**=================Video Data =================================== */
 
 // eslint-disable-next-line react/prop-types
 const DataProvider = ({ children }) => {
-
-
   /**=================Registration =================================== */
 
   const registerConfig = async (formData) => {
@@ -22,21 +21,24 @@ const DataProvider = ({ children }) => {
         password: formData.password,
       };
 
-      
-      console.log(registerData)
-      const response = await apiPost("/user/auth/register", registerData);
-      const data = await response.data;
-      console.log(data);
-      toast.success(data.displayMessage);
+      console.log(registerData);
 
+      const response = await axios.post(
+        "https://localhost:7299/api/User/register",
+        registerData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.data;
+      toast.success(data);
       setTimeout(() => {
-        // const userEmail = registerData.email;
-         window.location.href = `/success`;
-        //  window.location.href = `/verify?userId=${userEmail}`;
-  
+        window.location.href = "/success";
       }, 2000);
     } catch (error) {
-      toast.error(error.response.data.errorMessages[0]);
+      toast.error(error.response.data);
     }
   };
 
@@ -90,42 +92,45 @@ const DataProvider = ({ children }) => {
     }
   };
 
-    /**=================User Login =================================== */
-    const userLoginConfig = async (formData) => {
-      try {
-        const userLoginData = {
-          email: formData.email,
-          password: formData.password,
-        };
-  
-        const response = await apiPost("/user/auth/login", userLoginData);
-        const data = await response.data;
-        if (data.displayMessage === "Successfully login") {
-          localStorage.setItem("token", data.result.jwt);
-          // localStorage.setItem("userid", JSON.stringify(data.user._id));
-        }
-        console.log(data.result.jwt);
-        
-        toast.success(data.displayMessage);
-  
-        setTimeout(() => {
-          window.location.href = "/home";
-        }, 2000);
-      } catch (error) {
-        toast.error(error.response.data.errorMessages[0]);
-      }
-    };
+  /**=================User Login =================================== */
+  const userLoginConfig = async (formData) => {
+    try {
+      const userLoginData = {
+        email: formData.email,
+        password: formData.password,
+      };
 
-     /* ==================================== Verify Email with OTP ================================================*/
+      const response = await apiPost("/user/auth/login", userLoginData);
+      const data = await response.data;
+      if (data.displayMessage === "Successfully login") {
+        localStorage.setItem("token", data.result.jwt);
+        // localStorage.setItem("userid", JSON.stringify(data.user._id));
+      }
+      console.log(data.result.jwt);
+
+      toast.success(data.displayMessage);
+
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 2000);
+    } catch (error) {
+      toast.error(error.response.data.errorMessages[0]);
+    }
+  };
+
+  /* ==================================== Verify Email with OTP ================================================*/
   const OTPConfig = async (enteredOTP, userId) => {
     try {
       const OTPData = {
-        "token": enteredOTP,
+        token: enteredOTP,
       };
 
-      let email = userId
-      
-      const response = await apiPost(`/user/auth/confirm-email/${email}`, OTPData);
+      let email = userId;
+
+      const response = await apiPost(
+        `/user/auth/confirm-email/${email}`,
+        OTPData
+      );
       console.log(OTPData);
       const data = await response.data;
       if (data.displayMessage === "Success") {
@@ -134,9 +139,6 @@ const DataProvider = ({ children }) => {
           window.location.href = "/login";
         }, 2000);
       }
-      
-
-
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.errorMessages[0]);
@@ -152,9 +154,11 @@ const DataProvider = ({ children }) => {
       };
       console.log(EmailData);
       console.log(EmailData.email);
-      
-      const response = await apiPost(`/user/auth/forgot_password${EmailData.email}`);
- 
+
+      const response = await apiPost(
+        `/user/auth/forgot_password${EmailData.email}`
+      );
+
       console.log(EmailData.otp);
       const data = await response.data;
       if (data.displayMessage === "Success") {
@@ -180,14 +184,13 @@ const DataProvider = ({ children }) => {
         adminLoginConfig,
         userLoginConfig,
         OTPConfig,
-        EmailConfig
+        EmailConfig,
       }}
     >
       {children}
     </dataContext.Provider>
   );
 };
-
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {

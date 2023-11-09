@@ -1,4 +1,5 @@
 import "./App.css";
+import { useParams } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./Pages/Signup/UserSignupPage";
 import AdminSignupPage from "./Pages/Signup/AdminSignupPage";
@@ -9,7 +10,6 @@ import HomePage from "./Pages/HomePage/HomePage";
 import SuccessPage from "./Pages/SuccessPage";
 import Page404Page from "./Pages/Page404Page";
 import ResetPasswordPage from "./Pages/ResetPasswordPage";
-import AccountVerificationPage from "./Pages/AccountVerificationPage";
 import ForgotPasswordPage from "./Pages/ForgotPasswordPage";
 import ViewPage from "./Pages/ViewPage/ViewPage";
 import VideoListPage from "./Pages/VideoListPage";
@@ -21,8 +21,12 @@ import WatchLater from "./Components/DashboardUpdate/pages/WatchLater";
 import Settings from "./Components/DashboardUpdate/pages/Settings";
 import Analytics from "./Components/DashboardUpdate/pages/Analytics";
 import ThemeProvider from "./Components/DashboardUpdate/utils/ThemeContext";
+import EmailVerificationPage from "./Pages/EmailVerificationPage";
+import Video from "./Components/Video/Video";
 
 function App() {
+  console.log(useParams());
+
   return (
     <div>
       <DataProvider>
@@ -34,8 +38,9 @@ function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/adminSignup" element={<AdminSignupPage />} />
-              <Route path="/success" element={<SuccessPage />} />
-              <Route path="/verify" element={<AccountVerificationPage />} />
+              <Route path="/verify/" element={<SuccessPage />} />
+              <Route path="/success" element={<EmailVerificationPage />} />
+              <Route path="/video/" element={<Video />} />
               <Route path="*" element={<Page404Page />} />
               <Route path="/resetPassword" element={<ResetPasswordPage />} />
               <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
