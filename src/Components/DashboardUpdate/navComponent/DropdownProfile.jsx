@@ -8,15 +8,14 @@ import generateInitials from "../../../utils/initialsUtils";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [name, setName] = useState();
-  const [initials, setInitials] = useState();
+  const [name, setName] = useState("");
+  const [initials, setInitials] = useState("");
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
   useEffect(() => {
     const user = localStorage.getItem("email");
-    console.log(user);
     const username = getUsernameFromEmail(user);
     const initialSet = generateInitials(username);
     setInitials(initialSet);
