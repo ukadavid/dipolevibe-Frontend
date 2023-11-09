@@ -1,7 +1,6 @@
 import React, { createContext } from "react";
 import { apiPost } from "./Api/Axios";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -23,15 +22,7 @@ const DataProvider = ({ children }) => {
 
       console.log(registerData);
 
-      const response = await axios.post(
-        "https://localhost:7299/api/User/register",
-        registerData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await apiPost("/User/register", registerData);
       const data = await response.data;
       toast.success(data);
       setTimeout(() => {
@@ -74,21 +65,25 @@ const DataProvider = ({ children }) => {
         password: formData.password,
       };
 
-      const response = await apiPost("/admin/login", adminLoginData);
+      const response = await apiPost("/User/login", adminLoginData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.data;
-      if (data.message === "Login successful") {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userid", JSON.stringify(data.admin._id));
+      toast.success(data.message);
+      if (data.message === "You are logged in successfully") {
+        localStorage.setItem("token", data.email);
+        localStorage.setItem("User", "User");
       }
       console.log(data);
       console.log(data.message);
-      toast.success(data.message);
 
       setTimeout(() => {
-        window.location.href = "/adminDashboard";
+        window.location.href = "/dashboard";
       }, 2000);
     } catch (error) {
-      toast.error(error.response.data.error);
+      toast.error(error.response.data);
     }
   };
 
@@ -100,21 +95,27 @@ const DataProvider = ({ children }) => {
         password: formData.password,
       };
 
-      const response = await apiPost("/user/auth/login", userLoginData);
+      const response = await apiPost("/User/login", userLoginData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       const data = await response.data;
-      if (data.displayMessage === "Successfully login") {
-        localStorage.setItem("token", data.result.jwt);
-        // localStorage.setItem("userid", JSON.stringify(data.user._id));
-      }
-      console.log(data.result.jwt);
+      console.log(data.email);
+      toast.success(data.message);
 
-      toast.success(data.displayMessage);
+      if (data.message === "You are logged in successfully") {
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("User", "User");
+      }
+      console.log(data);
+      console.log(data.message);
 
       setTimeout(() => {
-        window.location.href = "/home";
+        window.location.href = "/dashboard";
       }, 2000);
     } catch (error) {
-      toast.error(error.response.data.errorMessages[0]);
+      toast.error(error.response.data.message);
     }
   };
 

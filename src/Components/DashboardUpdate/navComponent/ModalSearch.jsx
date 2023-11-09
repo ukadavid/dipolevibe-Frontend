@@ -19,7 +19,6 @@ function ModalSearch({ id, searchId, modalOpen, setModalOpen }) {
       console.error("Error searching videos:", error);
     }
   };
-  console.log(searchResult);
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
