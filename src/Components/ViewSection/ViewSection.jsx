@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../Preloader/Preloader";
 import TagInput from "./TagInput";
+import TranscriptionPrompt from "../Modal/TranscriptionPrompt";
+import SignUpPrompt from "../Modal/SignUpPrompt";
 
 const ViewSection = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
@@ -29,8 +31,25 @@ const ViewSection = () => {
   const [buttons, setButtons] = useState([]);
   const [hasMinimumTag, setMinimumTagError] = useState(false);
   const [videoShare, setVideoShare] = useState();
+  const [displayModal, setModal] = useState(false);
+  const [isAnonUser, setAnonUser] = useState(false);
+  const [isPrivatePublish, setPrivatePublish] = useState(false);
+  const [displaySignUpModal, setSignUpModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
+
+  const submitContext = {
+    tag,
+    title,
+    summary,
+    isPrivatePublish: isPrivatePublish,
+    video: mostRecentVideo?.blob,
+  }
+
+  const isTranscribe = true
+
+  
   const handleResize = (e) => {
     const newWidth = `${Math.max(
       20,
@@ -81,33 +100,47 @@ const ViewSection = () => {
     };
   }, []);
 
-  const handleSubmit = async () => {
+  const handleCheckBox = () => {
+    toggleCheckbox();
+
+    isAnonUser ? setSignUpModal(true) : setPrivatePublish( !isPrivatePublish )
+
+    isPrivatePublish ? 
+       submitContext.isPrivatePublish = true : 
+       submitContext.isPrivatePublish = false;
+      
+    console.log("submitContext :"+JSON.stringify(submitContext));
+    return;
+  }
+  
+  const submitLogic = async () => {
+    try{
+      console.log(submitContext);
+       const response = await apiTranscribePost("/videos/upload",
+                                                 submitContext
+                                                 );
+      const newVideoUrl = response.data.message.videoObj.videoURL;
+      setVideoUrl(newVideoUrl);
+      toast.success(response.data.message.message);
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
+
+
+  const handleDefaultSubmit = async () => {
     try {
       if (buttons.length < 1) {
         setMinimumTagError(true); // Set the tag limit message
         return;
       }
+
       setSubmitClicked(true);
       setLoading(true);
-      // console.log(tag, title, summary, mostRecentVideo.blob);
 
-      setSubmitClicked(true);
-      const response = await apiTranscribePost("/videos/upload", {
-        tag,
-        title,
-        summary,
-        video: mostRecentVideo.blob,
-      });
+      isAnonUser ? submitLogic() : setModal(true)
 
-      console.log(response);
-
-      const newVideoUrl = response.data.message.videoObj.videoURL;
-      const videoShareURL = response.data.message.videoObj._id;
-      const videoShareUrl = `http://localhost:5173/video/?${videoShareURL}`;
-      setVideoShare(videoShareUrl);
-      console.log(videoShareURL);
-      setVideoUrl(newVideoUrl);
-      toast.success(response.data.message.message);
     } catch (error) {
       console.error("Error submitting data:", error);
     } finally {
@@ -116,9 +149,36 @@ const ViewSection = () => {
     }
   };
 
+  const handleTranscriptionSubmit = async () => {
+    console.log("with love from transciption prompt modal");
+    isAnonUser ? setSignUpModal(true) : null
+
+    try {
+      submitContext.transcription = isTranscribe;
+      submitLogic();
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    } finally {
+      setSubmitClicked(false); // Reset submitClicked
+      setLoading(false);
+    }
+  };
+
+  const handleSignUpRedirection = async () => {
+    const signUpPage = "/signup"
+    setTimeout(() => {
+      navigate(signUpPage);
+    },2000)
+  }
+
+  const toggleCheckbox = async () => {
+    setIsChecked(!isChecked);
+  }
+
   if (mostRecentVideo && mostRecentVideo.blob) {
     const url = URL.createObjectURL(mostRecentVideo.blob);
     return (
+      <>
       <div className="flex lg:ml-4 flex-col lg:flex-row pt-20 lg:pt-28 ">
         <div
           className="w-full lg:w-1/2 relative"
@@ -188,11 +248,21 @@ const ViewSection = () => {
                 /> */}
               <p className="edit-text">Tags</p>
             </div>
+            {/* <div class="mt-2.5">
+              <input 
+                id="checkbox"
+                checked={isChecked}
+                type="checkbox" 
+                name="publish-private"
+                onClick={handleCheckBox}
+              />
+              <label for="publish-private" class="ml-1.5 text-slate-500 text-sm hover:text-black"><span>publish private</span></label>
+            </div> */}
 
             <div>
               <div className="flex my-8 justify-center ">
                 <button
-                  onClick={handleSubmit}
+                  onClick={submitLogic}
                   className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
                 >
                   Submit
@@ -202,6 +272,9 @@ const ViewSection = () => {
           </div>
         </div>
       </div>
+      {displayModal && <TranscriptionPrompt state={displayModal} transcription={handleTranscriptionSubmit}/>}
+      {displaySignUpModal && <SignUpPrompt redirect={handleSignUpRedirection} toggleCheckbox={toggleCheckbox}/>}
+      </>
     );
   }
 };

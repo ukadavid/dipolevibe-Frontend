@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './CaptureMeetingModal.css'; 
 
 const CaptureMeetingModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const [input1, setInput1] = useState('');
   const [input2, setInput2] = useState('');
 
@@ -13,6 +13,12 @@ const CaptureMeetingModal = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const onClickOutsideModal = (event) => {
+    if (event.target === event.currentTarget) {
+      setIsOpen(false);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +32,10 @@ const CaptureMeetingModal = () => {
       <button onClick={openModal}>Logo</button>
 
       {isOpen && (
-        <div className="modal-overlay">
+        <div 
+           className="modal-overlay"
+           onClick={onClickOutsideModal}
+        >
           <div className="modal w-1/3">
             <h2 className="font-medium">Capture life meeting</h2>
             <h2 className="font-serif text-slate-500">Notetaker bot will be added to your meeting</h2>

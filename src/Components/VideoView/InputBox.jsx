@@ -8,12 +8,14 @@ function InputBox({
   postReplyComment,
   type,
   setReplyState,
-  setCommentUpdate,
+  onReplyUpdate,
+  setCommentUpdate
 }) {
   const [activeReply, setReply] = useState(false);
   const [commentText, setCommentText] = useState("");
   const [isSubmitDisabled, setIsSubmitDisabled] = useState(true); // Initial state, submit button is disabled
   const [firstCharacterEntered, setFirstCharacterEntered] = useState(false); // Initial state, first character not entered
+
 
 
   const comment = {
@@ -43,6 +45,11 @@ function InputBox({
 
   const triggerReplyPost = () => {
     postReplyComment(commentText);
+
+    const data = commentText;
+    onReplyUpdate(data);
+    console.log("we have called function: onReplyState")
+
     resetInputState();
   };
 

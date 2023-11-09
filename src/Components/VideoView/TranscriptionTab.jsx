@@ -25,6 +25,12 @@ function Transcription() {
     setActiveLink("transcript");
   };
 
+  const handleTranscription = () => {
+    setInterval(() => {
+      window.location.href = '/signup'
+    }, 1000)
+  }
+
   return (
     <div className="page border-black">
       <div className="mb-3"></div>
@@ -51,12 +57,13 @@ function Transcription() {
         </p>
       </div>
       {showReceived && <ShowReceived />}
-      {showTranscript &&
-        (isPaidUser ? (
-          <ShowTranscript />
-        ) : (
+      {showTranscript && (isPaidUser ? (
+          <ShowTranscript /> ) : (
           <div>
-            <button className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40">
+            <button 
+              className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40"
+              onClick={handleTranscription}
+            >
               Subscribe to view transcription
             </button>
           </div>

@@ -11,7 +11,6 @@ import RecommendedVideoContainer from "./RecommendedVideoContainer";
 import Transcription from "./TranscriptionTab";
 import Preloader from "../Preloader/Preloader";
 import Logo from "../../assets/logo.jpeg";
-import { useLocation } from "react-router-dom";
 import { apiPostComment, apiGetReccVideos } from "../../Context/Api/Axios";
 import MainCommentCard from "./MainCommentCard";
 import InputBox from "./InputBox";
@@ -19,12 +18,9 @@ import InputBox from "./InputBox";
 const VideoView = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
   const [commentUpdate, setCommentUpdate] = useState("");
-  // const location = useLocation();
-  // const videoObject = location.state.videoUrl;
   const videoObject = JSON.parse(localStorage.getItem("videoObject"));
   const [video, setVideo] = useState(videoObject);
   const [recommendedVideos, setRecommendedVideos] = useState(null);
-  console.log("video from localStorage " + typeof video);
 
   const handleResize = (e) => {
     const newWidth = `${Math.max(
