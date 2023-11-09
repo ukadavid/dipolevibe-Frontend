@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../Preloader/Preloader";
 import TagInput from "./TagInput";
-import CaptureMeetingModal from "../Modal/CaptureMeetingModal/CaptureMeetingModal";
 import TranscriptionPrompt from "../Modal/TranscriptionPrompt";
 import SignUpPrompt from "../Modal/SignUpPrompt";
 
