@@ -13,9 +13,8 @@ function CommentCard({ comment, showReplies, toggleReplies, onReplyUpdate }) {
   const [replyComments, setReplyComment] = useState([]);
   const [activeReplyComment, setActiveReplyComment] = useState(false);
   const [isActiveReplyButton, setReplyState] = useState(false);
-  const newTimeAgo = useTimeAgo(comment.timestamp);
+  const newTimeAgo = useTimeAgo(comment.createdAt);
   const commentId = comment._id;
-   
   {
     isActiveReplyButton;
   }
