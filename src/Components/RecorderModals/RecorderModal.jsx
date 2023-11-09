@@ -92,7 +92,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
       // eslint-disable-next-line no-undef
       stopRecording();
     }
-  }, 10000);
+  }, 60000);
 
   const startRecording = async () => {
     try {
