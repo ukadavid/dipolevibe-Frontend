@@ -29,14 +29,14 @@ function SearchBar({ onSearch }) {
 
   return (
     <div className="search-box-container flex justify-center mb-3">
-      <div className="search-box bg-gray-200 rounded-lg p-2 flex items-center space-x-2">
+      <div className="search-box bg-gray-200 rounded-lg flex items-center space-x-2">
         <div className="search-icon">
           <FaSearch />
         </div>
         <input
           type="text"
           placeholder="Search..."
-          className="search-input"
+          className="search-input py-1"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
