@@ -3,12 +3,18 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Transition from "../utils/Transition";
+import { getUsernameFromEmail } from "../../../utils/emailExtraction";
 
 function DropdownProfile({ align }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [name, setName] = useState();
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+
+  const username = getUsernameFromEmail(localStorage.getItem("email"));
+
+  setName(username);
 
   // close on click outside
   useEffect(() => {
@@ -27,7 +33,7 @@ function DropdownProfile({ align }) {
   });
 
   function clearUserData() {
-    localStorage.removeItem("user");
+    localStorage.removeItem("User");
     localStorage.removeItem("email");
     toast("Goodbye...");
     setTimeout(() => {
@@ -89,10 +95,10 @@ function DropdownProfile({ align }) {
         >
           <div className="pt-0.5 pb-2 px-3 mb-1 border-b border-slate-200 dark:border-slate-700">
             <div className="font-medium text-slate-800 dark:text-slate-100">
-              User name
+              {name}
             </div>
             <div className="text-xs text-slate-500 dark:text-slate-400 italic">
-              User
+              {name}
             </div>
           </div>
           <ul>
