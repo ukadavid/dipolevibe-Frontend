@@ -38,18 +38,16 @@ const ViewSection = () => {
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
-
   const submitContext = {
     tag,
     title,
     summary,
     isPrivatePublish: isPrivatePublish,
     video: mostRecentVideo?.blob,
-  }
+  };
 
-  const isTranscribe = true
+  const isTranscribe = true;
 
-  
   const handleResize = (e) => {
     const newWidth = `${Math.max(
       20,
@@ -103,31 +101,27 @@ const ViewSection = () => {
   const handleCheckBox = () => {
     toggleCheckbox();
 
-    isAnonUser ? setSignUpModal(true) : setPrivatePublish( !isPrivatePublish )
+    isAnonUser ? setSignUpModal(true) : setPrivatePublish(!isPrivatePublish);
 
-    isPrivatePublish ? 
-       submitContext.isPrivatePublish = true : 
-       submitContext.isPrivatePublish = false;
-      
-    console.log("submitContext :"+JSON.stringify(submitContext));
+    isPrivatePublish
+      ? (submitContext.isPrivatePublish = true)
+      : (submitContext.isPrivatePublish = false);
+
+    console.log("submitContext :" + JSON.stringify(submitContext));
     return;
-  }
-  
+  };
+
   const submitLogic = async () => {
-    try{
+    try {
       console.log(submitContext);
-       const response = await apiTranscribePost("/videos/upload",
-                                                 submitContext
-                                                 );
+      const response = await apiTranscribePost("/videos/upload", submitContext);
       const newVideoUrl = response.data.message.videoObj.videoURL;
       setVideoUrl(newVideoUrl);
       toast.success(response.data.message.message);
-    }
-    catch(error){
+    } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   const handleDefaultSubmit = async () => {
     try {
@@ -139,8 +133,7 @@ const ViewSection = () => {
       setSubmitClicked(true);
       setLoading(true);
 
-      isAnonUser ? submitLogic() : setModal(true)
-
+      isAnonUser ? submitLogic() : setModal(true);
     } catch (error) {
       console.error("Error submitting data:", error);
     } finally {
@@ -151,7 +144,7 @@ const ViewSection = () => {
 
   const handleTranscriptionSubmit = async () => {
     console.log("with love from transciption prompt modal");
-    isAnonUser ? setSignUpModal(true) : null
+    isAnonUser ? setSignUpModal(true) : null;
 
     try {
       submitContext.transcription = isTranscribe;
@@ -165,90 +158,90 @@ const ViewSection = () => {
   };
 
   const handleSignUpRedirection = async () => {
-    const signUpPage = "/signup"
+    const signUpPage = "/signup";
     setTimeout(() => {
       navigate(signUpPage);
-    },2000)
-  }
+    }, 2000);
+  };
 
   const toggleCheckbox = async () => {
     setIsChecked(!isChecked);
-  }
+  };
 
   if (mostRecentVideo && mostRecentVideo.blob) {
     const url = URL.createObjectURL(mostRecentVideo.blob);
     return (
       <>
-      <div className="flex lg:ml-4 flex-col lg:flex-row pt-20 lg:pt-28 ">
-        <div
-          className="w-full lg:w-1/2 relative"
-          style={window.innerWidth > 768 ? { width: leftColumnWidth } : {}}
-        >
-          <div className="py-8">
-            {mostRecentVideo && mostRecentVideo.blob && (
-              <video className="w-full" controls>
-                <source src={url} type="video/mp4" />
-              </video>
-            )}
-            {submitClicked && loading && <Preloader />}
-            {videoUrl && <SocialMediaShare url={videoShare} />}
-            <div
-              className="resize-handle hidden lg:block"
-              onMouseDown={handleMouseDown}
-            ></div>
-          </div>
-        </div>
-        <div className="w-full min-w-96 max-w-5xl div-section lg:w-1/4 lg:ml-4 h-3/6 rounded-full rounded-lg shadow-lg bg-white mt-16 lg:mt-4 flex flex-col relative ">
-          <div className="pt-16 mt-4  px-4">
-            <div
-              className={`flex rounded-full hover:blue-500 items-center ${
-                isEditing ? "" : "hover-div"
-              }`}
-            >
-              <h2 className="mr-2">
-                <FaPen className="dark:text-gray-800" />
-              </h2>
-              <InlineEdit
-                text={title}
-                onEditText={setTitle}
-                onFocus={() => setIsEditing(true)}
-                onBlur={() => setIsEditing(false)}
-              />
-              <p className="edit-text dark:text-gray-800">Edit Title</p>
+        <div className="flex lg:ml-4 flex-col lg:flex-row pt-20 lg:pt-28 ">
+          <div
+            className="w-full lg:w-1/2 relative"
+            style={window.innerWidth > 768 ? { width: leftColumnWidth } : {}}
+          >
+            <div className="py-8">
+              {mostRecentVideo && mostRecentVideo.blob && (
+                <video className="w-full" controls>
+                  <source src={url} type="video/mp4" />
+                </video>
+              )}
+              {submitClicked && loading && <Preloader />}
+              {videoUrl && <SocialMediaShare url={videoShare} />}
+              <div
+                className="resize-handle hidden lg:block"
+                onMouseDown={handleMouseDown}
+              ></div>
             </div>
           </div>
-          <div className="px-4">
-            <div className="flex hover-div items-center">
-              <p className="mr-2">
-                <FaList className="dark:text-gray-800" />
-              </p>
-              <InlineEdit
-                text={summary}
-                onEditText={setSummary}
-                onFocus={() => setIsEditing(true)}
-                onBlur={() => setIsEditing(false)}
-              />
-              <p className="dark:text-gray-800 edit-text">Edit Summary</p>
+          <div className="w-full min-w-96 max-w-5xl div-section lg:w-1/4 lg:ml-4 h-3/6 rounded-full rounded-lg shadow-lg bg-white mt-16 lg:mt-4 flex flex-col relative ">
+            <div className="pt-16 mt-4  px-4">
+              <div
+                className={`flex rounded-full hover:blue-500 items-center ${
+                  isEditing ? "" : "hover-div"
+                }`}
+              >
+                <h2 className="mr-2">
+                  <FaPen className="dark:text-gray-800" />
+                </h2>
+                <InlineEdit
+                  text={title}
+                  onEditText={setTitle}
+                  onFocus={() => setIsEditing(true)}
+                  onBlur={() => setIsEditing(false)}
+                />
+                <p className="edit-text dark:text-gray-800">Edit Title</p>
+              </div>
             </div>
-            <div className="flex hover-div items-center">
-              <p className="mr-2">
-                <FaSlackHash className="dark:text-gray-800" />
-              </p>
-              <TagInput
-                tag={tag}
-                setTag={setTag}
-                buttons={buttons}
-                setButtons={setButtons}
-                hasMinimumTag={hasMinimumTag}
-                setMinimumTagError={setMinimumTagError}
-              />
-              {/* <InlineEdit
+            <div className="px-4">
+              <div className="flex hover-div items-center">
+                <p className="mr-2">
+                  <FaList className="dark:text-gray-800" />
+                </p>
+                <InlineEdit
+                  text={summary}
+                  onEditText={setSummary}
+                  onFocus={() => setIsEditing(true)}
+                  onBlur={() => setIsEditing(false)}
+                />
+                <p className="dark:text-gray-800 edit-text">Edit Summary</p>
+              </div>
+              <div className="flex hover-div items-center">
+                <p className="mr-2">
+                  <FaSlackHash className="dark:text-gray-800" />
+                </p>
+                <TagInput
+                  tag={tag}
+                  setTag={setTag}
+                  buttons={buttons}
+                  setButtons={setButtons}
+                  hasMinimumTag={hasMinimumTag}
+                  setMinimumTagError={setMinimumTagError}
+                />
+                {/* <InlineEdit
                   onFocus={() => setIsEditing(true)}
                   onBlur={() => setIsEditing(false)}
                 /> */}
-              <p className="edit-text">Tags</p>
-            </div>
-            {/* <div class="mt-2.5">
+                <p className="edit-text">Tags</p>
+              </div>
+              {/* <div class="mt-2.5">
               <input 
                 id="checkbox"
                 checked={isChecked}
@@ -259,21 +252,31 @@ const ViewSection = () => {
               <label for="publish-private" class="ml-1.5 text-slate-500 text-sm hover:text-black"><span>publish private</span></label>
             </div> */}
 
-            <div>
-              <div className="flex my-8 justify-center ">
-                <button
-                  onClick={submitLogic}
-                  className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                >
-                  Submit
-                </button>
+              <div>
+                <div className="flex my-8 justify-center ">
+                  <button
+                    onClick={submitLogic}
+                    className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {displayModal && <TranscriptionPrompt state={displayModal} transcription={handleTranscriptionSubmit}/>}
-      {displaySignUpModal && <SignUpPrompt redirect={handleSignUpRedirection} toggleCheckbox={toggleCheckbox}/>}
+        {displayModal && (
+          <TranscriptionPrompt
+            state={displayModal}
+            transcription={handleTranscriptionSubmit}
+          />
+        )}
+        {displaySignUpModal && (
+          <SignUpPrompt
+            redirect={handleSignUpRedirection}
+            toggleCheckbox={toggleCheckbox}
+          />
+        )}
       </>
     );
   }

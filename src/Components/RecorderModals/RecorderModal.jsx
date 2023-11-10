@@ -88,7 +88,7 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
   const stopRecordingAfterOneMinute = setTimeout(() => {
     if (!localStorage.getItem("User")) {
-      console.log("Recording stopped after 1 minute.");
+      console.log("Recording stopped after 5 minute.");
       // eslint-disable-next-line no-undef
       stopRecording();
     }
@@ -189,8 +189,11 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
       request.onsuccess = () => {
         if (discardVideo == true || discardVideo == false) return;
-        console.log("Video stored in IndexedDB");
-        window.location.replace("/views");
+        if (localStorage.getItem("User")) {
+          window.location.replace("/user-view");
+        } else {
+          window.location.replace("/views");
+        }
         // Stop recording
         stopRecording();
       };
@@ -226,8 +229,11 @@ export const RecorderComponent = ({ closeScreenModal }) => {
 
       // Redirect the user to the views page after one second
       setTimeout(() => {
-        console.log("Redirecting...");
-        window.location.replace(views);
+        if (localStorage.getItem("User")) {
+          window.location.replace("/user-view");
+        } else {
+          window.location.replace(views);
+        }
       }, 1000);
     }
   };
