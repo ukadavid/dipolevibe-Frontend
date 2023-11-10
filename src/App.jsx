@@ -23,6 +23,7 @@ import Analytics from "./Components/DashboardUpdate/pages/Analytics";
 import ThemeProvider from "./Components/DashboardUpdate/utils/ThemeContext";
 import EmailVerificationPage from "./Pages/EmailVerificationPage";
 import Video from "./Components/Video/Video";
+import View from "./Components/DashboardUpdate/pages/View";
 
 function App() {
   console.log(useParams());
@@ -53,6 +54,7 @@ function App() {
               <Route path="/watchlater" element={<WatchLater />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/analytics" element={<Analytics />} />
+              <Route path="/user-view" element={<View />} />
             </Routes>
           </Router>
         </ThemeProvider>
