@@ -33,60 +33,6 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  /**=================Admin Signup=================================== */
-  const adminRegisterConfig = async (formData) => {
-    try {
-      const adminSignupData = {
-        email: formData.email,
-        password: formData.password,
-      };
-
-      const response = await apiPost("/admin/register", adminSignupData);
-      const data = await response.data;
-      if (data.message === "Admin created successfully") {
-        localStorage.setItem("token", data.token);
-      }
-      toast.success(data.message);
-
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-    } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.error);
-    }
-  };
-
-  /**=================Admin Login =================================== */
-  const adminLoginConfig = async (formData) => {
-    try {
-      const adminLoginData = {
-        email: formData.email,
-        password: formData.password,
-      };
-
-      const response = await apiPost("/User/login", adminLoginData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.data;
-      toast.success(data.message);
-      if (data.message === "You are logged in successfully") {
-        localStorage.setItem("token", data.email);
-        localStorage.setItem("User", "User");
-      }
-      console.log(data);
-      console.log(data.message);
-
-      setTimeout(() => {
-        window.location.href = "/dashboard";
-      }, 2000);
-    } catch (error) {
-      toast.error(error.response.data);
-    }
-  };
-
   /**=================User Login =================================== */
   const userLoginConfig = async (formData) => {
     try {
@@ -119,36 +65,9 @@ const DataProvider = ({ children }) => {
     }
   };
 
-  /* ==================================== Verify Email with OTP ================================================*/
-  const OTPConfig = async (enteredOTP, userId) => {
-    try {
-      const OTPData = {
-        token: enteredOTP,
-      };
-
-      let email = userId;
-
-      const response = await apiPost(
-        `/user/auth/confirm-email/${email}`,
-        OTPData
-      );
-      console.log(OTPData);
-      const data = await response.data;
-      if (data.displayMessage === "Success") {
-        toast.success(data.result);
-        setTimeout(() => {
-          window.location.href = "/login";
-        }, 2000);
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(error.response.data.errorMessages[0]);
-    }
-  };
-
   /* ==================================== Forgot Password with Email ================================================*/
 
-  const EmailConfig = async (emailData) => {
+  const EmailResetConfig = async (emailData) => {
     try {
       const EmailData = {
         email: emailData.email,
@@ -157,23 +76,47 @@ const DataProvider = ({ children }) => {
       console.log(EmailData.email);
 
       const response = await apiPost(
-        `/user/auth/forgot_password${EmailData.email}`
+        `/User/forgot-password?email=${EmailData.email}`
       );
 
-      console.log(EmailData.otp);
       const data = await response.data;
-      if (data.displayMessage === "Success") {
-        localStorage.setItem("role", JSON.stringify(data.user.role));
-        console.log(data.user.role);
-      }
-      toast.success(data.result);
-
+      toast.success(data);
       setTimeout(() => {
-        window.location.href = "/resetPassword";
+        window.location.href = "/verifyPassword";
       }, 2000);
     } catch (error) {
       console.error(error);
       toast.error(error.response.data.errorMessages[0]);
+    }
+  };
+  /* ==================================== Forgot Password with password and confirm Password ================================================*/
+
+  const PasswordResetConfig = async (formData) => {
+    try {
+      const ResetData = {
+        password: formData.email,
+        confirmPassword: formData.confirmPassword,
+        locate: formData.locate.replace(/\?.*?=/, ""),
+      };
+
+      console.log(ResetData.locate);
+      const response = await apiPost(
+        `/User/reset-password?Token=${ResetData.locate}&Password=${ResetData.password}&ConfirmPassword=${ResetData.confirmPassword}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.data;
+      toast.success(data);
+      setTimeout(() => {
+        window.location.href = "/successReset";
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+      toast.error(error.response.data);
     }
   };
 
@@ -181,11 +124,9 @@ const DataProvider = ({ children }) => {
     <dataContext.Provider
       value={{
         registerConfig,
-        adminRegisterConfig,
-        adminLoginConfig,
         userLoginConfig,
-        OTPConfig,
-        EmailConfig,
+        EmailResetConfig,
+        PasswordResetConfig,
       }}
     >
       {children}
