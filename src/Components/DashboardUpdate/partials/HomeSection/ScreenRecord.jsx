@@ -34,6 +34,7 @@ function ScreenRecord() {
                 data-id="uploadRecommendationBannerBtn"
                 onMouseEnter={() => setHoveredMeet(true)}
                 onMouseLeave={() => setHoveredMeet(false)}
+                disabled
               >
                 <span className="flex items-center">
                   <i
