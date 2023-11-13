@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { FaDesktop } from "react-icons/fa";
-import { RecorderComponent } from "../RecorderModals/RecorderModal";
-import ThemeToggle from "../DashboardUpdate/navComponent/ThemeToggle";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
