@@ -126,46 +126,37 @@ const NavBar = () => {
                 </div>
                 <div className="flow-root mt-6">
                   <div className="-my-6 divide-y divide-gray-500/10">
-                    <div className="py-6 space-y-2">
-                      <a
-                        href="/"
-                        className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                    <div className="py-6 flex-col space-y-2">
+                      <Link
+                        className="text-gray-900 hover:text-gray-600"
+                        to="/"
                       >
                         Home
-                      </a>
-                      <a
-                        href="/signup"
-                        className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                      </Link>
+                      <Link
+                        className="text-gray-900 hover:text-gray-600 block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                        to="/"
                       >
-                        Register
-                      </a>
-                      <a
-                        href="/login"
-                        className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                        Features
+                      </Link>
+                      <Link
+                        className="text-gray-900 hover:text-gray-600 block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                        to="/"
                       >
-                        Login
-                      </a>
-                      <a
-                        href="/videolist"
-                        className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                        Pricing
+                      </Link>
+                      <Link
+                        className="text-gray-900 hover:text-gray-600 block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
+                        to="/videolist"
                       >
-                        Video Library
-                      </a>
-                    </div>
-                    <div className="flex-col items-center py-6">
-                      <div>
-                        <ThemeToggle />
-                      </div>
-
-                      <div className="mt-4 ml-2">
-                        <a
-                          href="#"
-                          className="text-sm font-semibold leading-6 text-gray-900 transition hover:text-blue-500"
-                          onClick={openScreenModal}
-                        >
-                          <FaDesktop /> <span aria-hidden="true"></span>
-                        </a>
-                      </div>
+                        Video Stash
+                      </Link>
+                      <Link
+                        className="text-white bg-blue-500 btn "
+                        to="/signup"
+                      >
+                        Get started
+                      </Link>
                     </div>
                   </div>
                 </div>
