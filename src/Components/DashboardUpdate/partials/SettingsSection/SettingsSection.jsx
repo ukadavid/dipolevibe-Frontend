@@ -1,28 +1,38 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FaSlack, FaGoogle, FaTrash } from "react-icons/fa";
 import { apiDelete } from "../../../../Context/Api/Axios";
+import { apiPatchUserInfo, apiGetUserInfo } from "../../../../Context/Api/Axios"
 import { toast } from "react-toastify";
 
 const SettingsSection = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [message, setMessage] = useState();
+  const [userEmail, setUserEmail] = useState();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    profileImage: null,
+  });
+
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
     reader.onload = () => {
-      setUploadedImage(reader.result);
+      const imageData = reader.result;
+
+      setUploadedImage(imageData);
+      setFormData({
+        ...formData,
+        profileImage: imageData,
+      });
     };
 
     reader.readAsDataURL(file);
   };
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -32,8 +42,17 @@ const SettingsSection = () => {
     });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    try{
+      const response = await apiPatchUserInfo("/user/update", formData);
+      console.log(response.data.message);
+
+      toast.success('User information successfully updated');
+    }
+    catch(error){
+      toast.error('Error updating user information');
+    }
   };
 
   const handleDeleteAccount = async (e) => {
@@ -51,6 +70,37 @@ const SettingsSection = () => {
       toast(message);
     }
   };
+
+  useEffect(() => {
+    const userEmail = localStorage.getItem("email");
+    setUserEmail(userEmail);
+    setFormData({
+      ...formData,
+      email: userEmail
+    })
+  },[])
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        if(!userEmail) return;
+        const response = await apiGetUserInfo('/user/getInfo', { email: userEmail });
+        setFormData({
+          ...formData,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          email: response.data.email,
+          profileImage: response.data.profileImageUrl,
+        })
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    };
+  
+    // Call the asynchronous function
+    fetchUserInfo();
+  }, [userEmail]);
+
   return (
     <>
       <div>
@@ -63,14 +113,20 @@ const SettingsSection = () => {
       <div className="border-b-2 pb-8">
         <form className="w-full md:w-1/2 mt-8">
           <div className="flex flex-col md:flex-row items-center mb-8">
-            {uploadedImage ? (
+            {uploadedImage || formData.profileImage  ? (
               <span className="relative">
                 <FaTrash
                   className="absolute top-7 right-0 h-4 w-4 m-2 text-red-500 cursor-pointer"
-                  onClick={() => setUploadedImage(null)}
+                  onClick={() => {
+                            setUploadedImage(null);
+                            setFormData({
+                              ...formData,
+                              profileImage: null
+                            })
+                          }}
                 />
                 <img
-                  src={uploadedImage}
+                  src={uploadedImage == null?  formData.profileImage : uploadedImage}
                   alt="Uploaded"
                   className="rounded-full w-16 h-16 md:mr-4 mb-4 md:mb-0"
                 />
@@ -79,7 +135,14 @@ const SettingsSection = () => {
               <span className="relative">
                 <FaTrash
                   className="absolute top-7 right-0 h-4 w-4 m-2 text-red-500 cursor-pointer"
-                  onClick={() => setUploadedImage(null)}
+                  onClick={() => {
+                             setUploadedImage(null)
+                             setFormData({
+                              ...formData,
+                              profileImage: null
+                            })
+                            }
+                          }
                 />
                 <span className="rounded-full text-center w-16 h-16 flex items-center justify-center bg-gray-800 text-white text-lg font-bold mb-4 md:mr-4">
                   TU

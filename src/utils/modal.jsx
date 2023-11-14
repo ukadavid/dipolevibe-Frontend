@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { TbFileDescription } from "react-icons/tb";
 
-function Modal(props,children) {
+function Modal(props,{ children }) {
   const { displayModal,transcription } = props;
   const [open, setOpen] = useState(!displayModal)
  

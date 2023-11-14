@@ -25,7 +25,7 @@ import EmailVerificationPage from "./Pages/EmailVerificationPage";
 import Video from "./Components/Video/Video";
 
 function App() {
-  console.log(useParams());
+  // console.log(useParams());
 
   return (
     <div>
