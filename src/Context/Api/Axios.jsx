@@ -12,6 +12,7 @@ export const apiGet = (path) => {
 export const apiGetReccVideos = (path, data) => {
   return axios.get(`${TranscriptionUrl}${path}`, data);
 };
+
 export const apiNodeService = (path) => {
   return axios.get(`${TranscriptionUrl}${path}`);
 };
@@ -65,6 +66,23 @@ export const apiPut = (path, data) => {
 
   return axios.put(`${baseUrl}${path}`, data, config);
 };
+
+export const apiPatchUserInfo = (path,data) => {
+  return axios.patch(`${TranscriptionUrl}${path}`, data, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+export const apiGetUserInfo = (path, params) => {
+  
+  if( !params || Object.keys(params).length === 0 ){
+    return;
+  }
+  console.log("params:" + JSON.stringify(params));
+  return axios.get(`${TranscriptionUrl}${path}`, { params: params })
+}
 
 // Patch Request
 export const apiPatch = (path, data) => {

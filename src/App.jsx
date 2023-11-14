@@ -28,7 +28,7 @@ import PasswordVerification from "./Components/PasswordVerification/PasswordVeri
 import ResetSuccess from "./Components/ResetSuccess/ResetSuccess";
 
 function App() {
-  console.log(useParams());
+  // console.log(useParams());
 
   return (
     <div>
