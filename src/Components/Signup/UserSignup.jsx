@@ -5,7 +5,8 @@ function SignUp() {
   const { registerConfig } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -14,16 +15,24 @@ function SignUp() {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
       email,
       password,
     };
 
-    registerConfig(formData);
+    try {
+      await registerConfig(formData);
+      // Continue with any logic after a successful login
+    } catch (error) {
+      // Handle errors
+      console.error("Login failed:", error);
+      setError("Invalid email or password. Please try again."); // Set error message
+    } finally {
+      setLoading(false);
+    }
   };
-
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 lg:max-w-4xl">
@@ -127,7 +136,14 @@ function SignUp() {
                 type="submit"
                 className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
               >
-                Register
+                {loading ? (
+                  <>
+                    {/* <i className="fas fa-circle-notch fa-spin "></i> */}
+                    <span>Signing up</span>
+                  </>
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </div>
           </form>
