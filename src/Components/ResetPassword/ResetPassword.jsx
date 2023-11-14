@@ -1,4 +1,38 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import Preloader from "../Preloader/Preloader";
+import { apiPost } from "../../Context/Api/Axios";
+import { useAuth } from "../../Context/AuthContext";
+
 function ResetPassword() {
+  const { PasswordResetConfig } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const location = useLocation();
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const formData = {
+        password,
+        confirmPassword,
+        locate: location.search,
+      };
+      PasswordResetConfig(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div
@@ -15,7 +49,12 @@ function ResetPassword() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            action="#"
+            method="POST"
+            onSubmit={handleSubmit}
+          >
             <div>
               <label
                 htmlFor="email"
@@ -30,6 +69,8 @@ function ResetPassword() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={handlePasswordChange}
+                  value={password}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black focus:ring-2 dark:bg-white focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -51,6 +92,8 @@ function ResetPassword() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  onChange={handleConfirmPasswordChange}
+                  value={confirmPassword}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-black placeholder:ml-8 focus:ring-2 dark:bg-white focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"
                 />
               </div>

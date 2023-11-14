@@ -1,8 +1,19 @@
 import { useState } from "react";
+import { RecorderComponent } from "../../../RecorderModals/RecorderModal";
 
 function ScreenRecord() {
   const [hoveredRecord, setHoveredRecord] = useState(false);
   const [hoveredMeet, setHoveredMeet] = useState(false);
+
+  const [isScreenModalOpen, setScreenModalOpen] = useState(false);
+
+  const openScreenModal = () => {
+    setScreenModalOpen(true);
+  };
+
+  const closeScreenModal = () => {
+    setScreenModalOpen(false);
+  };
 
   return (
     <div className="flex flex-col col-span-full sm:col-span-12 xl:col-span-12 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
@@ -23,13 +34,17 @@ function ScreenRecord() {
                 data-id="uploadRecommendationBannerBtn"
                 onMouseEnter={() => setHoveredMeet(true)}
                 onMouseLeave={() => setHoveredMeet(false)}
+                disabled
               >
                 <span className="flex items-center">
-                  <i className="fa fa-video-camera" style={{ fontSize: "1.5rem" }} />
+                  <i
+                    className="fa fa-video-camera"
+                    style={{ fontSize: "1.5rem" }}
+                  />
                 </span>
               </button>
               {hoveredMeet && (
-               <span className=" ml-2 absolute bg-blue-300 text-sm font-semibold p-1 whitespace-nowrap rounded-full top-10 left-8">
+                <span className=" ml-2 absolute bg-blue-300 text-sm font-semibold p-1 whitespace-nowrap rounded-full top-10 left-8">
                   Schedule Meeting
                 </span>
               )}
@@ -38,15 +53,18 @@ function ScreenRecord() {
               <button
                 className="px-4 py-2 text-white bg-blue-500 rounded-full hover:bg-blue-700 ml-4"
                 data-id="uploadRecommendationBannerBtn"
+                onClick={openScreenModal}
                 onMouseEnter={() => setHoveredRecord(true)}
                 onMouseLeave={() => setHoveredRecord(false)}
               >
                 <span className="flex items-center">
-                  <i className="fas fa-desktop" style={{ fontSize: "1.5rem" }} />
+                  <i
+                    className="fas fa-desktop"
+                    style={{ fontSize: "1.5rem" }}
+                  />
                 </span>
               </button>
               {hoveredRecord && (
-
                 <span className=" ml-2 absolute bg-blue-300 text-sm font-semibold p-1 whitespace-nowrap rounded-full top-10 left-8">
                   Screen Record
                 </span>
@@ -67,6 +85,10 @@ function ScreenRecord() {
           </div>
         </div>
       </div>
+      {/* Modal */}
+      {isScreenModalOpen && (
+        <RecorderComponent closeScreenModal={closeScreenModal} />
+      )}
     </div>
   );
 }
