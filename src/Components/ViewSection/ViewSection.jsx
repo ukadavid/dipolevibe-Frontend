@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./view.css";
+import "../../utils/css/loader.css";
 import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
 import { FaSlackHash } from "react-icons/fa";
@@ -113,13 +114,17 @@ const ViewSection = () => {
 
   const submitLogic = async () => {
     try {
-      console.log(submitContext);
+      setLoading(true)
+
       const response = await apiTranscribePost("/videos/upload", submitContext);
       const newVideoUrl = response.data.message.videoObj.videoURL;
       setVideoUrl(newVideoUrl);
       toast.success(response.data.message.message);
     } catch (error) {
       console.log(error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -183,7 +188,11 @@ const ViewSection = () => {
                   <source src={url} type="video/mp4" />
                 </video>
               )}
-              {submitClicked && loading && <Preloader />}
+              {
+              // submitClicked &&
+               loading &&
+               <Preloader />
+              }
               {videoUrl && <SocialMediaShare url={videoShare} />}
               <div
                 className="resize-handle hidden lg:block"
@@ -256,9 +265,12 @@ const ViewSection = () => {
                 <div className="flex my-8 justify-center ">
                   <button
                     onClick={submitLogic}
-                    className="bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    className={`bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full ${
+                      loading ? "loading" : ""
+                    }`}
+                    disabled={loading}
                   >
-                    Submit
+                   <span>Submit</span> 
                   </button>
                 </div>
               </div>
