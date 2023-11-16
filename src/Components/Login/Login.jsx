@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useAuth } from "../../Context/AuthContext";
-import "./Login.css";
+import "../../utils/css/loader.css";
 import { useState } from "react";
 function Login() {
   const { userLoginConfig } = useAuth();

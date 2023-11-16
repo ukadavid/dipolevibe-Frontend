@@ -1,5 +1,6 @@
 import { useAuth } from "../../Context/AuthContext";
 import { useState } from "react";
+import "../../utils/css/loader.css";
 
 function SignUp() {
   const { registerConfig } = useAuth();
@@ -17,6 +18,8 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
     const formData = {
       email,
       password,
@@ -134,7 +137,10 @@ function SignUp() {
             <div className="mt-6">
               <button
                 type="submit"
-                className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50"
+                className={`w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50 ${
+                    loading ? "loading" : ""
+                }`}
+                disabled={loading}
               >
                 {loading ? (
                   <>
@@ -142,7 +148,7 @@ function SignUp() {
                     <span>Signing up</span>
                   </>
                 ) : (
-                  "Sign In"
+                  "Sign Up"
                 )}
               </button>
             </div>
