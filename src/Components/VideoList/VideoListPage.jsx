@@ -36,6 +36,15 @@ function VideoList() {
     setVideos(searchResults);
   };
 
+  const handleFilter = async(dateFilter) => {
+    try{
+      const response = apiGetVideos(`/videos/searchByDate?search=${dateFilter}`)
+    }
+    catch(error){
+      console.error("Error searching videos:", error);
+    }
+  }
+
   const loadMore = () => {
     setPage((prevPage) => prevPage + 1); // Increment the page number
   };
@@ -54,7 +63,7 @@ function VideoList() {
         <div className="flex flex-col justify-center my-8 items-center">
           <SearchBar onSearch={handleSearch} />
           <div className="flex lg:ml-auto mt-4 justify-end items-end">
-            <FilterButton />
+            <FilterButton handleFilter={handleFilter}/>
             {/* Datepicker built with flatpickr */}
             <Datepicker />
           </div>

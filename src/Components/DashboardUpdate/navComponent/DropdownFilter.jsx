@@ -1,16 +1,97 @@
 /* eslint-disable react/prop-types */
 import { useState, useRef, useEffect } from 'react';
+import moment from 'moment';
 import Transition from '../utils/Transition';
 
 function DropdownFilter({
-  align
+  align,
+  handleFilter
 }) {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [checkbox, setCheckbox] = useState({
+    today: false,
+    thisWeek: false,
+    lastWeek: false,
+    thisMonth: false,
+    lastMonth: false
+  });
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
 
+  const handleClearButton = async() => {
+    setCheckbox({
+      today: false,
+      thisWeek: false,
+      lastWeek: false,
+      thisMonth: false,
+      lastMonth: false
+    });
+  }
+
+  const handleApplyButton = async() => {
+    setDropdownOpen(false);
+    const dateRange = calculateDateRange()
+
+    // handleFilter(dateRange);
+
+    // console.log("dateRange "+JSON.stringify(dateRange))
+  }
+
+  const toggleCheck = async(e) => {
+    const ele = e.target;
+    ele.checked == true ?
+     setCheckbox((checkbox) => ({
+      ...checkbox,
+      [ele.name]: ele.checked
+    })) : 
+    setCheckbox((checkbox) =>({
+      ...checkbox,
+      [ele.name]: false
+    }))
+  }
+
+  const calculateDateRange = () => {
+    let startDate, endDate;
+  
+    const today = moment();
+    const startOfToday = today.startOf('day');
+    const endOfToday = today.endOf('day');
+  
+    for (const key in checkbox) {
+      if (checkbox[key]) {
+        switch (key) {
+          case 'today':
+            startDate = startOfToday;
+            endDate = endOfToday;
+            break;
+          case 'thisWeek':
+            startDate = startDate ? moment.min(startDate, today.startOf('week')) : today.startOf('week');
+            endDate = endDate ? moment.max(endDate, today.endOf('week')) : today.endOf('week');
+            break;
+          case 'lastWeek':
+            startDate = startDate ? moment.min(startDate, today.subtract(1, 'week').startOf('week')) : today.subtract(1, 'week').startOf('week');
+            endDate = endDate ? moment.max(endDate, today.subtract(1, 'week').endOf('week')) : today.subtract(1, 'week').endOf('week');
+            break;
+          case 'thisMonth':
+            startDate = startDate ? moment.min(startDate, today.startOf('month')) : today.startOf('month');
+            endDate = endDate ? moment.max(endDate, today.endOf('month')) : today.endOf('month');
+            break;
+          case 'lastMonth':
+            startDate = startDate ? moment.min(startDate, today.subtract(1, 'month').startOf('month')) : today.subtract(1, 'month').startOf('month');
+            endDate = endDate ? moment.max(endDate, today.subtract(1, 'month').endOf('month')) : today.subtract(1, 'month').endOf('month');
+            break;
+          // Handle additional cases if needed
+          default:
+            // Handle default case or additional cases
+            break;
+        }
+      }
+    }
+  
+    return { startDate, endDate };
+  };
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }) => {
@@ -65,31 +146,59 @@ function DropdownFilter({
           <ul className="mb-4">
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
+                <input 
+                  type="checkbox" 
+                  name="today"
+                  className="form-checkbox"
+                  checked={checkbox.today}
+                  onChange={toggleCheck} />
                 <span className="text-sm font-medium ml-2">Today</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
+                <input 
+                type="checkbox"
+                name="thisWeek" 
+                className="form-checkbox"
+                checked={checkbox.thisWeek}
+                onChange={toggleCheck} />
                 <span className="text-sm font-medium ml-2">This week</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
+                <input 
+                type="checkbox" 
+                name="lastWeek"
+                className="form-checkbox"
+                checked={checkbox.lastWeek}
+                onChange={toggleCheck}
+                />
                 <span className="text-sm font-medium ml-2">Last Week</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
+                <input 
+                type="checkbox"
+                name="thisMonth" 
+                className="form-checkbox"
+                checked={checkbox.thisMonth}
+                onChange={toggleCheck} 
+                />
                 <span className="text-sm font-medium ml-2">This month</span>
               </label>
             </li>
             <li className="py-1 px-3">
               <label className="flex items-center">
-                <input type="checkbox" className="form-checkbox" />
+                <input 
+                type="checkbox"
+                name="lastMonth" 
+                className="form-checkbox"
+                checked={checkbox.lastMonth}
+                onChange={toggleCheck} 
+                />
                 <span className="text-sm font-medium ml-2">Last Month</span>
               </label>
             </li>
@@ -97,14 +206,17 @@ function DropdownFilter({
           <div className="py-2 px-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-700/20">
             <ul className="flex items-center justify-between">
               <li>
-                <button className="btn-xs bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-300 hover:text-slate-600 dark:hover:text-slate-200">
+                <button 
+                  className="btn-xs bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-500 dark:text-slate-300 hover:text-slate-600 dark:hover:text-slate-200"
+                  onClick={handleClearButton}
+                  >
                   Clear
                 </button>
               </li>
               <li>
                 <button
                   className="btn-xs bg-indigo-500 hover:bg-indigo-600 text-white"
-                  onClick={() => setDropdownOpen(false)}
+                  onClick={() => handleApplyButton()}
                   onBlur={() => setDropdownOpen(false)}
                 >
                   Apply

@@ -80,7 +80,6 @@ export const apiGetUserInfo = (path, params) => {
   if( !params || Object.keys(params).length === 0 ){
     return;
   }
-  console.log("params:" + JSON.stringify(params));
   return axios.get(`${TranscriptionUrl}${path}`, { params: params })
 }
 

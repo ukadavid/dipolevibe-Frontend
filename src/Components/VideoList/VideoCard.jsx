@@ -47,8 +47,6 @@ function VideoCard({ video, index }) {
     }
   };
 
-  console.log("video.videoURL :"+video.videoURL);
-
   return (
     <div style={{
         display: 'inline-block',
