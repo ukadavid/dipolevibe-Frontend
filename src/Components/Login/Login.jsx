@@ -2,10 +2,14 @@
 import { useAuth } from "../../Context/AuthContext";
 import "../../utils/css/loader.css";
 import { useState } from "react";
+import { LuEye,LuEyeOff } from "react-icons/lu";
+
+
 function Login() {
   const { userLoginConfig } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordType, setPasswordType] = useState("password");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const handleEmailChange = (e) => {
@@ -15,6 +19,15 @@ function Login() {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
+
+  const togglePassword =()=>{
+    if(passwordType==="password")
+    {
+     setPasswordType("text")
+     return;
+    }
+    setPasswordType("password")
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -135,14 +148,24 @@ function Login() {
                     Forget Password?
                   </a>
                 </div>
-                <input
-                  id="loggingPassword"
-                  className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
-                  type="password"
-                  onChange={handlePasswordChange}
-                  value={password}
-                  required
-                />
+                <div 
+                  className="relative"
+                >
+                   <input
+                     id="loggingPassword"
+                     className="block w-full px-4 py-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-blue-300"
+                     type={passwordType}
+                     onChange={handlePasswordChange}
+                     value={password}
+                     required
+                   />
+                   <button 
+                     onClick={togglePassword}
+                     className="absolute top-3 right-6"
+                   >
+                     { passwordType==="password" ? <LuEyeOff /> : <LuEye/> }
+                   </button>
+                </div>
               </div>
               <div className="mt-6">
                 <button
