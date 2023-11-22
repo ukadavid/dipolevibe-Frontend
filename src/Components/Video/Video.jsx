@@ -9,8 +9,8 @@ const Video = () => {
   const [video, setVideo] = useState("");
   const location = useLocation();
   const locate = location.search.replace(/\?/, "");
-  console.log(locate);
-  console.log(video);
+  // console.log("locate "+locate);
+  // console.log("video "+video);
   useEffect(() => {
     async function fetchVideos() {
       setIsLoading(true);
@@ -20,7 +20,6 @@ const Video = () => {
           const newVideos = await response?.data?.videoURL;
           setVideo(newVideos);
           setIsLoading(false); // Data is loaded, set loading to false
-          console.log(newVideos);
         }
       } catch (error) {
         console.log(error);
