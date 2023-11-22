@@ -39,6 +39,8 @@ const ViewSection = () => {
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
+  const baseURL = "https://dipolevibe-frontend.vercel.app/video/?";
+
   const submitContext = {
     tag,
     title,
@@ -117,8 +119,9 @@ const ViewSection = () => {
       setLoading(true)
 
       const response = await apiTranscribePost("/videos/upload", submitContext);
-      const newVideoUrl = response.data.message.videoObj.videoURL;
-      setVideoUrl(newVideoUrl);
+      const videoId = response.data.message.videoObj._id;
+      setVideoUrl(videoId);
+      setVideoShare(baseURL+videoId);
       toast.success(response.data.message.message);
     } catch (error) {
       console.log(error);
