@@ -90,12 +90,12 @@ function InputBox({
             placeholder="Add a comment"
             value={commentText}
             onChange={handleInputChange}
-            className="w-full dark:bg-gray-800 outline-0 focus:border-b-blue-500 p-1 text-base"
+            className="w-full dark:bg-gray-800 outline-0 focus:border-b-blue-500 p-1 text-slate-600"
           />
         </div>
         <div className="mt-2 absolute flex mb-8 right-0">
           <button
-            className="text-white rounded-full px-8 py-1 mr-2 hover:bg-sky-700"
+            className="text-slate-800 rounded-full px-8 py-1 mr-2 hover:bg-sky-700"
             onClick={() => setReplyState(false)}
           >
             Cancel

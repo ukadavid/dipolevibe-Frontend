@@ -36,26 +36,26 @@ function CommentCard({ comment, showReplies, toggleReplies, onReplyUpdate }) {
     <>
       <div className="flex mt-8 items-center py-2 mt-2">
         <div className="mr-2">
-          <div className="h-12 w-12 rounded-full text-white bg-gray-300 flex items-center justify-center">
+          <div className="h-12 w-12 rounded-full text-slate-800 bg-gray-300 flex items-center justify-center">
             {newInitials}
           </div>
         </div>
         <div>
-          <div className="flex items-center text-white">
+          <div className="flex items-center text-slate-800">
             <span className="text-blue-600 mr-1">
               {comment.authorPaid ? <BiBadgeCheck /> : ""}
             </span>
             <span>{comment.author}</span>
-            <span className="text-zinc-400 text-xs ml-2 ">{newTimeAgo} </span>
+            <span className="text-slate-800 text-xs ml-2 ">{newTimeAgo} </span>
           </div>
-          <div className="text-white">
+          <div className="text-slate-800">
             <span>{comment.text}</span>
           </div>
         </div>
       </div>
       <div className="flex mb-8 items-center relative mt-0.5 left-4">
         <button
-          className="relative left-6 text-white text-sm rounded-full px-4 py-1 hover:bg-gray-500"
+          className="relative left-6 text-slate-800 text-sm rounded-full px-4 py-1 hover:bg-gray-500"
           onClick={() => {
             setReplyState(true);
           }}
@@ -73,7 +73,7 @@ function CommentCard({ comment, showReplies, toggleReplies, onReplyUpdate }) {
                 )}
               </div>
               <button
-                className="text-white text-sm ml-2"
+                className="text-slate-800 text-sm ml-2"
                 onClick={() => toggleReplies(commentId)}
               >
                 {comment.replies.length === 1

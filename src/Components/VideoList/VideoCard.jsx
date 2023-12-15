@@ -82,8 +82,9 @@ function VideoCard({ video, index }) {
             handleViewButtonClick();
             handleViewCountUpdate(videoId);
           }}
+          className="flex items-center justify-center hover:bg-slate-400 hover:border hover:border-blue-400 w-8 h-8 rounded-2xl"
         >
-            <BsBoxArrowUpRight className="text-lg text-slate-200"/>
+            <BsBoxArrowUpRight className="text-lg text-slate-200 hover:text-slate-600"/>
         </div>
         <video
           ref={videoRef}

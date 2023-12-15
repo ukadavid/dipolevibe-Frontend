@@ -43,28 +43,19 @@ function Transcription() {
           }`}
           onClick={handleMyTranscript}
         >
-          My Transcript
-        </p>
-        <p
-          className={`px-3 text-sm font-medium border-b-2 border-transparent pb-1.5 dark:text-black ${
-            activeLink === "comment"
-              ? "dark:text-gray-400 dark:text-gray"
-              : "no-underline"
-          }`}
-          onClick={handleMyReceived}
-        >
-          comment
+          Transcription
         </p>
       </div>
-      {showReceived && <ShowReceived />}
-      {showTranscript && (isPaidUser ? (
+           {showReceived && <ShowReceived />}
+           {showTranscript && (isPaidUser ? (
           <ShowTranscript /> ) : (
-          <div>
+          <div className="">
+             <div className="text-sm w-44 ml-16 mt-5">Requires registration to view transcription</div>
             <button 
               className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40"
               onClick={handleTranscription}
             >
-              Subscribe to view transcription
+              Subscribe
             </button>
           </div>
         ))}
