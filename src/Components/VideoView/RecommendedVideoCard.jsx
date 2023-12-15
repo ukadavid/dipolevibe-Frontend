@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import HoverVideoPlayer from 'react-hover-video-player';
+import { MdOutlineRemoveRedEye } from "react-icons/md"
 
 function RecommendedVideoCard({video, onClick}){
   const navigate = useNavigate();
@@ -17,13 +18,16 @@ function RecommendedVideoCard({video, onClick}){
           <div>
             {video.tags.map((tag, index) => (
               <span 
-                className="mr-1 text-xs text-white font-thin rounded-full border-sky-400 border px-1"
+                className="mr-1 text-xs text-slate-950 font-thin rounded-full border-sky-400 border px-1"
               >{tag}</span>
             ))}
-            <p className="text-white">{video.videoTitle}</p>
-            <p className="text-stone-100 text-sm">{video.videoSummary}</p>
+            <p className="text-slate-950">{video.videoTitle}</p>
+            <p className="text-stone-900 text-sm">{video.videoSummary}</p>
             <div>
-              <span className="text-xs text-white">{video.views}</span>
+              <div className="flex items-center justify-center w-8">
+                <MdOutlineRemoveRedEye />
+                <span className="text-xs text-slate-950">{video.views}</span>
+              </div> 
               <span>{video.comment}</span>
             </div>
           </div>

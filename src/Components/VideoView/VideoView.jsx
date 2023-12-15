@@ -117,15 +117,15 @@ const VideoView = () => {
             <video className="mb-1 w-full" controls>
               <source src={video.videoURL} type="video/mp4" />
             </video>
-            <div className="px-2 w-full mt-0 bg-gray-800 dark:bg-gray-800 w-350">
-              <div className="mt-2 mb-3  text-lg text-white font-bold ">
+            <div className="px-2 w-full mt-0  w-350">
+              <div className="mt-2 mb-3  text-lg text-slate-800 font-bold ">
                 <span>{video.videoTitle}</span>
               </div>
-              <div className="text-white">
+              <div className="text-slate-800">
                 {video.tags.map((tag, index) => {
                   return (
                     <span
-                      className="text-white mr-2 rounded-full border-sky-400 border px-1 font-serif text-inherit"
+                      className="text-slate-800 mr-2 rounded-full border-sky-400 border px-1 font-serif text-inherit"
                       key={index}
                     >
                       #{tag}
@@ -134,16 +134,16 @@ const VideoView = () => {
                 })}
               </div>
               <div className="flex justify-between items-center py-2 mb-8 ">
-                <div className="flex justify-center items-center text-white">
+                <div className="flex justify-center items-center text-slate-800">
                   <div className="mr-3 rounded-full">
                     <img src={Logo} alt="" className="h-12 w-12 rounded-full" />
                   </div>
                   <div>
-                    <span>User Name</span>
+                    <span className="text-slate-800">User Name</span>
                   </div>
                 </div>
                 <a href={video.videoURL} download={video.videoTitle}>
-                  <div className="text-white relative rounded-full bg-slate-600 px-8 py-1 hover:bg-slate-700 outline outline-0 outline-sky-700 hover:outline-1 ">
+                  <div className="text-slate-800 relative rounded-full bg-slate-600 px-8 py-1 hover:bg-slate-700 outline outline-0 outline-sky-700 hover:outline-1 ">
                     <div className="absolute top-2 left-2">
                       <LiaDownloadSolid />
                     </div>
@@ -164,7 +164,10 @@ const VideoView = () => {
             ></div>
           </div>
         </div>
-        <div>
+        <div 
+        className="mt-0 "
+        style={{marginTop: "-85px"}}
+        >
           <div className="w-full mx-auto mb-8 min-w-96 max-w-5xl div-section lg:mx-auto lg:ml-4 h-3/6 rounded-full rounded-lg shadow-lg bg-white mt-16 lg:mt-4 flex flex-col relative ">
             <div className="pt-0 px-4 h-full">
               <Transcription transcription={video.transcription} />
