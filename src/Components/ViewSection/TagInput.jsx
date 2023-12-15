@@ -127,12 +127,16 @@ function TagInput({
     </div>
   ) : (
     <span style={{ padding: "10px" }} onDoubleClick={handleDoubleClick}>
-      {hasAtLeastOneTag ? (
-        setIsEditing(true)
-      ) : (
+      {
+      hasAtLeastOneTag ? 
+      (setIsEditing(true)) : 
+      (
         <>
           Double-click to add tags
-          {hasMinimumTag && (
+          {
+          hasMinimumTag 
+          && 
+          (
             <p className="text-red-600 dark:text-red-600 text-xs">
               You must enter at least one tag.
             </p>

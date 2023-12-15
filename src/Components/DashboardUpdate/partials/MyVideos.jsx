@@ -44,13 +44,16 @@ const MyVideos = ({ videosData }) => {
                   {video?._id?.slice(0, 6)}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {getDaysSinceUpload(video.uploadedAt)}
+                  {
+                  getDaysSinceUpload(video?.uploadedAt)
+                  ? JSON.stringify(video?.userId) : getDaysSinceUpload(JSON.stringify(video?.updatedAt)) 
+                  }
                 </p>
               </div>
 
               <h2 className="text-xl font-bold mb-4">{video?.videoTitle}</h2>
               <p className="text-xl  text-left text-gray-600 mb-4 dark:text-gray-400">
-                {video.videoSummary}
+                {video?.videoSummary}
               </p>
 
               <div className="flex mb-8 items-center">

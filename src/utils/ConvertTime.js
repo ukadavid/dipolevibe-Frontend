@@ -1,5 +1,6 @@
 export function getDaysSinceUpload(dateString) {
   const uploadedAt = new Date(dateString);
+  console.log("dateString :"+ dateString)
   const now = new Date();
 
   // Calculate the difference in milliseconds

@@ -1,5 +1,5 @@
 import "./App.css";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignupPage from "./Pages/Signup/UserSignupPage";
 import AdminSignupPage from "./Pages/Signup/AdminSignupPage";

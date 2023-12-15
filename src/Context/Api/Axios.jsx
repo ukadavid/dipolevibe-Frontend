@@ -52,6 +52,20 @@ export const apiPostComment = (path, data) => {
   return axios.post(`${TranscriptionUrl}${path}`, data, {});
 };
 
+export const apiSharePost = ( path, data ) => {
+  const config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  return axios.post(`${TranscriptionUrl}${path}`, data, config);
+}
+
+export const apiShareGet = (path) => {
+  return axios.get(`${TranscriptionUrl}${path}`)
+}
+
 export const apiGetComment = (videoId) => {
   return axios.get(`${TranscriptionUrl}/comments/public-video/${videoId}`);
 };

@@ -7,13 +7,14 @@ import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
 import { FaSlackHash } from "react-icons/fa";
 import SocialMediaShare from "../ShareComponent/Share";
-import { apiTranscribePost } from "../../Context/Api/Axios";
+import { apiTranscribePost, apiSharePost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../Preloader/Preloader";
 import TagInput from "./TagInput";
 import TranscriptionPrompt from "../Modal/TranscriptionPrompt";
 import SignUpPrompt from "../Modal/SignUpPrompt";
+import MailInput from "./MaiInput";
 
 const ViewSection = () => {
   const [leftColumnWidth, setLeftColumnWidth] = useState("70%");
@@ -22,6 +23,7 @@ const ViewSection = () => {
   );
   const [summary, setSummary] = useState("Summary");
   const [tag, setTag] = useState("");
+  const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [mostRecentVideo, setMostRecentVideo] = useState(null);
   const [db, setDb] = useState(null);
@@ -30,6 +32,7 @@ const ViewSection = () => {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [numTags, setNumTags] = useState(0);
   const [buttons, setButtons] = useState([]);
+  const [emailButtons, setEmailButtons] = useState([]);
   const [hasMinimumTag, setMinimumTagError] = useState(false);
   const [videoShare, setVideoShare] = useState();
   const [displayModal, setModal] = useState(false);
@@ -37,12 +40,16 @@ const ViewSection = () => {
   const [isPrivatePublish, setPrivatePublish] = useState(false);
   const [displaySignUpModal, setSignUpModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
+
   const navigate = useNavigate();
 
   const baseURL = "https://dipolevibe-frontend.vercel.app/video/?";
 
   const submitContext = {
+    author: localStorage.getItem("email"), 
     tag,
+    email,
     title,
     summary,
     isPrivatePublish: isPrivatePublish,
@@ -101,34 +108,30 @@ const ViewSection = () => {
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.getItem("email") != null ? setAnonUser(false) : setAnonUser(true);
+  },[])
+
   const handleCheckBox = () => {
-    toggleCheckbox();
+    // toggleCheckbox();
+    setIsChecked((prevChecked) => {
+      const newChecked = !prevChecked;
+      toggleCheckbox(newChecked);
+      return newChecked;
+    });
+    // isAnonUser ? setSignUpModal(true) : setPrivatePublish(!isPrivatePublish);
 
-    isAnonUser ? setSignUpModal(true) : setPrivatePublish(!isPrivatePublish);
-
-    isPrivatePublish
+    isChecked
       ? (submitContext.isPrivatePublish = true)
       : (submitContext.isPrivatePublish = false);
 
-    console.log("submitContext :" + JSON.stringify(submitContext));
-    return;
   };
 
-  const submitLogic = async () => {
-    try {
-      setLoading(true)
-
-      const response = await apiTranscribePost("/videos/upload", submitContext);
-      const videoId = response.data.message.videoObj._id;
-      setVideoUrl(videoId);
-      setVideoShare(baseURL+videoId);
-      toast.success(response.data.message.message);
-    } catch (error) {
-      console.log(error);
+  const toggleCheckbox =  (newChecked) => {
+    if (newChecked) {
+      setEmailButtons([]);
     }
-    finally{
-      setLoading(false);
-    }
+    setPrivatePublish(!isPrivatePublish);
   };
 
   const handleDefaultSubmit = async () => {
@@ -138,20 +141,68 @@ const ViewSection = () => {
         return;
       }
 
+      //setLoading(true);
       setSubmitClicked(true);
-      setLoading(true);
 
-      isAnonUser ? submitLogic() : setModal(true);
+      
+      isAnonUser && isChecked ? setSignUpModal(true) : submitLogic(selectedOption);  //setSignUpModal(true)
     } catch (error) {
       console.error("Error submitting data:", error);
     } finally {
       setSubmitClicked(false); // Reset submitClicked
+      //setLoading(false);
+    }
+  };
+
+  const createResponse = (status, message, data = null) => {
+    return { status, message, data };
+  };
+  
+
+  const submitLogic = async () => {
+    try {
+      setLoading(true);
+      const response = await handleUpload(selectedOption, submitContext);
+      console.log(response);
+      const videoId = response.data.message.videoData._id;
+      setVideoUrl(videoId);
+      setVideoShare(baseURL+videoId);
+      toast.success(response.data.message.message);
+    } catch (error) {
+      toast.error(error.response.data.message)
+
+      console.log(error);
+    }
+    finally{
       setLoading(false);
     }
   };
 
+  const handleUpload = async (selectedOption, submitContext) => {
+    switch (selectedOption) {
+      case 'team':
+        // Handle 'share with team' logic
+        console.log('team route');
+         return apiSharePost('/shared/upload', submitContext);
+        // break;
+        // Replace the following code with your logic for 'share with team'
+      case 'public-private':
+        // Handle 'public private' logic
+        console.log('public-private route');
+         return apiTranscribePost('/videos/upload/private', submitContext);
+        //break;
+      case 'self':
+        console.log('self route');
+         return apiSharePost('/shared/upload', submitContext);
+        //break;
+      default:
+        // Handle 'default' logic or other cases
+        console.log('default route');
+         return apiTranscribePost('/videos/upload', submitContext);
+    }
+  };
+
   const handleTranscriptionSubmit = async () => {
-    console.log("with love from transciption prompt modal");
     isAnonUser ? setSignUpModal(true) : null;
 
     try {
@@ -172,9 +223,11 @@ const ViewSection = () => {
     }, 2000);
   };
 
-  const toggleCheckbox = async () => {
-    setIsChecked(!isChecked);
-  };
+
+
+  useEffect(() => {
+
+  },[selectedOption])
 
   if (mostRecentVideo && mostRecentVideo.blob) {
     const url = URL.createObjectURL(mostRecentVideo.blob);
@@ -193,8 +246,8 @@ const ViewSection = () => {
               )}
               {
               // submitClicked &&
-               loading &&
-               <Preloader />
+              //  loading &&
+              //  <Preloader />
               }
               {videoUrl && <SocialMediaShare url={videoShare} />}
               <div
@@ -253,21 +306,38 @@ const ViewSection = () => {
                 /> */}
                 <p className="edit-text">Tags</p>
               </div>
-              {/* <div class="mt-2.5">
-              <input 
-                id="checkbox"
-                checked={isChecked}
-                type="checkbox" 
-                name="publish-private"
-                onClick={handleCheckBox}
-              />
-              <label for="publish-private" class="ml-1.5 text-slate-500 text-sm hover:text-black"><span>publish private</span></label>
-            </div> */}
+              <div className="mt-2.5">
+                <input 
+                  id="checkbox"
+                  checked={isChecked}
+                  type="checkbox" 
+                  name="publish-private"
+                  onClick={handleCheckBox}
+                />
+                <label className="ml-1.5 text-slate-500 text-sm hover:text-black"><span>publish private</span></label>
+              </div>
+              <div>
+                {
+                isChecked && 
+                <MailInput 
+                  email={email}
+                  setEmail={setEmail}
+                  emailButtons={emailButtons}
+                  setEmailButtons={setEmailButtons}
+                  hasMinimumTag={hasMinimumTag}
+                  setMinimumTagError={setMinimumTagError}
+                  selectedOption={selectedOption}
+                  setSelectedOption={setSelectedOption}
+                  displayModal={isChecked}
+                  handleSubmit={handleDefaultSubmit}
+                />
+                }
+              </div>
 
               <div>
                 <div className="flex my-8 justify-center ">
                   <button
-                    onClick={submitLogic}
+                    onClick={handleDefaultSubmit}
                     className={`bg-gradient-to-r from-blue-400 via-purple-600 to-blue-700 text-white font-bold py-2 px-4 rounded-full ${
                       loading ? "loading" : ""
                     }`}
@@ -282,8 +352,8 @@ const ViewSection = () => {
         </div>
         {displayModal && (
           <TranscriptionPrompt
-            state={displayModal}
-            transcription={handleTranscriptionSubmit}
+            displayModal={displayModal}
+            handleTranscriptionSubmit={handleTranscriptionSubmit}
           />
         )}
         {displaySignUpModal && (
