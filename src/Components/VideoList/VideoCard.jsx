@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { BsBoxArrowUpRight } from "react-icons/bs";
@@ -47,6 +47,22 @@ function VideoCard({ video, index }) {
     }
   };
 
+  const handleHover = async () => {
+    const videoCard = document.querySelector("#videoCard");
+    const icon = document.querySelector("#icon");
+
+    videoCard.addEventListener("mouseover", () => {
+      setHovered(true)
+    });
+    videoCard.addEventListener("mouseout", () => {
+      setHovered(false);
+    })
+  }
+
+  useEffect(() => {
+    handleHover()
+  },[])
+
   return (
     <div style={{
         display: 'inline-block',
@@ -57,6 +73,7 @@ function VideoCard({ video, index }) {
         // border: '1px solid grey',
       }}
       className="border border-slate-300 hover:border-indigo-700 rounded-b-lg"
+      id="videoCard"
     >
       <div
         style={{
@@ -83,8 +100,9 @@ function VideoCard({ video, index }) {
             handleViewCountUpdate(videoId);
           }}
           className="flex items-center justify-center hover:bg-slate-400 hover:border hover:border-blue-400 w-8 h-8 rounded-2xl"
+          id="icon"
         >
-            <BsBoxArrowUpRight className="text-lg text-slate-200 hover:text-slate-600"/>
+            <BsBoxArrowUpRight className={`text-lg text-slate-200 hover:text-slate-600 ${hovered ? '' : 'hidden'}`}/>
         </div>
         <video
           ref={videoRef}
