@@ -7,7 +7,7 @@ import InlineEdit from "./InlineEdit";
 import { FaList, FaPen } from "react-icons/fa";
 import { FaSlackHash } from "react-icons/fa";
 import SocialMediaShare from "../ShareComponent/Share";
-import { apiTranscribePost, apiSharePost } from "../../Context/Api/Axios";
+import { apiTranscribePost, apiSharePost, apiSelfPost } from "../../Context/Api/Axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Preloader from "../Preloader/Preloader";
@@ -182,7 +182,7 @@ const ViewSection = () => {
     switch (selectedOption) {
       case 'team':
         // Handle 'share with team' logic
-        console.log('team route');
+        // console.log('team route');
          return apiSharePost('/shared/upload', submitContext);
         // break;
         // Replace the following code with your logic for 'share with team'
@@ -193,7 +193,7 @@ const ViewSection = () => {
         //break;
       case 'self':
         console.log('self route');
-         return apiSharePost('/shared/upload', submitContext);
+         return  apiSelfPost('/self/upload', submitContext);
         //break;
       default:
         // Handle 'default' logic or other cases
