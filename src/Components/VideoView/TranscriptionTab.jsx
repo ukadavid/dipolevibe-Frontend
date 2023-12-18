@@ -32,7 +32,7 @@ function Transcription() {
   }
 
   return (
-    <div className="page border-black">
+    <div className="page border-black ">
       <div className="mb-3"></div>
       <div className="flex items-center justify-center space-x-3 sm:mt-7 px-12 mt-1">
         <p
@@ -46,11 +46,10 @@ function Transcription() {
           Transcription
         </p>
       </div>
-           {showReceived && <ShowReceived />}
-           {showTranscript && (isPaidUser ? (
+           {(isPaidUser ? (
           <ShowTranscript /> ) : (
           <div className="">
-             <div className="text-sm w-44 ml-16 mt-5">Requires registration to view transcription</div>
+             <div className="text-sm w-44 ml-12 mt-5">Requires registration to view transcription</div>
             <button 
               className="bg-blue-500 text-white py-2 px-4 rounded text-sm hover:bg-blue-600 transition duration-300 w-40"
               onClick={handleTranscription}

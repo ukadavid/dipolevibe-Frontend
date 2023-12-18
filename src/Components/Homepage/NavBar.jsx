@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -7,6 +8,33 @@ const NavBar = () => {
   // toggle menu section
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const scrollToHome = () => {
+    
+    scroll.scrollTo("home", {
+      smooth: true,
+      duration: 500,
+    });
+    toggleMobileMenu(); // Close mobile menu after clicking on the link
+  };
+
+  const scrollToFeatures = () => {
+    
+    scroll.scrollTo("features", {
+      smooth: true,
+      duration: 500,
+    });
+    toggleMobileMenu(); // Close mobile menu after clicking on the link
+  };
+
+  const scrollToPricing = () => {
+    console.log("scroll to pricing")
+    scroll.scrollTo("pricing", {
+      smooth: true,
+      duration: 500,
+    });
+    toggleMobileMenu(); // Close mobile menu after clicking on the link
   };
 
   return (
@@ -68,15 +96,39 @@ const NavBar = () => {
 
               {/*  */}
               <div className="items-center hidden text-sm lg:flex lg:gap-x-12 lg:flex-2 lg:justify-end ">
-                <Link className="text-gray-900 hover:text-gray-600" to="/">
+                <ScrollLink 
+                className="text-gray-900 hover:text-gray-600" 
+                to="home"
+                spy={true}
+                smooth={true}
+                offset={-50} 
+                duration={500}
+                onClick={scrollToHome}
+                >
                   Home
-                </Link>
-                <Link className="text-gray-900 hover:text-gray-600" to="/">
+                </ScrollLink>
+                <ScrollLink 
+                className="text-gray-900 hover:text-gray-600" 
+                to="features"
+                spy={true}
+                smooth={true}
+                offset={-50} 
+                duration={500}
+                onClick={scrollToFeatures}
+                >
                   Features
-                </Link>
-                <Link className="text-gray-900 hover:text-gray-600" to="/">
+                </ScrollLink>
+                <ScrollLink
+                 className="text-gray-900 hover:text-gray-600"
+                 to="pricing"
+                 spy={true}
+                 smooth={true}
+                 offset={-50} 
+                 duration={500}
+                 onClick={scrollToPricing}
+                 >
                   Pricing
-                </Link>
+                </ScrollLink>
                 <Link
                   className="text-gray-900 hover:text-gray-600"
                   to="/videolist"

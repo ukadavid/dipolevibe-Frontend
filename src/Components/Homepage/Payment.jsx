@@ -14,8 +14,11 @@ const PlansComponent = () => {
   };
 
   return (
-    <main className=" bg-gray-800 py-8 dark:bg-gray-800">
-      <div className="text-center ">
+    <main 
+    className=" bg-gray-800 py-8 dark:bg-gray-800"
+    id="pricing"
+    >
+      <div className="text-center">
         <h1 className="mb-4 text-2xl font-normal text-white md:text-3xl lg:text-4xl">
           Our <span className="font-semibold">plans</span> for your{" "}
           <span className="font-semibold">recordings</span>

@@ -21,7 +21,10 @@ const Header = () => {
   };
   return (
     <>
-      <div className="relative overflow-hidden bg-white">
+      <div 
+      className="relative overflow-hidden bg-white"
+      id="home"
+      >
         <div className="pt-40 mx-auto xl:gap-0 lg:pt-50 lg:pb-40">
           <div className="relative items-center justify-between lg:flex lg:px-20">
             <div className="mt-4xl w-full lg:w-0.9/2">
