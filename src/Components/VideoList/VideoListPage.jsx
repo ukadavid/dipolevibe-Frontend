@@ -31,6 +31,7 @@ function VideoList() {
     fetchVideos();
   }, [page]); // Add 'page' as a dependency
 
+
   const handleSearch = async (searchResults) => {
     // Update the videos state with the search results
     setVideos(searchResults);
